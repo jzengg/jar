@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Link, BrowserRouter as Router, Route } from 'react-router-dom'
+import Header from './Header'
+import Login from './Login'
+import { Route, Switch } from 'react-router-dom'
 
+import '../App.css';
+
+import CreateNote from './CreateNote'
 import Home from './Home'
 import History from './History'
-import './App.css';
 
 
 let id = 0
@@ -82,31 +86,26 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <div>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/history">History</Link>
-            </li>
-          </ul>
+      <div>
+        <Header />
 
-          <hr />
+        <hr />
+        <Switch>
 
-          <Route exact path='/' render={ (props) =>
-              (<Home db={this.getToday(this.state.db)} addItem={this.addItem} userId={user_id} />)
-            } />
-          <Route path='/history' render= { (props) => (
-              <History items={this.state.history} filter={this.state.historyFilter} setToday={this.setToday} setYesterday={this.setYesterday} />
-            )} />
+        <Route exact path='/' render={ (props) =>
+            (<Home db={this.getToday(this.state.db)} addItem={this.addItem} userId={user_id} />)
+          } />
+        <Route exact path='/login' component={Login}/>
 
-      </div>
+        <Route exact path='/history' render= { (props) => (
+            <History items={this.state.history} filter={this.state.historyFilter} setToday={this.setToday} setYesterday={this.setYesterday} />
+          )} />
+        <Route exact path='/new' render= { (props) => (
+            <CreateNote />
+          )} />
+        </Switch>
 
-
-
-    </Router>
+    </div>
     );
   }
 }

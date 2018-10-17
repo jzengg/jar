@@ -1,23 +1,1055 @@
-type Jar @model {
-  id: ID! @isUnique
-  name: String!
-  description: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  notes: [Note!]! @relation(name: "NoteAuthor")
-  owner: User! @relation(Name: "JarOwner")
+type AddToFriendsPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  friends2User: User
+  friends1User: User
+  friends2UserEdge: UserEdge
+  friends1UserEdge: UserEdge
 }
 
-type Note @model {
-  id: ID! @isUnique
-  text: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  author: User! @relation(name: "NoteAuthor")
+input AddToFriendsUserInput {
+  friends1UserId: ID!
+  friends2UserId: ID!
+  clientMutationId: String!
 }
 
-type User @model {
+input AddToJarNotesJarInput {
+  notesNoteId: ID!
+  jarJarId: ID!
+  clientMutationId: String!
+}
+
+type AddToJarNotesPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  jarJar: Jar
+  notesNote: Note
+  jarJarEdge: JarEdge
+  notesNoteEdge: NoteEdge
+}
+
+type AddToJarOwnerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  ownerUser: User
+  jarsJar: Jar
+  ownerUserEdge: UserEdge
+  jarsJarEdge: JarEdge
+}
+
+input AddToJarOwnerUserInput {
+  jarsJarId: ID!
+  ownerUserId: ID!
+  clientMutationId: String!
+}
+
+# AuthenticateUserPayload
+type AuthenticateUserPayload {
   id: ID!
-  jars: [Jar!]! @relation(name: "JarOwner")
-  friends: [User!]! @relation(name: "Friends")
+  token: String!
+}
+
+input CreateJar {
+  description: String
+  name: String!
+  ownerId: ID
+  owner: JarownerUser
+  notesIds: [ID!]
+  notes: [JarnotesNote!]
+}
+
+input CreateJarInput {
+  description: String
+  name: String!
+  ownerId: ID
+  owner: JarownerUser
+  notesIds: [ID!]
+  notes: [JarnotesNote!]
+  clientMutationId: String!
+}
+
+type CreateJarPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  jar: Jar
+  edge: JarEdge
+  owner: User
+}
+
+input CreateNote {
+  text: String!
+  jarId: ID
+  jar: NotejarJar
+}
+
+input CreateNoteInput {
+  text: String!
+  jarId: ID
+  jar: NotejarJar
+  clientMutationId: String!
+}
+
+type CreateNotePayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  note: Note
+  edge: NoteEdge
+  jar: Jar
+}
+
+input CreateUser {
+  email: String!
+  password: String!
+  friendsIds: [ID!]
+  friends: [UserfriendsUser!]
+  jarsIds: [ID!]
+  jars: [UserjarsJar!]
+}
+
+# If authentication was successful the payload contains the user and a token. If unsuccessful this payload is null.
+type CreateUserPayload {
+  user: User
+  clientMutationId: String
+  viewer: Viewer!
+}
+
+scalar DateTime
+
+input DeleteJarInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteJarPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  jar: Jar
+  edge: JarEdge
+  owner: User
+  deletedId: ID
+}
+
+input DeleteNoteInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteNotePayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  note: Note
+  edge: NoteEdge
+  jar: Jar
+  deletedId: ID
+}
+
+input DeleteUserInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteUserPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  user: User
+  edge: UserEdge
+  deletedId: ID
+}
+
+# HelloPayload
+type HelloPayload {
+  message: String!
+}
+
+input InvokeFunctionInput {
+  name: String!
+  input: String!
+  clientMutationId: String
+}
+
+type InvokeFunctionPayload {
+  result: String!
+  clientMutationId: String
+}
+
+type Jar implements Node {
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  name: String!
+  notes(filter: NoteFilter, orderBy: NoteOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): NoteConnection
+  owner(filter: UserFilter): User!
+  updatedAt: DateTime!
+}
+
+# A connection to a list of items.
+type JarConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [JarEdge]
+
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type JarEdge {
+  # The item at the end of the edge.
+  node: Jar!
+
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input JarFilter {
+  # Logical AND on all given filters.
+  AND: [JarFilter!]
+
+  # Logical OR on all given filters.
+  OR: [JarFilter!]
+  createdAt: DateTime
+
+  # All values that are not equal to given value.
+  createdAt_not: DateTime
+
+  # All values that are contained in given list.
+  createdAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  createdAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  createdAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  createdAt_lte: DateTime
+
+  # All values greater than the given value.
+  createdAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  createdAt_gte: DateTime
+  description: String
+
+  # All values that are not equal to given value.
+  description_not: String
+
+  # All values that are contained in given list.
+  description_in: [String!]
+
+  # All values that are not contained in given list.
+  description_not_in: [String!]
+
+  # All values less than the given value.
+  description_lt: String
+
+  # All values less than or equal the given value.
+  description_lte: String
+
+  # All values greater than the given value.
+  description_gt: String
+
+  # All values greater than or equal the given value.
+  description_gte: String
+
+  # All values containing the given string.
+  description_contains: String
+
+  # All values not containing the given string.
+  description_not_contains: String
+
+  # All values starting with the given string.
+  description_starts_with: String
+
+  # All values not starting with the given string.
+  description_not_starts_with: String
+
+  # All values ending with the given string.
+  description_ends_with: String
+
+  # All values not ending with the given string.
+  description_not_ends_with: String
+  id: ID
+
+  # All values that are not equal to given value.
+  id_not: ID
+
+  # All values that are contained in given list.
+  id_in: [ID!]
+
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+
+  # All values less than the given value.
+  id_lt: ID
+
+  # All values less than or equal the given value.
+  id_lte: ID
+
+  # All values greater than the given value.
+  id_gt: ID
+
+  # All values greater than or equal the given value.
+  id_gte: ID
+
+  # All values containing the given string.
+  id_contains: ID
+
+  # All values not containing the given string.
+  id_not_contains: ID
+
+  # All values starting with the given string.
+  id_starts_with: ID
+
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+
+  # All values ending with the given string.
+  id_ends_with: ID
+
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  name: String
+
+  # All values that are not equal to given value.
+  name_not: String
+
+  # All values that are contained in given list.
+  name_in: [String!]
+
+  # All values that are not contained in given list.
+  name_not_in: [String!]
+
+  # All values less than the given value.
+  name_lt: String
+
+  # All values less than or equal the given value.
+  name_lte: String
+
+  # All values greater than the given value.
+  name_gt: String
+
+  # All values greater than or equal the given value.
+  name_gte: String
+
+  # All values containing the given string.
+  name_contains: String
+
+  # All values not containing the given string.
+  name_not_contains: String
+
+  # All values starting with the given string.
+  name_starts_with: String
+
+  # All values not starting with the given string.
+  name_not_starts_with: String
+
+  # All values ending with the given string.
+  name_ends_with: String
+
+  # All values not ending with the given string.
+  name_not_ends_with: String
+  updatedAt: DateTime
+
+  # All values that are not equal to given value.
+  updatedAt_not: DateTime
+
+  # All values that are contained in given list.
+  updatedAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  updatedAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  updatedAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  updatedAt_lte: DateTime
+
+  # All values greater than the given value.
+  updatedAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  updatedAt_gte: DateTime
+  notes_every: NoteFilter
+  notes_some: NoteFilter
+  notes_none: NoteFilter
+  owner: UserFilter
+}
+
+input JarnotesNote {
+  text: String!
+}
+
+enum JarOrderBy {
+  createdAt_ASC
+  createdAt_DESC
+  description_ASC
+  description_DESC
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+input JarownerUser {
+  email: String!
+  password: String!
+  friendsIds: [ID!]
+  friends: [UserfriendsUser!]
+  jarsIds: [ID!]
+  jars: [UserjarsJar!]
+}
+
+# LoggedInUserPayload
+type LoggedInUserPayload {
+  id: ID!
+}
+
+type Mutation {
+  createJar(input: CreateJarInput!): CreateJarPayload
+  createNote(input: CreateNoteInput!): CreateNotePayload
+  updateJar(input: UpdateJarInput!): UpdateJarPayload
+  updateNote(input: UpdateNoteInput!): UpdateNotePayload
+  updateUser(input: UpdateUserInput!): UpdateUserPayload
+  updateOrCreateJar(input: UpdateOrCreateJarInput!): UpdateOrCreateJarPayload
+  updateOrCreateNote(input: UpdateOrCreateNoteInput!): UpdateOrCreateNotePayload
+  updateOrCreateUser(input: UpdateOrCreateUserInput!): UpdateOrCreateUserPayload
+  deleteJar(input: DeleteJarInput!): DeleteJarPayload
+  deleteNote(input: DeleteNoteInput!): DeleteNotePayload
+  deleteUser(input: DeleteUserInput!): DeleteUserPayload
+  addToFriends(input: AddToFriendsUserInput!): AddToFriendsPayload
+  addToJarNotes(input: AddToJarNotesJarInput!): AddToJarNotesPayload
+  addToJarOwner(input: AddToJarOwnerUserInput!): AddToJarOwnerPayload
+  removeFromFriends(input: RemoveFromFriendsUserInput!): RemoveFromFriendsPayload
+  createUser(input: SignupUserInput!): CreateUserPayload!
+
+  # authenticate
+  authenticateUser(email: String!, password: String!): AuthenticateUserPayload
+
+  # signup
+  signupUser(email: String!, password: String!): SignupUserPayload
+  invokeFunction(input: InvokeFunctionInput!): InvokeFunctionPayload
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+type Note implements Node {
+  createdAt: DateTime!
+  id: ID!
+  jar(filter: JarFilter): Jar!
+  text: String!
+  updatedAt: DateTime!
+}
+
+# A connection to a list of items.
+type NoteConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [NoteEdge]
+
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type NoteEdge {
+  # The item at the end of the edge.
+  node: Note!
+
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input NoteFilter {
+  # Logical AND on all given filters.
+  AND: [NoteFilter!]
+
+  # Logical OR on all given filters.
+  OR: [NoteFilter!]
+  createdAt: DateTime
+
+  # All values that are not equal to given value.
+  createdAt_not: DateTime
+
+  # All values that are contained in given list.
+  createdAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  createdAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  createdAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  createdAt_lte: DateTime
+
+  # All values greater than the given value.
+  createdAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  createdAt_gte: DateTime
+  id: ID
+
+  # All values that are not equal to given value.
+  id_not: ID
+
+  # All values that are contained in given list.
+  id_in: [ID!]
+
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+
+  # All values less than the given value.
+  id_lt: ID
+
+  # All values less than or equal the given value.
+  id_lte: ID
+
+  # All values greater than the given value.
+  id_gt: ID
+
+  # All values greater than or equal the given value.
+  id_gte: ID
+
+  # All values containing the given string.
+  id_contains: ID
+
+  # All values not containing the given string.
+  id_not_contains: ID
+
+  # All values starting with the given string.
+  id_starts_with: ID
+
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+
+  # All values ending with the given string.
+  id_ends_with: ID
+
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  text: String
+
+  # All values that are not equal to given value.
+  text_not: String
+
+  # All values that are contained in given list.
+  text_in: [String!]
+
+  # All values that are not contained in given list.
+  text_not_in: [String!]
+
+  # All values less than the given value.
+  text_lt: String
+
+  # All values less than or equal the given value.
+  text_lte: String
+
+  # All values greater than the given value.
+  text_gt: String
+
+  # All values greater than or equal the given value.
+  text_gte: String
+
+  # All values containing the given string.
+  text_contains: String
+
+  # All values not containing the given string.
+  text_not_contains: String
+
+  # All values starting with the given string.
+  text_starts_with: String
+
+  # All values not starting with the given string.
+  text_not_starts_with: String
+
+  # All values ending with the given string.
+  text_ends_with: String
+
+  # All values not ending with the given string.
+  text_not_ends_with: String
+  updatedAt: DateTime
+
+  # All values that are not equal to given value.
+  updatedAt_not: DateTime
+
+  # All values that are contained in given list.
+  updatedAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  updatedAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  updatedAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  updatedAt_lte: DateTime
+
+  # All values greater than the given value.
+  updatedAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  updatedAt_gte: DateTime
+  jar: JarFilter
+}
+
+input NotejarJar {
+  description: String
+  name: String!
+  ownerId: ID
+  owner: JarownerUser
+  notesIds: [ID!]
+  notes: [JarnotesNote!]
+}
+
+enum NoteOrderBy {
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
+  text_ASC
+  text_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+type Query {
+  viewer: Viewer!
+
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+}
+
+type RemoveFromFriendsPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  friends2User: User
+  friends1User: User
+  friends2UserEdge: UserEdge
+  friends1UserEdge: UserEdge
+}
+
+input RemoveFromFriendsUserInput {
+  friends1UserId: ID!
+  friends2UserId: ID!
+  clientMutationId: String!
+}
+
+input SignupUserInput {
+  email: String!
+  password: String!
+  friendsIds: [ID!]
+  friends: [UserfriendsUser!]
+  jarsIds: [ID!]
+  jars: [UserjarsJar!]
+  clientMutationId: String!
+}
+
+# SignupUserPayload
+type SignupUserPayload {
+  id: ID!
+  token: String!
+}
+
+input UpdateJar {
+  description: String
+  id: ID!
+  name: String
+  ownerId: ID
+  owner: JarownerUser
+  notesIds: [ID!]
+  notes: [JarnotesNote!]
+}
+
+input UpdateJarInput {
+  description: String
+  id: ID!
+  name: String
+  ownerId: ID
+  owner: JarownerUser
+  notesIds: [ID!]
+  notes: [JarnotesNote!]
+  clientMutationId: String!
+}
+
+type UpdateJarPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  jar: Jar
+  edge: JarEdge
+  owner: User
+}
+
+input UpdateNote {
+  id: ID!
+  text: String
+  jarId: ID
+  jar: NotejarJar
+}
+
+input UpdateNoteInput {
+  id: ID!
+  text: String
+  jarId: ID
+  jar: NotejarJar
+  clientMutationId: String!
+}
+
+type UpdateNotePayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  note: Note
+  edge: NoteEdge
+  jar: Jar
+}
+
+input UpdateOrCreateJarInput {
+  update: UpdateJar!
+  create: CreateJar!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateJarPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  jar: Jar
+  edge: JarEdge
+  owner: User
+}
+
+input UpdateOrCreateNoteInput {
+  update: UpdateNote!
+  create: CreateNote!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateNotePayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  note: Note
+  edge: NoteEdge
+  jar: Jar
+}
+
+input UpdateOrCreateUserInput {
+  update: UpdateUser!
+  create: CreateUser!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateUserPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  user: User
+  edge: UserEdge
+}
+
+input UpdateUser {
+  email: String
+  id: ID!
+  password: String
+  friendsIds: [ID!]
+  friends: [UserfriendsUser!]
+  jarsIds: [ID!]
+  jars: [UserjarsJar!]
+}
+
+input UpdateUserInput {
+  email: String
+  id: ID!
+  password: String
+  friendsIds: [ID!]
+  friends: [UserfriendsUser!]
+  jarsIds: [ID!]
+  jars: [UserjarsJar!]
+  clientMutationId: String!
+}
+
+type UpdateUserPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  user: User
+  edge: UserEdge
+}
+
+type User implements Node {
+  createdAt: DateTime!
+  email: String!
+  friends(filter: UserFilter, orderBy: UserOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection
+  id: ID!
+  jars(filter: JarFilter, orderBy: JarOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): JarConnection
+  password: String!
+  updatedAt: DateTime!
+}
+
+# A connection to a list of items.
+type UserConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [UserEdge]
+
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type UserEdge {
+  # The item at the end of the edge.
+  node: User!
+
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input UserFilter {
+  # Logical AND on all given filters.
+  AND: [UserFilter!]
+
+  # Logical OR on all given filters.
+  OR: [UserFilter!]
+  createdAt: DateTime
+
+  # All values that are not equal to given value.
+  createdAt_not: DateTime
+
+  # All values that are contained in given list.
+  createdAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  createdAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  createdAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  createdAt_lte: DateTime
+
+  # All values greater than the given value.
+  createdAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  createdAt_gte: DateTime
+  email: String
+
+  # All values that are not equal to given value.
+  email_not: String
+
+  # All values that are contained in given list.
+  email_in: [String!]
+
+  # All values that are not contained in given list.
+  email_not_in: [String!]
+
+  # All values less than the given value.
+  email_lt: String
+
+  # All values less than or equal the given value.
+  email_lte: String
+
+  # All values greater than the given value.
+  email_gt: String
+
+  # All values greater than or equal the given value.
+  email_gte: String
+
+  # All values containing the given string.
+  email_contains: String
+
+  # All values not containing the given string.
+  email_not_contains: String
+
+  # All values starting with the given string.
+  email_starts_with: String
+
+  # All values not starting with the given string.
+  email_not_starts_with: String
+
+  # All values ending with the given string.
+  email_ends_with: String
+
+  # All values not ending with the given string.
+  email_not_ends_with: String
+  id: ID
+
+  # All values that are not equal to given value.
+  id_not: ID
+
+  # All values that are contained in given list.
+  id_in: [ID!]
+
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+
+  # All values less than the given value.
+  id_lt: ID
+
+  # All values less than or equal the given value.
+  id_lte: ID
+
+  # All values greater than the given value.
+  id_gt: ID
+
+  # All values greater than or equal the given value.
+  id_gte: ID
+
+  # All values containing the given string.
+  id_contains: ID
+
+  # All values not containing the given string.
+  id_not_contains: ID
+
+  # All values starting with the given string.
+  id_starts_with: ID
+
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+
+  # All values ending with the given string.
+  id_ends_with: ID
+
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  password: String
+
+  # All values that are not equal to given value.
+  password_not: String
+
+  # All values that are contained in given list.
+  password_in: [String!]
+
+  # All values that are not contained in given list.
+  password_not_in: [String!]
+
+  # All values less than the given value.
+  password_lt: String
+
+  # All values less than or equal the given value.
+  password_lte: String
+
+  # All values greater than the given value.
+  password_gt: String
+
+  # All values greater than or equal the given value.
+  password_gte: String
+
+  # All values containing the given string.
+  password_contains: String
+
+  # All values not containing the given string.
+  password_not_contains: String
+
+  # All values starting with the given string.
+  password_starts_with: String
+
+  # All values not starting with the given string.
+  password_not_starts_with: String
+
+  # All values ending with the given string.
+  password_ends_with: String
+
+  # All values not ending with the given string.
+  password_not_ends_with: String
+  updatedAt: DateTime
+
+  # All values that are not equal to given value.
+  updatedAt_not: DateTime
+
+  # All values that are contained in given list.
+  updatedAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  updatedAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  updatedAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  updatedAt_lte: DateTime
+
+  # All values greater than the given value.
+  updatedAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  updatedAt_gte: DateTime
+  friends_every: UserFilter
+  friends_some: UserFilter
+  friends_none: UserFilter
+  jars_every: JarFilter
+  jars_some: JarFilter
+  jars_none: JarFilter
+}
+
+input UserfriendsUser {
+  email: String!
+  password: String!
+  friendsIds: [ID!]
+  friends: [UserfriendsUser!]
+  jarsIds: [ID!]
+  jars: [UserjarsJar!]
+}
+
+input UserjarsJar {
+  description: String
+  name: String!
+  notesIds: [ID!]
+  notes: [JarnotesNote!]
+}
+
+enum UserOrderBy {
+  createdAt_ASC
+  createdAt_DESC
+  email_ASC
+  email_DESC
+  id_ASC
+  id_DESC
+  password_ASC
+  password_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+# This is the famous Relay viewer object
+type Viewer {
+  allJars(filter: JarFilter, orderBy: JarOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): JarConnection!
+  allNotes(filter: NoteFilter, orderBy: NoteOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): NoteConnection!
+  allUsers(filter: UserFilter, orderBy: UserOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  user: User
+  Jar(id: ID): Jar
+  Note(id: ID): Note
+  User(email: String, id: ID): User
+
+  # loggedInUser
+  loggedInUser: LoggedInUserPayload
+  id: ID!
 }

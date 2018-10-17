@@ -1,14 +1,28 @@
 # The following types define the data model of the example service
 # based on which the GraphQL API is generated
 
+type User @model {
+  id: ID! @isUnique
+
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+
+  email: String! @isUnique
+  password: String!
+
+  jars: [Jar!]! @relation(name: "JarOwner")
+  friends: [User!]! @relation(name: "Friends")
+}
+
 type Jar @model {
   id: ID! @isUnique
   name: String!
   description: String
   createdAt: DateTime!
   updatedAt: DateTime!
-  notes: [Note!]! @relation(name: "NoteAuthor")
-  owner: User! @relation(Name: "JarOwner")
+  notes: [Note!]! @relation(name: "JarNotes")
+  owner: User! @relation(name: "JarOwner")
 }
 
 type Note @model {
@@ -16,11 +30,5 @@ type Note @model {
   text: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  author: User! @relation(name: "NoteAuthor")
-}
-
-type User @model {
-  id: ID!
-  jars: [Jar!]! @relation(name: "JarOwner")
-  friends: [User!]! @relation(name: "Friends")
+  jar: Jar! @relation(name: "JarNotes")
 }

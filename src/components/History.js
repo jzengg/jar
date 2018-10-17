@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ItemList from './ItemList'
+import NoteList from './NoteList'
 
 class History extends React.Component {
 
@@ -8,7 +8,7 @@ class History extends React.Component {
     return (
     <div>
       <h2> History - {this.props.filter}</h2>
-      <ItemList items={this.props.items} />
+      <NoteList notes={this.props.notes} />
       <button onClick={this.props.setToday}> Today </button>
       <button onClick={this.props.setYesterday}> Yesterday </button>
     </div>

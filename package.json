@@ -27,6 +27,7 @@
     "fs-extra": "3.0.1",
     "global": "^4.3.2",
     "graphcool": "^0.11.6",
+    "graphql": "^14.0.2",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
     "object-assign": "4.1.1",
@@ -53,7 +54,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "relay": "relay-compiler --src ./src --schema server/types.graphql"
+    "relay": "relay-compiler --src ./src --schema ./schema.graphql --extensions js jsx"
   },
   "devDependencies": {
     "babel-plugin-relay": "^1.6.2",

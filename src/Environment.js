@@ -1,3 +1,5 @@
+import { GC_AUTH_TOKEN } from './constants'
+
 const {
   Environment,
   Network,
@@ -7,11 +9,13 @@ const {
 
 
 function fetchQuery(operation,variables) {
-  return fetch('__RELAY_API_ENDPOINT__', {
+  return fetch('https://api.graph.cool/relay/v1/cjn6n3fw25jr50120xugu4ged', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem(GC_AUTH_TOKEN)}`
+
     },
     body: JSON.stringify({
       query: operation.text,
