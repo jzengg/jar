@@ -8,13 +8,11 @@
 
 /*::
 import type { ConcreteFragment } from 'relay-runtime';
-type NoteList_jar$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type Jar_jar$ref: FragmentReference;
 export type Jar_jar = {|
   +id: string,
   +name: string,
-  +$fragmentRefs: NoteList_jar$ref,
   +$refType: Jar_jar$ref,
 |};
 */
@@ -40,14 +38,9 @@ const node/*: ConcreteFragment*/ = {
       "name": "name",
       "args": null,
       "storageKey": null
-    },
-    {
-      "kind": "FragmentSpread",
-      "name": "NoteList_jar",
-      "args": null
     }
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '69c28fd5c89efa66907049e19339af3e';
+(node/*: any*/).hash = '6b1509ceed1621adaf0d8675486e92d6';
 module.exports = node;

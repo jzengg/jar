@@ -6,7 +6,7 @@ import Note from './Note'
 class NoteList extends React.Component {
 
   render () {
-    let notes = this.props.jar.notes.edges
+    let notes = this.props.viewer.allNotes.edges
 
     return (
       <ul>
@@ -24,8 +24,10 @@ class NoteList extends React.Component {
 }
 
 export default createFragmentContainer(NoteList, graphql`
-  fragment NoteList_jar on Jar {
-    notes(last: 100, orderBy: createdAt_DESC) @connection(key: "NoteList_notes", filters: []) {
+  fragment NoteList_viewer on Viewer @argumentDefinitions(
+    noteFilter: {type: "NoteFilter"},
+  ) {
+    allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) @connection(key: "NoteList_allNotes", filters: []) {
       edges {
         node {
           ...Note_note

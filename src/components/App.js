@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router-dom'
 import '../App.css';
 
 import CreateNote from './CreateNote'
-import Home from './Home'
+import Today from './Today'
 import History from './History'
 
 
@@ -92,17 +92,9 @@ class App extends Component {
         <hr />
         <Switch>
 
-        <Route exact path='/' render={ (props) =>
-            (<Home db={this.getToday(this.state.db)} addItem={this.addItem} userId={user_id} />)
-          } />
-        <Route exact path='/login' component={Login}/>
+        <Route exact path='/' component={Today} />
+        <Route exact path='/login' component={Login} />
 
-        <Route exact path='/history' render= { (props) => (
-            <History items={this.state.history} filter={this.state.historyFilter} setToday={this.setToday} setYesterday={this.setYesterday} />
-          )} />
-        <Route exact path='/new' render= { (props) => (
-            <CreateNote />
-          )} />
         </Switch>
 
     </div>

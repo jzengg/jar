@@ -1,18 +1,34 @@
 import React, { Component } from 'react'
-import CreateNoteMutation from '../mutations/CreateNoteMutation'
 import { withRouter } from 'react-router-dom'
+import { createFragmentContainer, graphql } from 'react-relay'
+
+import JarList from './JarList'
+import CreateNoteMutation from '../mutations/CreateNoteMutation'
+
 
 
 class CreateNote extends Component {
+  constructor(props) {
+    super(props)
+    const jars = this.props.user.jars.edges
 
-  state = {
-    text: ''
+    this.state = {
+      selectedJar: jars[0],
+      text: ''
+    }
+  }
+
+  updateSelectedJar = (jarId) => {
+    this.setState({
+      selectedJar: jarId
+    })
   }
 
   render() {
 
     return (
       <div>
+        <JarList handleClick={this.updateSelectedJar} user={this.props.user} />
         <div>
           <input
             className='mb2'
@@ -34,10 +50,24 @@ class CreateNote extends Component {
   }
 
   _createNote = () => {
-    const { text, jarId } = this.state
-    CreateNoteMutation(text, jarId, () => this.props.history.push('/'))
+    const { text, selectedJar } = this.state
+
+    CreateNoteMutation(text, selectedJar, () => this.props.history.push('/'))
   }
 
 }
 
-export default withRouter(CreateNote)
+export default withRouter(createFragmentContainer(CreateNote, graphql`
+  fragment CreateNote_user on User {
+    ...JarList_user
+    jars(last: 100, orderBy: createdAt_DESC)
+      @connection(key: "CreateNote_jars", filters: []) {
+      edges {
+        node {
+          ...Jar_jar
+        }
+      }
+    }
+  }
+`)
+)

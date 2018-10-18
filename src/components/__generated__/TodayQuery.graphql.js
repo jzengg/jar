@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 58d70c9bc2e6d63c3d6444358b8f37b6
+ * @relayHash f42d84bb39ebe26e3981c08214061367
  */
 
 /* eslint-disable */
@@ -9,7 +9,7 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-type JarList_user$ref = any;
+type CreateNote_user$ref = any;
 type NoteList_viewer$ref = any;
 export type NoteFilter = {
   AND?: ?$ReadOnlyArray<NoteFilter>,
@@ -194,35 +194,35 @@ export type UserFilter = {
   jars_some?: ?JarFilter,
   jars_none?: ?JarFilter,
 };
-export type HomeQueryVariables = {|
+export type TodayQueryVariables = {|
   userId?: ?string,
   noteFilter?: ?NoteFilter,
 |};
-export type HomeQueryResponse = {|
+export type TodayQueryResponse = {|
   +viewer: {|
     +User: ?{|
       +email: string,
-      +$fragmentRefs: JarList_user$ref,
+      +$fragmentRefs: CreateNote_user$ref,
     |},
     +$fragmentRefs: NoteList_viewer$ref,
   |}
 |};
-export type HomeQuery = {|
-  variables: HomeQueryVariables,
-  response: HomeQueryResponse,
+export type TodayQuery = {|
+  variables: TodayQueryVariables,
+  response: TodayQueryResponse,
 |};
 */
 
 
 /*
-query HomeQuery(
+query TodayQuery(
   $userId: ID
   $noteFilter: NoteFilter
 ) {
   viewer {
     User(id: $userId) {
       email
-      ...JarList_user
+      ...CreateNote_user
       id
     }
     ...NoteList_viewer_bWUU2
@@ -230,7 +230,8 @@ query HomeQuery(
   }
 }
 
-fragment JarList_user on User {
+fragment CreateNote_user on User {
+  ...JarList_user
   jars(last: 100, orderBy: createdAt_DESC) {
     edges {
       node {
@@ -270,6 +271,23 @@ fragment Note_note on Note {
   jar {
     name
     id
+  }
+}
+
+fragment JarList_user on User {
+  jars(last: 100, orderBy: createdAt_DESC) {
+    edges {
+      node {
+        ...Jar_jar
+        id
+        __typename
+      }
+      cursor
+    }
+    pageInfo {
+      hasPreviousPage
+      startCursor
+    }
   }
 }
 
@@ -395,13 +413,13 @@ v10 = [
 return {
   "kind": "Request",
   "operationKind": "query",
-  "name": "HomeQuery",
+  "name": "TodayQuery",
   "id": null,
-  "text": "query HomeQuery(\n  $userId: ID\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...JarList_user\n      id\n    }\n    ...NoteList_viewer_bWUU2\n    id\n  }\n}\n\nfragment JarList_user on User {\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Jar_jar\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment NoteList_viewer_bWUU2 on Viewer {\n  allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n    edges {\n      node {\n        ...Note_note\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  jar {\n    name\n    id\n  }\n}\n\nfragment Jar_jar on Jar {\n  id\n  name\n}\n",
+  "text": "query TodayQuery(\n  $userId: ID\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...CreateNote_user\n      id\n    }\n    ...NoteList_viewer_bWUU2\n    id\n  }\n}\n\nfragment CreateNote_user on User {\n  ...JarList_user\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Jar_jar\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment NoteList_viewer_bWUU2 on Viewer {\n  allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n    edges {\n      node {\n        ...Note_note\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  jar {\n    name\n    id\n  }\n}\n\nfragment JarList_user on User {\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Jar_jar\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Jar_jar on Jar {\n  id\n  name\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "HomeQuery",
+    "name": "TodayQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": v0,
@@ -427,7 +445,7 @@ return {
               v2,
               {
                 "kind": "FragmentSpread",
-                "name": "JarList_user",
+                "name": "CreateNote_user",
                 "args": null
               }
             ]
@@ -450,7 +468,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "HomeQuery",
+    "name": "TodayQuery",
     "argumentDefinitions": v0,
     "selections": [
       {
@@ -517,6 +535,15 @@ return {
                 "args": v4,
                 "handle": "connection",
                 "key": "JarList_jars",
+                "filters": []
+              },
+              {
+                "kind": "LinkedHandle",
+                "alias": null,
+                "name": "jars",
+                "args": v4,
+                "handle": "connection",
+                "key": "CreateNote_jars",
                 "filters": []
               },
               v5
@@ -596,5 +623,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'ae9c7007cf1fd57f6b9af5fa6227feb9';
+(node/*: any*/).hash = 'fa4d2d29516838f8a105b1a51cff0bd4';
 module.exports = node;

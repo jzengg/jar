@@ -8,26 +8,28 @@
 
 /*::
 import type { ConcreteFragment } from 'relay-runtime';
-type Note_note$ref = any;
+type JarList_user$ref = any;
+type Jar_jar$ref = any;
 import type { FragmentReference } from "relay-runtime";
-declare export opaque type NoteList_jar$ref: FragmentReference;
-export type NoteList_jar = {|
-  +notes: ?{|
+declare export opaque type CreateNote_user$ref: FragmentReference;
+export type CreateNote_user = {|
+  +jars: ?{|
     +edges: ?$ReadOnlyArray<?{|
       +node: {|
-        +$fragmentRefs: Note_note$ref
+        +$fragmentRefs: Jar_jar$ref
       |}
     |}>
   |},
-  +$refType: NoteList_jar$ref,
+  +$fragmentRefs: JarList_user$ref,
+  +$refType: CreateNote_user$ref,
 |};
 */
 
 
 const node/*: ConcreteFragment*/ = {
   "kind": "Fragment",
-  "name": "NoteList_jar",
-  "type": "Jar",
+  "name": "CreateNote_user",
+  "type": "User",
   "metadata": {
     "connection": [
       {
@@ -35,7 +37,7 @@ const node/*: ConcreteFragment*/ = {
         "cursor": null,
         "direction": "backward",
         "path": [
-          "notes"
+          "jars"
         ]
       }
     ]
@@ -43,12 +45,17 @@ const node/*: ConcreteFragment*/ = {
   "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "FragmentSpread",
+      "name": "JarList_user",
+      "args": null
+    },
+    {
       "kind": "LinkedField",
-      "alias": "notes",
-      "name": "__NoteList_notes_connection",
+      "alias": "jars",
+      "name": "__CreateNote_jars_connection",
       "storageKey": null,
       "args": null,
-      "concreteType": "NoteConnection",
+      "concreteType": "JarConnection",
       "plural": false,
       "selections": [
         {
@@ -57,7 +64,7 @@ const node/*: ConcreteFragment*/ = {
           "name": "edges",
           "storageKey": null,
           "args": null,
-          "concreteType": "NoteEdge",
+          "concreteType": "JarEdge",
           "plural": true,
           "selections": [
             {
@@ -66,12 +73,12 @@ const node/*: ConcreteFragment*/ = {
               "name": "node",
               "storageKey": null,
               "args": null,
-              "concreteType": "Note",
+              "concreteType": "Jar",
               "plural": false,
               "selections": [
                 {
                   "kind": "FragmentSpread",
-                  "name": "Note_note",
+                  "name": "Jar_jar",
                   "args": null
                 },
                 {
@@ -122,5 +129,5 @@ const node/*: ConcreteFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = 'e72f62677f5dbdfe96f52bf7056be0ca';
+(node/*: any*/).hash = '36b4877be5ccbe69c6c471c119b53667';
 module.exports = node;
