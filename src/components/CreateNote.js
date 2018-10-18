@@ -19,9 +19,9 @@ class CreateNote extends Component {
     }
   }
 
-  updateSelectedJar = (jarId) => {
+  updateSelectedJar = (jar) => {
     this.setState({
-      selectedJar: jarId
+      selectedJar: jar
     })
   }
 
@@ -30,7 +30,7 @@ class CreateNote extends Component {
     return (
       <div>
         <JarList handleClick={this.updateSelectedJar} user={this.props.user} />
-        
+
         <div>
           <input
             className='mb2'
@@ -53,8 +53,7 @@ class CreateNote extends Component {
 
   _createNote = () => {
     const { text, selectedJar } = this.state
-
-    CreateNoteMutation(text, selectedJar, () => this.props.history.push('/'))
+    CreateNoteMutation(text, selectedJar.node.__id, () => this.props.history.push('/'))
   }
 
 }

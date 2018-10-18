@@ -7,13 +7,6 @@ interface User {
   id: string
 }
 
-interface Jar {
-  id: string
-  description: string
-  ownerId: string
-  name: string
-}
-
 interface EventData {
   email: string
   password: string
@@ -50,8 +43,6 @@ export default async (event: FunctionEvent<EventData>) => {
 
     // generate node token for new User node
     const token = await graphcool.generateNodeToken(userId, 'User')
-
-    const jars  = await createDefaultJars(api, userId)
 
     return { data: { id: userId, token } }
   } catch (e) {
@@ -95,26 +86,4 @@ async function createGraphcoolUser(api: GraphQLClient, email: string, password: 
 
   return api.request<{ createUser: User }>(mutation, variables)
     .then(r => r.createUser.id)
-}
-
-async function createDefaultJars(api: GraphQLClient, ownerId: string): Promise<string> {
-  const mutation = `
-    mutation createJar1($description: String, $name: String!, $ownerId: ID!) {
-      createJar(
-        name: $name,
-        description: $description,
-        ownerId: $ownerId
-      ) {
-        id
-      }
-    }
-  `
-
-  const variables = {
-    ownerId,
-    name: 'Default jar',
-  }
-
-  return api.request<{ jar: Jar }>(mutation, variables)
-    .then(r => r.id)
 }

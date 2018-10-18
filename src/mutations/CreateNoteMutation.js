@@ -21,7 +21,6 @@ const mutation = graphql`
 `
 
 export default (text, jarId, callback) => {
-  jarId = "cjnai4gbh0y4g0197yu9uz7kc"
   const variables = {
     input: {
       text,
