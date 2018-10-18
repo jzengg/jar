@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 5c8a11f531212fd21ae69e64fe18c210
+ * @relayHash beca3c341e2340f85754f5e7419cbcb6
  */
 
 /* eslint-disable */
@@ -10,6 +10,7 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type NoteList_viewer$ref = any;
+export type NoteOrderBy = "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "text_ASC" | "text_DESC" | "updatedAt_ASC" | "updatedAt_DESC" | "%future added value";
 export type NoteFilter = {
   AND?: ?$ReadOnlyArray<NoteFilter>,
   OR?: ?$ReadOnlyArray<NoteFilter>,
@@ -194,7 +195,8 @@ export type UserFilter = {
   jars_none?: ?JarFilter,
 };
 export type HistoryQueryVariables = {|
-  noteFilter?: ?NoteFilter
+  noteFilter?: ?NoteFilter,
+  orderBy?: ?NoteOrderBy,
 |};
 export type HistoryQueryResponse = {|
   +viewer: {|
@@ -211,15 +213,16 @@ export type HistoryQuery = {|
 /*
 query HistoryQuery(
   $noteFilter: NoteFilter
+  $orderBy: NoteOrderBy
 ) {
   viewer {
-    ...NoteList_viewer_bWUU2
+    ...NoteList_viewer_25puJs
     id
   }
 }
 
-fragment NoteList_viewer_bWUU2 on Viewer {
-  allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {
+fragment NoteList_viewer_25puJs on Viewer {
+  allNotes(last: 100, orderBy: $orderBy, filter: $noteFilter) {
     edges {
       node {
         ...Note_note
@@ -253,6 +256,12 @@ var v0 = [
     "name": "noteFilter",
     "type": "NoteFilter",
     "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "orderBy",
+    "type": "NoteOrderBy",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -269,9 +278,9 @@ v1 = [
     "type": "Int"
   },
   {
-    "kind": "Literal",
+    "kind": "Variable",
     "name": "orderBy",
-    "value": "createdAt_DESC",
+    "variableName": "orderBy",
     "type": "NoteOrderBy"
   }
 ],
@@ -287,7 +296,7 @@ return {
   "operationKind": "query",
   "name": "HistoryQuery",
   "id": null,
-  "text": "query HistoryQuery(\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    ...NoteList_viewer_bWUU2\n    id\n  }\n}\n\nfragment NoteList_viewer_bWUU2 on Viewer {\n  allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n    edges {\n      node {\n        ...Note_note\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    name\n    id\n  }\n}\n",
+  "text": "query HistoryQuery(\n  $noteFilter: NoteFilter\n  $orderBy: NoteOrderBy\n) {\n  viewer {\n    ...NoteList_viewer_25puJs\n    id\n  }\n}\n\nfragment NoteList_viewer_25puJs on Viewer {\n  allNotes(last: 100, orderBy: $orderBy, filter: $noteFilter) {\n    edges {\n      node {\n        ...Note_note\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    name\n    id\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -313,6 +322,12 @@ return {
                 "kind": "Variable",
                 "name": "noteFilter",
                 "variableName": "noteFilter",
+                "type": null
+              },
+              {
+                "kind": "Variable",
+                "name": "orderBy",
+                "variableName": "orderBy",
                 "type": null
               }
             ]
@@ -458,5 +473,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'aa98eb690c3d4ceea5b71d084dbafc88';
+(node/*: any*/).hash = '1697856d689da67e00e57fd25ba84b59';
 module.exports = node;

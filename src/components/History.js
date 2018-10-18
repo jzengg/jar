@@ -8,9 +8,9 @@ import moment from 'moment'
 import NoteList from './NoteList'
 
 const HistoryQuery = graphql`
-  query HistoryQuery($noteFilter: NoteFilter) {
+  query HistoryQuery($noteFilter: NoteFilter, $orderBy: NoteOrderBy) {
     viewer {
-      ...NoteList_viewer @arguments(noteFilter: $noteFilter)
+      ...NoteList_viewer @arguments(noteFilter: $noteFilter, orderBy: $orderBy)
     }
   }
 `
@@ -32,6 +32,7 @@ class History extends Component {
         createdAt_gt: this.state.dayStart,
         createdAt_lte: this.state.dayEnd
       },
+      orderBy: "createdAt_ASC"
     }
 
     return (

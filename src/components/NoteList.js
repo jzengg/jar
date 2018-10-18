@@ -26,8 +26,9 @@ class NoteList extends React.Component {
 export default createFragmentContainer(NoteList, graphql`
   fragment NoteList_viewer on Viewer @argumentDefinitions(
     noteFilter: {type: "NoteFilter"},
+    orderBy: {type: "NoteOrderBy", defaultValue: "createdAt_DESC"}
   ) {
-    allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) @connection(key: "NoteList_allNotes", filters: []) {
+    allNotes(last: 100, orderBy: $orderBy, filter: $noteFilter) @connection(key: "NoteList_allNotes", filters: []) {
       edges {
         node {
           ...Note_note

@@ -46,6 +46,12 @@ const node/*: ConcreteFragment*/ = {
       "name": "noteFilter",
       "type": "NoteFilter",
       "defaultValue": null
+    },
+    {
+      "kind": "LocalArgument",
+      "name": "orderBy",
+      "type": "NoteOrderBy",
+      "defaultValue": "createdAt_DESC"
     }
   ],
   "selections": [
@@ -129,5 +135,5 @@ const node/*: ConcreteFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '870c1432b1dfe1fa5cb9fcb08609798f';
+(node/*: any*/).hash = '1ed5433c7a8cddf315cc7f2f25872f0c';
 module.exports = node;
