@@ -44,11 +44,32 @@ export default async (event: FunctionEvent<EventData>) => {
     // generate node token for new User node
     const token = await graphcool.generateNodeToken(userId, 'User')
 
+    // create default jars
+    let lookingForwardJar = await createDefaultJar(api, userId, 'Looking Forward Jar', "Things you're looking forward to.")
+
+    let gladJar = await createDefaultJar(api, userId, 'Glad Jar', "Things you're glad about.")
+
     return { data: { id: userId, token } }
   } catch (e) {
     console.log(e)
     return { error: 'An unexpected error occured during signup.' }
   }
+}
+
+async function createDefaultJar(api: GraphQLClient, ownerId: string, name: string, description: string): Promise<{ Jar }> {
+  // Create mutation
+  const mutation = `
+    mutation createDefaultJar($description: String, $name: String!, $ownerId: ID!) {
+      createJar(
+        name: $name,
+        description: $description,
+        ownerId: $ownerId
+      ) {
+        id
+      }
+    }
+  `
+  return api.request<{ Jar }>(mutation, { ownerId, name, description })
 }
 
 async function getUser(api: GraphQLClient, email: string): Promise<{ User }> {

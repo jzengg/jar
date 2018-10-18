@@ -1,9 +1,0 @@
-subscription {
-  User(filter: {
-    mutation_in: [CREATED]
-    }) {
-      node {
-        id
-    }
-  }
-}
