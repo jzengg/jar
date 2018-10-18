@@ -10,6 +10,7 @@ import CreateNoteMutation from '../mutations/CreateNoteMutation'
 class CreateNote extends Component {
   constructor(props) {
     super(props)
+
     const jars = this.props.user.jars.edges
 
     this.state = {
@@ -29,6 +30,7 @@ class CreateNote extends Component {
     return (
       <div>
         <JarList handleClick={this.updateSelectedJar} user={this.props.user} />
+        
         <div>
           <input
             className='mb2'
