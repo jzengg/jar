@@ -10,7 +10,6 @@ class Login extends Component {
     login: true, // switch between Login and SignUp
     email: '',
     password: '',
-    name: ''
   }
 
   render() {
@@ -19,13 +18,6 @@ class Login extends Component {
       <div>
         <h4>{this.state.login ? 'Login' : 'Sign Up'}</h4>
         <div>
-          {!this.state.login &&
-          <input
-            value={this.state.name}
-            onChange={(e) => this.setState({ name: e.target.value })}
-            type='text'
-            placeholder='Your name'
-          />}
           <input
             value={this.state.email}
             onChange={(e) => this.setState({ email: e.target.value })}

@@ -11,6 +11,7 @@ class Header extends Component {
           <div>Jar</div>
           <Link to='/'>Home</Link>
           <Link to='/login' > Login </Link>
+          <Link to='/history' > History </Link>
         </div>
       </div>
     )

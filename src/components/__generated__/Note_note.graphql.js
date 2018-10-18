@@ -13,6 +13,7 @@ declare export opaque type Note_note$ref: FragmentReference;
 export type Note_note = {|
   +id: string,
   +text: string,
+  +createdAt: any,
   +jar: {|
     +name: string
   |},
@@ -43,6 +44,13 @@ const node/*: ConcreteFragment*/ = {
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "createdAt",
+      "args": null,
+      "storageKey": null
+    },
+    {
       "kind": "LinkedField",
       "alias": null,
       "name": "jar",
@@ -63,5 +71,5 @@ const node/*: ConcreteFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = 'd855da88034ebacacc902ab2bf8a10a7';
+(node/*: any*/).hash = '160b116f5ae42bd355a1fd996a04514a';
 module.exports = node;
