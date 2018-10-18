@@ -11,7 +11,12 @@ class JarList extends React.Component {
       <ul>
         {
           jars.map(( {node} ) =>
-          <Jar key={node.__id} jar={node} onClick={this.props.updateActiveJar} />
+          <Jar
+            key={node.__id}
+            jar={node}
+            active={this.props.selectedJarId === node.__id }
+            handleClick={this.props.handleClick}
+          />
 
         )
       }

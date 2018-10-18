@@ -6,7 +6,8 @@ class Jar extends React.Component {
 
   render () {
     return (
-        <li>
+        <li onClick={this.props.handleClick.bind(this, this.props.jar.id)}>
+          {this.props.active && <span>==></span>}
           {this.props.jar.name}
         </li>
     )

@@ -14,22 +14,30 @@ class CreateNote extends Component {
     const jars = this.props.user.jars.edges
 
     this.state = {
-      selectedJar: jars[0],
+      selectedJarId: jars[0].node.__id,
       text: ''
     }
   }
 
-  updateSelectedJar = (jar) => {
+  _updateSelectedJar = (id) => {
     this.setState({
-      selectedJar: jar
+      selectedJarId: id
     })
   }
 
-  render() {
+  _createNote = () => {
+    const { text, selectedJarId } = this.state
+    CreateNoteMutation(text, selectedJarId, () => this.props.history.push('/'))
+  }
 
+  render() {
     return (
       <div>
-        <JarList handleClick={this.updateSelectedJar} user={this.props.user} />
+        <JarList
+          handleClick={this._updateSelectedJar}
+          selectedJarId={this.state.selectedJarId}
+          user={this.props.user}
+        />
 
         <div>
           <input
@@ -50,12 +58,6 @@ class CreateNote extends Component {
     )
 
   }
-
-  _createNote = () => {
-    const { text, selectedJar } = this.state
-    CreateNoteMutation(text, selectedJar.node.__id, () => this.props.history.push('/'))
-  }
-
 }
 
 export default withRouter(createFragmentContainer(CreateNote, graphql`
