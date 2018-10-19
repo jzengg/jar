@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
 import { createFragmentContainer, graphql } from 'react-relay'
 
 import JarList from './JarList'
@@ -27,7 +26,7 @@ class CreateNote extends Component {
 
   _createNote = () => {
     const { text, selectedJarId } = this.state
-    CreateNoteMutation(text, selectedJarId, () => this.props.history.push('/'))
+    CreateNoteMutation(text, selectedJarId)
   }
 
   render() {
@@ -60,7 +59,7 @@ class CreateNote extends Component {
   }
 }
 
-export default withRouter(createFragmentContainer(CreateNote, graphql`
+export default createFragmentContainer(CreateNote, graphql`
   fragment CreateNote_user on User {
     ...JarList_user
     jars(last: 100, orderBy: createdAt_DESC)
@@ -73,4 +72,3 @@ export default withRouter(createFragmentContainer(CreateNote, graphql`
     }
   }
 `)
-)

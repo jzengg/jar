@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 903687ccf0625f27f408e36da85c4eaa
+ * @relayHash af11cbbd15b5c7522667145e2b8f53ad
  */
 
 /* eslint-disable */
@@ -53,6 +53,9 @@ export type CreateNoteMutationVariables = {|
 |};
 export type CreateNoteMutationResponse = {|
   +createNote: ?{|
+    +viewer: {|
+      +id: string
+    |},
     +note: ?{|
       +id: string,
       +createdAt: any,
@@ -61,7 +64,7 @@ export type CreateNoteMutationResponse = {|
         +id: string,
         +name: string,
       |},
-    |}
+    |},
   |}
 |};
 export type CreateNoteMutation = {|
@@ -76,6 +79,9 @@ mutation CreateNoteMutation(
   $input: CreateNoteInput!
 ) {
   createNote(input: $input) {
+    viewer {
+      id
+    }
     note {
       id
       createdAt
@@ -122,6 +128,18 @@ v2 = [
     "concreteType": "CreateNotePayload",
     "plural": false,
     "selections": [
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "viewer",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "Viewer",
+        "plural": false,
+        "selections": [
+          v1
+        ]
+      },
       {
         "kind": "LinkedField",
         "alias": null,
@@ -175,7 +193,7 @@ return {
   "operationKind": "mutation",
   "name": "CreateNoteMutation",
   "id": null,
-  "text": "mutation CreateNoteMutation(\n  $input: CreateNoteInput!\n) {\n  createNote(input: $input) {\n    note {\n      id\n      createdAt\n      text\n      jar {\n        id\n        name\n      }\n    }\n  }\n}\n",
+  "text": "mutation CreateNoteMutation(\n  $input: CreateNoteInput!\n) {\n  createNote(input: $input) {\n    viewer {\n      id\n    }\n    note {\n      id\n      createdAt\n      text\n      jar {\n        id\n        name\n      }\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -194,5 +212,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '051c39da2424c606776ef27cb3e553cd';
+(node/*: any*/).hash = '71a800940db84738e71bc55e6476c1bd';
 module.exports = node;

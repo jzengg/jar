@@ -2,11 +2,16 @@ import {
   commitMutation,
   graphql,
 } from 'react-relay'
+import {ConnectionHandler} from 'relay-runtime';
+
 import environment from '../Environment'
 
 const mutation = graphql`
   mutation CreateNoteMutation($input: CreateNoteInput!) {
     createNote(input: $input) {
+      viewer {
+        id
+      }
       note {
         id
         createdAt
@@ -34,8 +39,16 @@ export default (text, jarId, callback) => {
     {
       mutation,
       variables,
-      onCompleted: () => {
-        callback()
+      optimisticUpdater: proxyStore => {
+
+      },
+      updater: proxyStore => {
+        const payload = proxyStore.getRootField('createNote')
+        const viewer = payload.getLinkedRecord('viewer')
+        const note = payload.getLinkedRecord('note')
+        const notes = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
+        const edge = ConnectionHandler.createEdge(proxyStore, notes, note, 'NotesEdge')
+        ConnectionHandler.insertEdgeBefore(notes, edge)
       },
       onError: err => console.error(err),
     },
