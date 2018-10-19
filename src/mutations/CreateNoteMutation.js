@@ -39,9 +39,6 @@ export default (text, jarId, callback) => {
     {
       mutation,
       variables,
-      optimisticUpdater: proxyStore => {
-
-      },
       updater: proxyStore => {
         const payload = proxyStore.getRootField('createNote')
         const viewer = payload.getLinkedRecord('viewer')

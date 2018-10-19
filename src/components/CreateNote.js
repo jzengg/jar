@@ -26,7 +26,9 @@ class CreateNote extends Component {
 
   _createNote = () => {
     const { text, selectedJarId } = this.state
-    CreateNoteMutation(text, selectedJarId)
+    if (text && selectedJarId) {
+      CreateNoteMutation(text, selectedJarId)
+    }
   }
 
   render() {
