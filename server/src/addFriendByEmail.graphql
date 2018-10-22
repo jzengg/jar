@@ -1,0 +1,7 @@
+type addFriendByEmailPayload {
+id: ID!
+}
+
+extend type Mutation {
+  addFriendByEmail(email: String!, senderId: ID!): addFriendByEmailPayload
+}

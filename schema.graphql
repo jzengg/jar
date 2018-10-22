@@ -43,10 +43,66 @@ input AddToJarOwnerUserInput {
   clientMutationId: String!
 }
 
+type AddToReceivedFriendRequestsPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  recipientUser: User
+  receivedFriendRequestsFriendRequest: FriendRequest
+  recipientUserEdge: UserEdge
+  receivedFriendRequestsFriendRequestEdge: FriendRequestEdge
+}
+
+input AddToReceivedFriendRequestsUserInput {
+  receivedFriendRequestsFriendRequestId: ID!
+  recipientUserId: ID!
+  clientMutationId: String!
+}
+
+type AddToSentFriendRequestsPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  senderUser: User
+  sentFriendRequestsFriendRequest: FriendRequest
+  senderUserEdge: UserEdge
+  sentFriendRequestsFriendRequestEdge: FriendRequestEdge
+}
+
+input AddToSentFriendRequestsUserInput {
+  sentFriendRequestsFriendRequestId: ID!
+  senderUserId: ID!
+  clientMutationId: String!
+}
+
 # AuthenticateUserPayload
 type AuthenticateUserPayload {
   id: ID!
   token: String!
+}
+
+input CreateFriendRequest {
+  status: FriendRequestStatus
+  recipientId: ID
+  recipient: FriendRequestrecipientUser
+  senderId: ID
+  sender: FriendRequestsenderUser
+}
+
+input CreateFriendRequestInput {
+  status: FriendRequestStatus
+  recipientId: ID
+  recipient: FriendRequestrecipientUser
+  senderId: ID
+  sender: FriendRequestsenderUser
+  clientMutationId: String!
+}
+
+type CreateFriendRequestPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  friendRequest: FriendRequest
+  edge: FriendRequestEdge
+  recipient: User
+  sender: User
 }
 
 input CreateJar {
@@ -104,6 +160,10 @@ input CreateUser {
   friends: [UserfriendsUser!]
   jarsIds: [ID!]
   jars: [UserjarsJar!]
+  receivedFriendRequestsIds: [ID!]
+  receivedFriendRequests: [UserreceivedFriendRequestsFriendRequest!]
+  sentFriendRequestsIds: [ID!]
+  sentFriendRequests: [UsersentFriendRequestsFriendRequest!]
 }
 
 # If authentication was successful the payload contains the user and a token. If unsuccessful this payload is null.
@@ -114,6 +174,21 @@ type CreateUserPayload {
 }
 
 scalar DateTime
+
+input DeleteFriendRequestInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteFriendRequestPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  friendRequest: FriendRequest
+  edge: FriendRequestEdge
+  recipient: User
+  sender: User
+  deletedId: ID
+}
 
 input DeleteJarInput {
   id: ID!
@@ -156,9 +231,131 @@ type DeleteUserPayload {
   deletedId: ID
 }
 
-# HelloPayload
-type HelloPayload {
-  message: String!
+type FriendRequest implements Node {
+  id: ID!
+  recipient(filter: UserFilter): User!
+  sender(filter: UserFilter): User!
+  status: FriendRequestStatus!
+}
+
+# A connection to a list of items.
+type FriendRequestConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [FriendRequestEdge]
+
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type FriendRequestEdge {
+  # The item at the end of the edge.
+  node: FriendRequest!
+
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input FriendRequestFilter {
+  # Logical AND on all given filters.
+  AND: [FriendRequestFilter!]
+
+  # Logical OR on all given filters.
+  OR: [FriendRequestFilter!]
+  id: ID
+
+  # All values that are not equal to given value.
+  id_not: ID
+
+  # All values that are contained in given list.
+  id_in: [ID!]
+
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+
+  # All values less than the given value.
+  id_lt: ID
+
+  # All values less than or equal the given value.
+  id_lte: ID
+
+  # All values greater than the given value.
+  id_gt: ID
+
+  # All values greater than or equal the given value.
+  id_gte: ID
+
+  # All values containing the given string.
+  id_contains: ID
+
+  # All values not containing the given string.
+  id_not_contains: ID
+
+  # All values starting with the given string.
+  id_starts_with: ID
+
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+
+  # All values ending with the given string.
+  id_ends_with: ID
+
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  status: FriendRequestStatus
+
+  # All values that are not equal to given value.
+  status_not: FriendRequestStatus
+
+  # All values that are contained in given list.
+  status_in: [FriendRequestStatus!]
+
+  # All values that are not contained in given list.
+  status_not_in: [FriendRequestStatus!]
+  recipient: UserFilter
+  sender: UserFilter
+}
+
+enum FriendRequestOrderBy {
+  id_ASC
+  id_DESC
+  status_ASC
+  status_DESC
+}
+
+input FriendRequestrecipientUser {
+  email: String!
+  password: String!
+  friendsIds: [ID!]
+  friends: [UserfriendsUser!]
+  jarsIds: [ID!]
+  jars: [UserjarsJar!]
+  receivedFriendRequestsIds: [ID!]
+  receivedFriendRequests: [UserreceivedFriendRequestsFriendRequest!]
+  sentFriendRequestsIds: [ID!]
+  sentFriendRequests: [UsersentFriendRequestsFriendRequest!]
+}
+
+input FriendRequestsenderUser {
+  email: String!
+  password: String!
+  friendsIds: [ID!]
+  friends: [UserfriendsUser!]
+  jarsIds: [ID!]
+  jars: [UserjarsJar!]
+  receivedFriendRequestsIds: [ID!]
+  receivedFriendRequests: [UserreceivedFriendRequestsFriendRequest!]
+  sentFriendRequestsIds: [ID!]
+  sentFriendRequests: [UsersentFriendRequestsFriendRequest!]
+}
+
+enum FriendRequestStatus {
+  PENDING
+  ACCEPTED
+  IGNORED
 }
 
 input InvokeFunctionInput {
@@ -403,6 +600,10 @@ input JarownerUser {
   friends: [UserfriendsUser!]
   jarsIds: [ID!]
   jars: [UserjarsJar!]
+  receivedFriendRequestsIds: [ID!]
+  receivedFriendRequests: [UserreceivedFriendRequestsFriendRequest!]
+  sentFriendRequestsIds: [ID!]
+  sentFriendRequests: [UsersentFriendRequestsFriendRequest!]
 }
 
 # LoggedInUserPayload
@@ -410,21 +611,31 @@ type LoggedInUserPayload {
   id: ID!
 }
 
+type AddFriendByEmailPayload {
+  id: ID!
+}
+
 type Mutation {
+  createFriendRequest(input: CreateFriendRequestInput!): CreateFriendRequestPayload
   createJar(input: CreateJarInput!): CreateJarPayload
   createNote(input: CreateNoteInput!): CreateNotePayload
+  updateFriendRequest(input: UpdateFriendRequestInput!): UpdateFriendRequestPayload
   updateJar(input: UpdateJarInput!): UpdateJarPayload
   updateNote(input: UpdateNoteInput!): UpdateNotePayload
   updateUser(input: UpdateUserInput!): UpdateUserPayload
+  updateOrCreateFriendRequest(input: UpdateOrCreateFriendRequestInput!): UpdateOrCreateFriendRequestPayload
   updateOrCreateJar(input: UpdateOrCreateJarInput!): UpdateOrCreateJarPayload
   updateOrCreateNote(input: UpdateOrCreateNoteInput!): UpdateOrCreateNotePayload
   updateOrCreateUser(input: UpdateOrCreateUserInput!): UpdateOrCreateUserPayload
+  deleteFriendRequest(input: DeleteFriendRequestInput!): DeleteFriendRequestPayload
   deleteJar(input: DeleteJarInput!): DeleteJarPayload
   deleteNote(input: DeleteNoteInput!): DeleteNotePayload
   deleteUser(input: DeleteUserInput!): DeleteUserPayload
   addToFriends(input: AddToFriendsUserInput!): AddToFriendsPayload
   addToJarNotes(input: AddToJarNotesJarInput!): AddToJarNotesPayload
   addToJarOwner(input: AddToJarOwnerUserInput!): AddToJarOwnerPayload
+  addToReceivedFriendRequests(input: AddToReceivedFriendRequestsUserInput!): AddToReceivedFriendRequestsPayload
+  addToSentFriendRequests(input: AddToSentFriendRequestsUserInput!): AddToSentFriendRequestsPayload
   removeFromFriends(input: RemoveFromFriendsUserInput!): RemoveFromFriendsPayload
   createUser(input: SignupUserInput!): CreateUserPayload!
 
@@ -433,6 +644,8 @@ type Mutation {
 
   # signup
   signupUser(email: String!, password: String!): SignupUserPayload
+
+  addFriendByEmail(email: String!, senderId: ID!): AddFriendByEmailPayload
   invokeFunction(input: InvokeFunctionInput!): InvokeFunctionPayload
 }
 
@@ -671,6 +884,10 @@ input SignupUserInput {
   friends: [UserfriendsUser!]
   jarsIds: [ID!]
   jars: [UserjarsJar!]
+  receivedFriendRequestsIds: [ID!]
+  receivedFriendRequests: [UserreceivedFriendRequestsFriendRequest!]
+  sentFriendRequestsIds: [ID!]
+  sentFriendRequests: [UsersentFriendRequestsFriendRequest!]
   clientMutationId: String!
 }
 
@@ -678,6 +895,34 @@ input SignupUserInput {
 type SignupUserPayload {
   id: ID!
   token: String!
+}
+
+input UpdateFriendRequest {
+  id: ID!
+  status: FriendRequestStatus
+  recipientId: ID
+  recipient: FriendRequestrecipientUser
+  senderId: ID
+  sender: FriendRequestsenderUser
+}
+
+input UpdateFriendRequestInput {
+  id: ID!
+  status: FriendRequestStatus
+  recipientId: ID
+  recipient: FriendRequestrecipientUser
+  senderId: ID
+  sender: FriendRequestsenderUser
+  clientMutationId: String!
+}
+
+type UpdateFriendRequestPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  friendRequest: FriendRequest
+  edge: FriendRequestEdge
+  recipient: User
+  sender: User
 }
 
 input UpdateJar {
@@ -732,6 +977,21 @@ type UpdateNotePayload {
   jar: Jar
 }
 
+input UpdateOrCreateFriendRequestInput {
+  update: UpdateFriendRequest!
+  create: CreateFriendRequest!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateFriendRequestPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  friendRequest: FriendRequest
+  edge: FriendRequestEdge
+  recipient: User
+  sender: User
+}
+
 input UpdateOrCreateJarInput {
   update: UpdateJar!
   create: CreateJar!
@@ -781,6 +1041,10 @@ input UpdateUser {
   friends: [UserfriendsUser!]
   jarsIds: [ID!]
   jars: [UserjarsJar!]
+  receivedFriendRequestsIds: [ID!]
+  receivedFriendRequests: [UserreceivedFriendRequestsFriendRequest!]
+  sentFriendRequestsIds: [ID!]
+  sentFriendRequests: [UsersentFriendRequestsFriendRequest!]
 }
 
 input UpdateUserInput {
@@ -791,6 +1055,10 @@ input UpdateUserInput {
   friends: [UserfriendsUser!]
   jarsIds: [ID!]
   jars: [UserjarsJar!]
+  receivedFriendRequestsIds: [ID!]
+  receivedFriendRequests: [UserreceivedFriendRequestsFriendRequest!]
+  sentFriendRequestsIds: [ID!]
+  sentFriendRequests: [UsersentFriendRequestsFriendRequest!]
   clientMutationId: String!
 }
 
@@ -808,6 +1076,8 @@ type User implements Node {
   id: ID!
   jars(filter: JarFilter, orderBy: JarOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): JarConnection
   password: String!
+  receivedFriendRequests(filter: FriendRequestFilter, orderBy: FriendRequestOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): FriendRequestConnection
+  sentFriendRequests(filter: FriendRequestFilter, orderBy: FriendRequestOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): FriendRequestConnection
   updatedAt: DateTime!
 }
 
@@ -1008,6 +1278,12 @@ input UserFilter {
   jars_every: JarFilter
   jars_some: JarFilter
   jars_none: JarFilter
+  receivedFriendRequests_every: FriendRequestFilter
+  receivedFriendRequests_some: FriendRequestFilter
+  receivedFriendRequests_none: FriendRequestFilter
+  sentFriendRequests_every: FriendRequestFilter
+  sentFriendRequests_some: FriendRequestFilter
+  sentFriendRequests_none: FriendRequestFilter
 }
 
 input UserfriendsUser {
@@ -1017,6 +1293,10 @@ input UserfriendsUser {
   friends: [UserfriendsUser!]
   jarsIds: [ID!]
   jars: [UserjarsJar!]
+  receivedFriendRequestsIds: [ID!]
+  receivedFriendRequests: [UserreceivedFriendRequestsFriendRequest!]
+  sentFriendRequestsIds: [ID!]
+  sentFriendRequests: [UsersentFriendRequestsFriendRequest!]
 }
 
 input UserjarsJar {
@@ -1039,12 +1319,26 @@ enum UserOrderBy {
   updatedAt_DESC
 }
 
+input UserreceivedFriendRequestsFriendRequest {
+  status: FriendRequestStatus
+  senderId: ID
+  sender: FriendRequestsenderUser
+}
+
+input UsersentFriendRequestsFriendRequest {
+  status: FriendRequestStatus
+  recipientId: ID
+  recipient: FriendRequestrecipientUser
+}
+
 # This is the famous Relay viewer object
 type Viewer {
+  allFriendRequests(filter: FriendRequestFilter, orderBy: FriendRequestOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): FriendRequestConnection!
   allJars(filter: JarFilter, orderBy: JarOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): JarConnection!
   allNotes(filter: NoteFilter, orderBy: NoteOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): NoteConnection!
   allUsers(filter: UserFilter, orderBy: UserOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   user: User
+  FriendRequest(id: ID): FriendRequest
   Jar(id: ID): Jar
   Note(id: ID): Note
   User(email: String, id: ID): User

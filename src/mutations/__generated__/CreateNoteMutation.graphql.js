@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash af11cbbd15b5c7522667145e2b8f53ad
+ * @relayHash 77f6c266e2c1a0b700a7285e62922018
  */
 
 /* eslint-disable */
@@ -9,6 +9,7 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
+export type FriendRequestStatus = "ACCEPTED" | "IGNORED" | "PENDING" | "%future added value";
 export type CreateNoteInput = {
   text: string,
   jarId?: ?string,
@@ -30,6 +31,10 @@ export type JarownerUser = {
   friends?: ?$ReadOnlyArray<UserfriendsUser>,
   jarsIds?: ?$ReadOnlyArray<string>,
   jars?: ?$ReadOnlyArray<UserjarsJar>,
+  receivedFriendRequestsIds?: ?$ReadOnlyArray<string>,
+  receivedFriendRequests?: ?$ReadOnlyArray<UserreceivedFriendRequestsFriendRequest>,
+  sentFriendRequestsIds?: ?$ReadOnlyArray<string>,
+  sentFriendRequests?: ?$ReadOnlyArray<UsersentFriendRequestsFriendRequest>,
 };
 export type UserfriendsUser = {
   email: string,
@@ -38,6 +43,10 @@ export type UserfriendsUser = {
   friends?: ?$ReadOnlyArray<UserfriendsUser>,
   jarsIds?: ?$ReadOnlyArray<string>,
   jars?: ?$ReadOnlyArray<UserjarsJar>,
+  receivedFriendRequestsIds?: ?$ReadOnlyArray<string>,
+  receivedFriendRequests?: ?$ReadOnlyArray<UserreceivedFriendRequestsFriendRequest>,
+  sentFriendRequestsIds?: ?$ReadOnlyArray<string>,
+  sentFriendRequests?: ?$ReadOnlyArray<UsersentFriendRequestsFriendRequest>,
 };
 export type UserjarsJar = {
   description?: ?string,
@@ -47,6 +56,40 @@ export type UserjarsJar = {
 };
 export type JarnotesNote = {
   text: string
+};
+export type UserreceivedFriendRequestsFriendRequest = {
+  status?: ?FriendRequestStatus,
+  senderId?: ?string,
+  sender?: ?FriendRequestsenderUser,
+};
+export type FriendRequestsenderUser = {
+  email: string,
+  password: string,
+  friendsIds?: ?$ReadOnlyArray<string>,
+  friends?: ?$ReadOnlyArray<UserfriendsUser>,
+  jarsIds?: ?$ReadOnlyArray<string>,
+  jars?: ?$ReadOnlyArray<UserjarsJar>,
+  receivedFriendRequestsIds?: ?$ReadOnlyArray<string>,
+  receivedFriendRequests?: ?$ReadOnlyArray<UserreceivedFriendRequestsFriendRequest>,
+  sentFriendRequestsIds?: ?$ReadOnlyArray<string>,
+  sentFriendRequests?: ?$ReadOnlyArray<UsersentFriendRequestsFriendRequest>,
+};
+export type UsersentFriendRequestsFriendRequest = {
+  status?: ?FriendRequestStatus,
+  recipientId?: ?string,
+  recipient?: ?FriendRequestrecipientUser,
+};
+export type FriendRequestrecipientUser = {
+  email: string,
+  password: string,
+  friendsIds?: ?$ReadOnlyArray<string>,
+  friends?: ?$ReadOnlyArray<UserfriendsUser>,
+  jarsIds?: ?$ReadOnlyArray<string>,
+  jars?: ?$ReadOnlyArray<UserjarsJar>,
+  receivedFriendRequestsIds?: ?$ReadOnlyArray<string>,
+  receivedFriendRequests?: ?$ReadOnlyArray<UserreceivedFriendRequestsFriendRequest>,
+  sentFriendRequestsIds?: ?$ReadOnlyArray<string>,
+  sentFriendRequests?: ?$ReadOnlyArray<UsersentFriendRequestsFriendRequest>,
 };
 export type CreateNoteMutationVariables = {|
   input: CreateNoteInput

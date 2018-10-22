@@ -13,6 +13,26 @@ type User @model {
 
   jars: [Jar!]! @relation(name: "JarOwner")
   friends: [User!]! @relation(name: "Friends")
+
+  sentFriendRequests: [FriendRequest!]! @relation(name: "SentFriendRequests")
+  receivedFriendRequests: [FriendRequest!]! @relation(name: "ReceivedFriendRequests")
+}
+
+type FriendRequest @model {
+  id: ID! @isUnique
+
+  sender: User! @relation(name: "SentFriendRequests")
+  recipient: User! @relation(name: "ReceivedFriendRequests")
+  status: FriendRequestStatus! @defaultValue(value: PENDING)  # Optional system fields (remove if not needed):
+  
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+}
+
+enum FriendRequestStatus {
+  PENDING
+  ACCEPTED
+  IGNORED
 }
 
 type Jar @model {

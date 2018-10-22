@@ -40,6 +40,12 @@ functions:
     handler:
       code: src/email-password/loggedInUser.ts
 
+  addFriendByEmail:
+    type: resolver
+    schema: src/addFriendByEmail.graphql
+    handler:
+      code: src/addFriendByEmail.ts
+
 # Model/Relation permissions are used to limit the API access
 # To take the burden of thinking about those while development, we
 # preconfigured the wildcard ("*") permission that allows everything

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash beca3c341e2340f85754f5e7419cbcb6
+ * @relayHash ae4911d5c6198708e61cfe5bfe1f2c8f
  */
 
 /* eslint-disable */
@@ -10,6 +10,7 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type NoteList_viewer$ref = any;
+export type FriendRequestStatus = "ACCEPTED" | "IGNORED" | "PENDING" | "%future added value";
 export type NoteOrderBy = "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "text_ASC" | "text_DESC" | "updatedAt_ASC" | "updatedAt_DESC" | "%future added value";
 export type NoteFilter = {
   AND?: ?$ReadOnlyArray<NoteFilter>,
@@ -193,6 +194,36 @@ export type UserFilter = {
   jars_every?: ?JarFilter,
   jars_some?: ?JarFilter,
   jars_none?: ?JarFilter,
+  receivedFriendRequests_every?: ?FriendRequestFilter,
+  receivedFriendRequests_some?: ?FriendRequestFilter,
+  receivedFriendRequests_none?: ?FriendRequestFilter,
+  sentFriendRequests_every?: ?FriendRequestFilter,
+  sentFriendRequests_some?: ?FriendRequestFilter,
+  sentFriendRequests_none?: ?FriendRequestFilter,
+};
+export type FriendRequestFilter = {
+  AND?: ?$ReadOnlyArray<FriendRequestFilter>,
+  OR?: ?$ReadOnlyArray<FriendRequestFilter>,
+  id?: ?string,
+  id_not?: ?string,
+  id_in?: ?$ReadOnlyArray<string>,
+  id_not_in?: ?$ReadOnlyArray<string>,
+  id_lt?: ?string,
+  id_lte?: ?string,
+  id_gt?: ?string,
+  id_gte?: ?string,
+  id_contains?: ?string,
+  id_not_contains?: ?string,
+  id_starts_with?: ?string,
+  id_not_starts_with?: ?string,
+  id_ends_with?: ?string,
+  id_not_ends_with?: ?string,
+  status?: ?FriendRequestStatus,
+  status_not?: ?FriendRequestStatus,
+  status_in?: ?$ReadOnlyArray<FriendRequestStatus>,
+  status_not_in?: ?$ReadOnlyArray<FriendRequestStatus>,
+  recipient?: ?UserFilter,
+  sender?: ?UserFilter,
 };
 export type HistoryQueryVariables = {|
   noteFilter?: ?NoteFilter,
