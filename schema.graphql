@@ -1,3 +1,14 @@
+# acceptFriendRequestPayload
+type acceptFriendRequestPayload {
+  user1Id: ID!
+  user2Id: ID!
+}
+
+# addFriendByEmailPayload
+type addFriendByEmailPayload {
+  id: ID!
+}
+
 type AddToFriendsPayload {
   viewer: Viewer!
   clientMutationId: String!
@@ -232,10 +243,12 @@ type DeleteUserPayload {
 }
 
 type FriendRequest implements Node {
+  createdAt: DateTime!
   id: ID!
   recipient(filter: UserFilter): User!
   sender(filter: UserFilter): User!
   status: FriendRequestStatus!
+  updatedAt: DateTime!
 }
 
 # A connection to a list of items.
@@ -265,6 +278,28 @@ input FriendRequestFilter {
 
   # Logical OR on all given filters.
   OR: [FriendRequestFilter!]
+  createdAt: DateTime
+
+  # All values that are not equal to given value.
+  createdAt_not: DateTime
+
+  # All values that are contained in given list.
+  createdAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  createdAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  createdAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  createdAt_lte: DateTime
+
+  # All values greater than the given value.
+  createdAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  createdAt_gte: DateTime
   id: ID
 
   # All values that are not equal to given value.
@@ -315,15 +350,41 @@ input FriendRequestFilter {
 
   # All values that are not contained in given list.
   status_not_in: [FriendRequestStatus!]
+  updatedAt: DateTime
+
+  # All values that are not equal to given value.
+  updatedAt_not: DateTime
+
+  # All values that are contained in given list.
+  updatedAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  updatedAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  updatedAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  updatedAt_lte: DateTime
+
+  # All values greater than the given value.
+  updatedAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  updatedAt_gte: DateTime
   recipient: UserFilter
   sender: UserFilter
 }
 
 enum FriendRequestOrderBy {
+  createdAt_ASC
+  createdAt_DESC
   id_ASC
   id_DESC
   status_ASC
   status_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 input FriendRequestrecipientUser {
@@ -611,15 +672,6 @@ type LoggedInUserPayload {
   id: ID!
 }
 
-type AddFriendByEmailPayload {
-  id: ID!
-}
-
-type AcceptFriendRequestPayload {
-  user1Id: ID!
-  user2Id: ID!
-}
-
 type Mutation {
   createFriendRequest(input: CreateFriendRequestInput!): CreateFriendRequestPayload
   createJar(input: CreateJarInput!): CreateJarPayload
@@ -644,14 +696,17 @@ type Mutation {
   removeFromFriends(input: RemoveFromFriendsUserInput!): RemoveFromFriendsPayload
   createUser(input: SignupUserInput!): CreateUserPayload!
 
+  # acceptFriendRequest
+  acceptFriendRequest(id: ID!): acceptFriendRequestPayload
+
+  # addFriendByEmail
+  addFriendByEmail(email: String!, senderId: ID!): addFriendByEmailPayload
+
   # authenticate
   authenticateUser(email: String!, password: String!): AuthenticateUserPayload
 
   # signup
   signupUser(email: String!, password: String!): SignupUserPayload
-
-  addFriendByEmail(email: String!, senderId: ID!): AddFriendByEmailPayload
-  acceptFriendRequest(id: ID!): AcceptFriendRequestPayload
   invokeFunction(input: InvokeFunctionInput!): InvokeFunctionPayload
 }
 

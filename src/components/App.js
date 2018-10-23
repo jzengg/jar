@@ -8,6 +8,7 @@ import Login from './Login'
 import History from './History'
 import Today from './Today'
 import AddFriend from './AddFriend'
+import FriendRequests from './FriendRequests'
 
 class App extends Component {
   render() {
@@ -21,6 +22,7 @@ class App extends Component {
           <Route exact path='/history' component={History} />
           <Route exact path='/login' component={Login} />
           <Route exact path='/add' component={AddFriend} />
+          <Route exact path='/requests' component={FriendRequests} />
 
         </Switch>
 

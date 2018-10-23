@@ -13,6 +13,7 @@ class Header extends Component {
           <Link to='/login' > Login </Link>
           <Link to='/history' > History </Link>
           <Link to='/add' > Add friends </Link>
+          <Link to='/requests' > Friend requests </Link>
         </div>
       </div>
     )

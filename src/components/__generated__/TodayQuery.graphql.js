@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 61fcfdb6627f0acc7a314dd62f51fc06
+ * @relayHash 02da11fa95a23e9914f03c2b5f857787
  */
 
 /* eslint-disable */
@@ -204,6 +204,14 @@ export type UserFilter = {
 export type FriendRequestFilter = {
   AND?: ?$ReadOnlyArray<FriendRequestFilter>,
   OR?: ?$ReadOnlyArray<FriendRequestFilter>,
+  createdAt?: ?any,
+  createdAt_not?: ?any,
+  createdAt_in?: ?$ReadOnlyArray<any>,
+  createdAt_not_in?: ?$ReadOnlyArray<any>,
+  createdAt_lt?: ?any,
+  createdAt_lte?: ?any,
+  createdAt_gt?: ?any,
+  createdAt_gte?: ?any,
   id?: ?string,
   id_not?: ?string,
   id_in?: ?$ReadOnlyArray<string>,
@@ -222,6 +230,14 @@ export type FriendRequestFilter = {
   status_not?: ?FriendRequestStatus,
   status_in?: ?$ReadOnlyArray<FriendRequestStatus>,
   status_not_in?: ?$ReadOnlyArray<FriendRequestStatus>,
+  updatedAt?: ?any,
+  updatedAt_not?: ?any,
+  updatedAt_in?: ?$ReadOnlyArray<any>,
+  updatedAt_not_in?: ?$ReadOnlyArray<any>,
+  updatedAt_lt?: ?any,
+  updatedAt_lte?: ?any,
+  updatedAt_gt?: ?any,
+  updatedAt_gte?: ?any,
   recipient?: ?UserFilter,
   sender?: ?UserFilter,
 };

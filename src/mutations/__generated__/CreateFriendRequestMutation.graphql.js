@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash e4c9936c6a7987b9a12fed4694c62145
+ * @relayHash b485475a757b0760d2ee84fdba3ab2f7
  */
 
 /* eslint-disable */
@@ -71,7 +71,7 @@ v1 = [
         "type": "ID!"
       }
     ],
-    "concreteType": "AddFriendByEmailPayload",
+    "concreteType": "addFriendByEmailPayload",
     "plural": false,
     "selections": [
       {
