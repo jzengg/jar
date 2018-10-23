@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash a8553a389a3805511eeb419a2504b9ef
+ * @relayHash 1fb64a447db33ac24ec735f3bb583870
  */
 
 /* eslint-disable */
@@ -291,6 +291,10 @@ fragment Note_note on Note {
   createdAt
   jar {
     name
+    owner {
+      email
+      id
+    }
     id
   }
 }
@@ -343,7 +347,7 @@ return {
   "operationKind": "query",
   "name": "HistoryQuery",
   "id": null,
-  "text": "query HistoryQuery(\n  $noteFilter: NoteFilter\n  $orderBy: NoteOrderBy\n) {\n  viewer {\n    ...NoteList_viewer_25puJs\n    id\n  }\n}\n\nfragment NoteList_viewer_25puJs on Viewer {\n  allNotes(last: 100, orderBy: $orderBy, filter: $noteFilter) {\n    edges {\n      node {\n        ...Note_note\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    name\n    id\n  }\n}\n",
+  "text": "query HistoryQuery(\n  $noteFilter: NoteFilter\n  $orderBy: NoteOrderBy\n) {\n  viewer {\n    ...NoteList_viewer_25puJs\n    id\n  }\n}\n\nfragment NoteList_viewer_25puJs on Viewer {\n  allNotes(last: 100, orderBy: $orderBy, filter: $noteFilter) {\n    edges {\n      node {\n        ...Note_note\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    name\n    owner {\n      email\n      id\n    }\n    id\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -454,6 +458,25 @@ return {
                             "name": "name",
                             "args": null,
                             "storageKey": null
+                          },
+                          {
+                            "kind": "LinkedField",
+                            "alias": null,
+                            "name": "owner",
+                            "storageKey": null,
+                            "args": null,
+                            "concreteType": "User",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "kind": "ScalarField",
+                                "alias": null,
+                                "name": "email",
+                                "args": null,
+                                "storageKey": null
+                              },
+                              v2
+                            ]
                           },
                           v2
                         ]

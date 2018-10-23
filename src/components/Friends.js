@@ -6,14 +6,16 @@ import environment from '../Environment'
 import { GC_USER_ID } from '../constants'
 
 import FriendList from './FriendList'
+import NoteList from './NoteList'
 
 const FriendsQuery = graphql`
-  query FriendsQuery($userId: ID) {
+  query FriendsQuery($userId: ID, $noteFilter: NoteFilter) {
     viewer {
       User(id: $userId) {
         email
         ...FriendList_user
       }
+      ...NoteList_viewer @arguments(noteFilter: $noteFilter)
     }
   }
 `
@@ -24,6 +26,9 @@ class Friends extends Component {
     const userId = localStorage.getItem(GC_USER_ID)
 
     const variables = {
+      noteFilter: {
+        jar: { owner: { friends_some: { id: userId } } }
+      },
       userId: userId
     }
 
@@ -40,6 +45,7 @@ class Friends extends Component {
               <div>
                 <h2> Friends </h2>
                 <FriendList user={props.viewer.User} />
+                <NoteList viewer={props.viewer} />
               </div>
             )
 

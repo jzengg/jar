@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 02da11fa95a23e9914f03c2b5f857787
+ * @relayHash 85428ceaaac92540fa77793f84cd780b
  */
 
 /* eslint-disable */
@@ -318,6 +318,10 @@ fragment Note_note on Note {
   createdAt
   jar {
     name
+    owner {
+      email
+      id
+    }
     id
   }
 }
@@ -463,7 +467,7 @@ return {
   "operationKind": "query",
   "name": "TodayQuery",
   "id": null,
-  "text": "query TodayQuery(\n  $userId: ID\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...CreateNote_user\n      id\n    }\n    ...NoteList_viewer_bWUU2\n    id\n  }\n}\n\nfragment CreateNote_user on User {\n  ...JarList_user\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Jar_jar\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment NoteList_viewer_bWUU2 on Viewer {\n  allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n    edges {\n      node {\n        ...Note_note\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    name\n    id\n  }\n}\n\nfragment JarList_user on User {\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Jar_jar\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Jar_jar on Jar {\n  id\n  name\n}\n",
+  "text": "query TodayQuery(\n  $userId: ID\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...CreateNote_user\n      id\n    }\n    ...NoteList_viewer_bWUU2\n    id\n  }\n}\n\nfragment CreateNote_user on User {\n  ...JarList_user\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Jar_jar\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment NoteList_viewer_bWUU2 on Viewer {\n  allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n    edges {\n      node {\n        ...Note_note\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    name\n    owner {\n      email\n      id\n    }\n    id\n  }\n}\n\nfragment JarList_user on User {\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Jar_jar\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Jar_jar on Jar {\n  id\n  name\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -649,6 +653,19 @@ return {
                         "plural": false,
                         "selections": [
                           v6,
+                          {
+                            "kind": "LinkedField",
+                            "alias": null,
+                            "name": "owner",
+                            "storageKey": null,
+                            "args": null,
+                            "concreteType": "User",
+                            "plural": false,
+                            "selections": [
+                              v2,
+                              v5
+                            ]
+                          },
                           v5
                         ]
                       },

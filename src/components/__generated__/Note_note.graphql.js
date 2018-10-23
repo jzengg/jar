@@ -15,7 +15,10 @@ export type Note_note = {|
   +text: string,
   +createdAt: any,
   +jar: {|
-    +name: string
+    +name: string,
+    +owner: {|
+      +email: string
+    |},
   |},
   +$refType: Note_note$ref,
 |};
@@ -65,11 +68,29 @@ const node/*: ConcreteFragment*/ = {
           "name": "name",
           "args": null,
           "storageKey": null
+        },
+        {
+          "kind": "LinkedField",
+          "alias": null,
+          "name": "owner",
+          "storageKey": null,
+          "args": null,
+          "concreteType": "User",
+          "plural": false,
+          "selections": [
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "email",
+              "args": null,
+              "storageKey": null
+            }
+          ]
         }
       ]
     }
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '160b116f5ae42bd355a1fd996a04514a';
+(node/*: any*/).hash = '9f55d5e75a2fe0638ffe5871616e9e9f';
 module.exports = node;

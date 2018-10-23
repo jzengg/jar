@@ -17,7 +17,7 @@ class Note extends React.Component {
             jar: {this.props.note.jar.name}
           </div>
           <div>
-            createdAt: {createdAt}
+            createdAt: {createdAt} -- by: {this.props.note.jar.owner.email}
           </div>
         </li>
     )
@@ -31,6 +31,9 @@ export default createFragmentContainer(Note, graphql`
     createdAt
     jar {
       name
+      owner {
+        email
+      }
     }
   }
 `)
