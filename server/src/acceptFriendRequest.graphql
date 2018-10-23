@@ -1,0 +1,8 @@
+type acceptFriendRequestPayload {
+  user1Id: ID!
+  user2Id: ID!
+}
+
+extend type Mutation {
+  acceptFriendRequest(id: ID!): acceptFriendRequestPayload
+}

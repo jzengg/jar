@@ -46,6 +46,12 @@ functions:
     handler:
       code: src/addFriendByEmail.ts
 
+  acceptFriendRequest:
+    type: resolver
+    schema: src/acceptFriendRequest.graphql
+    handler:
+      code: src/acceptFriendRequest.ts
+
 # Model/Relation permissions are used to limit the API access
 # To take the burden of thinking about those while development, we
 # preconfigured the wildcard ("*") permission that allows everything

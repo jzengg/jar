@@ -1,5 +1,5 @@
 type addFriendByEmailPayload {
-id: ID!
+  id: ID!
 }
 
 extend type Mutation {
