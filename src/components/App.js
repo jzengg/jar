@@ -11,19 +11,23 @@ import AddFriend from './AddFriend'
 import FriendRequests from './FriendRequests'
 import Friends from './Friends'
 
+import PrivateRoute from './PrivateRoute'
+
 class App extends Component {
+
   render() {
     return (
       <div>
         <Layout>
+
           <Switch>
 
-            <Route exact path='/' component={Today} />
-            <Route exact path='/history' component={History} />
+            <PrivateRoute exact path='/' component={Today} />
+            <PrivateRoute exact path='/history' component={History} />
             <Route exact path='/login' component={Login} />
-            <Route exact path='/add' component={AddFriend} />
-            <Route exact path='/requests' component={FriendRequests} />
-            <Route exact path='/friends' component={Friends} />
+            <PrivateRoute exact path='/add' component={AddFriend} />
+            <PrivateRoute exact path='/requests' component={FriendRequests} />
+            <PrivateRoute exact path='/friends' component={Friends} />
 
           </Switch>
         </Layout>

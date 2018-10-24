@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import { QueryRenderer, graphql } from 'react-relay'
 import environment from '../Environment'
+
+import HeaderNavLink from './HeaderNavLink'
 
 import { GC_USER_ID } from '../constants'
 
@@ -39,12 +40,12 @@ class Header extends Component {
               <div>
                 <h1>Jar</h1>
                 <div>
-                  <NavLink exact activeClassName='selected' to='/'>Home</NavLink>
-                  {loggedIn || <NavLink activeClassName='selected' to='/login' > Login </NavLink>}
-                  <NavLink activeClassName='selected' to='/history' > History </NavLink>
-                  <NavLink activeClassName='selected' to='/add' > Add friends </NavLink>
-                  <NavLink activeClassName='selected' to='/requests' > Friend requests </NavLink>
-                  <NavLink activeClassName='selected' to='/friends' > Friends </NavLink>
+                  <HeaderNavLink to='/'>Home </HeaderNavLink>
+                  {loggedIn || <HeaderNavLink activeClassName='selected' to='/login' > Login </HeaderNavLink>}
+                  <HeaderNavLink activeClassName='selected' to='/history' > History </HeaderNavLink>
+                  <HeaderNavLink activeClassName='selected' to='/add' > Add friends </HeaderNavLink>
+                  <HeaderNavLink activeClassName='selected' to='/requests' > Friend requests </HeaderNavLink>
+                  <HeaderNavLink activeClassName='selected' to='/friends' > Friends </HeaderNavLink>
                 </div>
                 { loggedIn &&
                   <div>

@@ -48,17 +48,19 @@ class Login extends Component {
   }
 
   _confirm = () => {
-    const { name, email, password } = this.state
-    if (this.state.login) {
-      AuthenticateUserMutation(email, password, (id, token) => {
-        this._saveUserData(id, token)
-        this.props.history.push(`/`)
-      })
-    } else {
-      SignupUserMutation(name, email, password, (id, token) => {
-        this._saveUserData(id, token)
-        this.props.history.push(`/`)
-      })
+    const { email, password } = this.state
+    if (email && password) {
+      if (this.state.login) {
+        AuthenticateUserMutation(email, password, (id, token) => {
+          this._saveUserData(id, token)
+          this.props.history.push(`/`)
+        })
+      } else {
+        SignupUserMutation(email, password, (id, token) => {
+          this._saveUserData(id, token)
+          this.props.history.push(`/`)
+        })
+      }
     }
   }
 
