@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 
 import '../App.css';
 
-import Header from './Header'
+import Layout from './Layout'
 import Login from './Login'
 import History from './History'
 import Today from './Today'
@@ -15,18 +15,18 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Layout>
+          <Switch>
 
-        <Switch>
+            <Route exact path='/' component={Today} />
+            <Route exact path='/history' component={History} />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/add' component={AddFriend} />
+            <Route exact path='/requests' component={FriendRequests} />
+            <Route exact path='/friends' component={Friends} />
 
-          <Route exact path='/' component={Today} />
-          <Route exact path='/history' component={History} />
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/add' component={AddFriend} />
-          <Route exact path='/requests' component={FriendRequests} />
-          <Route exact path='/friends' component={Friends} />
-
-        </Switch>
+          </Switch>
+        </Layout>
 
     </div>
     );

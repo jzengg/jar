@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
 
-// import { GC_USER_ID } from '../constants'
-
 import CreateFriendRequestMutation from '../mutations/CreateFriendRequestMutation'
 
 class CreateFriendRequest extends Component {

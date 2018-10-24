@@ -8,23 +8,24 @@ class JarList extends React.Component {
   render () {
     let jars = this.props.user.jars.edges
     return (
-      <ul>
-        {
-          jars.map(( {node} ) =>
-          <Jar
-            key={node.__id}
-            jar={node}
-            active={this.props.selectedJarId === node.__id }
-            handleClick={this.props.handleClick}
-          />
+      <div>
+        <h3> Jars </h3>
+        <ul>
+          {
+            jars.map(( {node} ) =>
+            <Jar
+              key={node.__id}
+              jar={node}
+              active={this.props.selectedJarId === node.__id }
+              handleClick={this.props.handleClick}
+            />
 
-        )
-      }
-    </ul>
+          )
+        }
+      </ul>
+  </div>
     )
   }
-
-
 }
 
 export default createFragmentContainer(JarList, graphql`
