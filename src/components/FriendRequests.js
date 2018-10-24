@@ -5,14 +5,14 @@ import environment from '../Environment'
 
 import { GC_USER_ID } from '../constants'
 
-import FriendRequestList from './FriendRequestList'
+import ReceivedFriendRequestList from './ReceivedFriendRequestList'
 
 const FriendRequestsQuery = graphql`
-  query FriendRequestsQuery($userId: ID) {
+  query FriendRequestsQuery($userId: ID, $friendRequestFilter: FriendRequestFilter) {
     viewer {
       User(id: $userId) {
         email
-        ...FriendRequestList_user
+        ...ReceivedFriendRequestList_user @arguments(friendRequestFilter: $friendRequestFilter)
       }
     }
   }
@@ -24,7 +24,8 @@ class FriendRequests extends Component {
     const userId = localStorage.getItem(GC_USER_ID)
 
     const variables = {
-      userId: userId
+      userId: userId,
+      friendRequestFilter: { status: "PENDING" }
     }
 
     return (
@@ -39,7 +40,7 @@ class FriendRequests extends Component {
             return (
               <div>
                 <h2> FriendRequests </h2>
-                <FriendRequestList user={props.viewer.User} />
+                <ReceivedFriendRequestList user={props.viewer.User} />
               </div>
             )
 

@@ -8,25 +8,30 @@
 
 /*::
 import type { ConcreteFragment } from 'relay-runtime';
-type FriendRequest_friendRequest$ref = any;
+export type FriendRequestStatus = "ACCEPTED" | "IGNORED" | "PENDING" | "%future added value";
 import type { FragmentReference } from "relay-runtime";
-declare export opaque type FriendRequestList_user$ref: FragmentReference;
-export type FriendRequestList_user = {|
+declare export opaque type ReceivedFriendRequestList_user$ref: FragmentReference;
+export type ReceivedFriendRequestList_user = {|
   +receivedFriendRequests: ?{|
     +edges: ?$ReadOnlyArray<?{|
       +node: {|
-        +$fragmentRefs: FriendRequest_friendRequest$ref
+        +id: string,
+        +status: FriendRequestStatus,
+        +createdAt: any,
+        +sender: {|
+          +email: string
+        |},
       |}
     |}>
   |},
-  +$refType: FriendRequestList_user$ref,
+  +$refType: ReceivedFriendRequestList_user$ref,
 |};
 */
 
 
 const node/*: ConcreteFragment*/ = {
   "kind": "Fragment",
-  "name": "FriendRequestList_user",
+  "name": "ReceivedFriendRequestList_user",
   "type": "User",
   "metadata": {
     "connection": [
@@ -40,7 +45,14 @@ const node/*: ConcreteFragment*/ = {
       }
     ]
   },
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "kind": "LocalArgument",
+      "name": "friendRequestFilter",
+      "type": "FriendRequestFilter",
+      "defaultValue": null
+    }
+  ],
   "selections": [
     {
       "kind": "LinkedField",
@@ -70,9 +82,43 @@ const node/*: ConcreteFragment*/ = {
               "plural": false,
               "selections": [
                 {
-                  "kind": "FragmentSpread",
-                  "name": "FriendRequest_friendRequest",
-                  "args": null
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "id",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "status",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "createdAt",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "LinkedField",
+                  "alias": null,
+                  "name": "sender",
+                  "storageKey": null,
+                  "args": null,
+                  "concreteType": "User",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "kind": "ScalarField",
+                      "alias": null,
+                      "name": "email",
+                      "args": null,
+                      "storageKey": null
+                    }
+                  ]
                 },
                 {
                   "kind": "ScalarField",
@@ -122,5 +168,5 @@ const node/*: ConcreteFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '2ccc6e5825fbd33ba37a68047bbf2ec9';
+(node/*: any*/).hash = '90b32dc8ad2dfafeb55a93df39a411de';
 module.exports = node;

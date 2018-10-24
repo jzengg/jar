@@ -6,7 +6,7 @@ import AcceptFriendRequestMutation from '../mutations/AcceptFriendRequestMutatio
 
 import FriendRequest from './FriendRequest'
 
-class FriendRequestList extends React.Component {
+class ReceivedFriendRequestList extends React.Component {
 
   render () {
     let friendRequests = this.props.user.receivedFriendRequests.edges
@@ -15,10 +15,13 @@ class FriendRequestList extends React.Component {
         {
           friendRequests.map(( {node} ) =>
           <FriendRequest
-            key={node.__id}
-            friendRequest={node}
-            handleClick={this._acceptFriendRequest}
-          />
+            key={node.id}
+          >
+            <div onClick={ this._acceptFriendRequest.bind(this, node.id) }>
+              From: {node.sender.email}
+              status: {node.status}
+            </div>
+          </FriendRequest>
 
         )
       }
@@ -31,13 +34,20 @@ class FriendRequestList extends React.Component {
   }
 }
 
-export default createFragmentContainer(FriendRequestList, graphql`
-  fragment FriendRequestList_user on User {
-    receivedFriendRequests(last: 100, orderBy: createdAt_DESC)
+export default createFragmentContainer(ReceivedFriendRequestList, graphql`
+  fragment ReceivedFriendRequestList_user on User @argumentDefinitions(
+    friendRequestFilter: {type: "FriendRequestFilter"}
+  ) {
+    receivedFriendRequests(last: 100, orderBy: createdAt_DESC, filter: $friendRequestFilter)
       @connection(key: "FriendRequestList_receivedFriendRequests", filters: []) {
       edges {
         node {
-          ...FriendRequest_friendRequest
+          id
+          status
+          createdAt
+          sender {
+            email
+          }
         }
       }
     }

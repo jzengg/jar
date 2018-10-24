@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash cb3d3baabd15db29834826bf1d1e7a23
+ * @relayHash fcd420d82d83f2adcb603f9cd6e5c100
  */
 
 /* eslint-disable */
@@ -9,15 +9,246 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-type FriendRequestList_user$ref = any;
+type ReceivedFriendRequestList_user$ref = any;
+export type FriendRequestStatus = "ACCEPTED" | "IGNORED" | "PENDING" | "%future added value";
+export type FriendRequestFilter = {
+  AND?: ?$ReadOnlyArray<FriendRequestFilter>,
+  OR?: ?$ReadOnlyArray<FriendRequestFilter>,
+  createdAt?: ?any,
+  createdAt_not?: ?any,
+  createdAt_in?: ?$ReadOnlyArray<any>,
+  createdAt_not_in?: ?$ReadOnlyArray<any>,
+  createdAt_lt?: ?any,
+  createdAt_lte?: ?any,
+  createdAt_gt?: ?any,
+  createdAt_gte?: ?any,
+  id?: ?string,
+  id_not?: ?string,
+  id_in?: ?$ReadOnlyArray<string>,
+  id_not_in?: ?$ReadOnlyArray<string>,
+  id_lt?: ?string,
+  id_lte?: ?string,
+  id_gt?: ?string,
+  id_gte?: ?string,
+  id_contains?: ?string,
+  id_not_contains?: ?string,
+  id_starts_with?: ?string,
+  id_not_starts_with?: ?string,
+  id_ends_with?: ?string,
+  id_not_ends_with?: ?string,
+  status?: ?FriendRequestStatus,
+  status_not?: ?FriendRequestStatus,
+  status_in?: ?$ReadOnlyArray<FriendRequestStatus>,
+  status_not_in?: ?$ReadOnlyArray<FriendRequestStatus>,
+  updatedAt?: ?any,
+  updatedAt_not?: ?any,
+  updatedAt_in?: ?$ReadOnlyArray<any>,
+  updatedAt_not_in?: ?$ReadOnlyArray<any>,
+  updatedAt_lt?: ?any,
+  updatedAt_lte?: ?any,
+  updatedAt_gt?: ?any,
+  updatedAt_gte?: ?any,
+  recipient?: ?UserFilter,
+  sender?: ?UserFilter,
+};
+export type UserFilter = {
+  AND?: ?$ReadOnlyArray<UserFilter>,
+  OR?: ?$ReadOnlyArray<UserFilter>,
+  createdAt?: ?any,
+  createdAt_not?: ?any,
+  createdAt_in?: ?$ReadOnlyArray<any>,
+  createdAt_not_in?: ?$ReadOnlyArray<any>,
+  createdAt_lt?: ?any,
+  createdAt_lte?: ?any,
+  createdAt_gt?: ?any,
+  createdAt_gte?: ?any,
+  email?: ?string,
+  email_not?: ?string,
+  email_in?: ?$ReadOnlyArray<string>,
+  email_not_in?: ?$ReadOnlyArray<string>,
+  email_lt?: ?string,
+  email_lte?: ?string,
+  email_gt?: ?string,
+  email_gte?: ?string,
+  email_contains?: ?string,
+  email_not_contains?: ?string,
+  email_starts_with?: ?string,
+  email_not_starts_with?: ?string,
+  email_ends_with?: ?string,
+  email_not_ends_with?: ?string,
+  id?: ?string,
+  id_not?: ?string,
+  id_in?: ?$ReadOnlyArray<string>,
+  id_not_in?: ?$ReadOnlyArray<string>,
+  id_lt?: ?string,
+  id_lte?: ?string,
+  id_gt?: ?string,
+  id_gte?: ?string,
+  id_contains?: ?string,
+  id_not_contains?: ?string,
+  id_starts_with?: ?string,
+  id_not_starts_with?: ?string,
+  id_ends_with?: ?string,
+  id_not_ends_with?: ?string,
+  password?: ?string,
+  password_not?: ?string,
+  password_in?: ?$ReadOnlyArray<string>,
+  password_not_in?: ?$ReadOnlyArray<string>,
+  password_lt?: ?string,
+  password_lte?: ?string,
+  password_gt?: ?string,
+  password_gte?: ?string,
+  password_contains?: ?string,
+  password_not_contains?: ?string,
+  password_starts_with?: ?string,
+  password_not_starts_with?: ?string,
+  password_ends_with?: ?string,
+  password_not_ends_with?: ?string,
+  updatedAt?: ?any,
+  updatedAt_not?: ?any,
+  updatedAt_in?: ?$ReadOnlyArray<any>,
+  updatedAt_not_in?: ?$ReadOnlyArray<any>,
+  updatedAt_lt?: ?any,
+  updatedAt_lte?: ?any,
+  updatedAt_gt?: ?any,
+  updatedAt_gte?: ?any,
+  friends_every?: ?UserFilter,
+  friends_some?: ?UserFilter,
+  friends_none?: ?UserFilter,
+  jars_every?: ?JarFilter,
+  jars_some?: ?JarFilter,
+  jars_none?: ?JarFilter,
+  receivedFriendRequests_every?: ?FriendRequestFilter,
+  receivedFriendRequests_some?: ?FriendRequestFilter,
+  receivedFriendRequests_none?: ?FriendRequestFilter,
+  sentFriendRequests_every?: ?FriendRequestFilter,
+  sentFriendRequests_some?: ?FriendRequestFilter,
+  sentFriendRequests_none?: ?FriendRequestFilter,
+};
+export type JarFilter = {
+  AND?: ?$ReadOnlyArray<JarFilter>,
+  OR?: ?$ReadOnlyArray<JarFilter>,
+  createdAt?: ?any,
+  createdAt_not?: ?any,
+  createdAt_in?: ?$ReadOnlyArray<any>,
+  createdAt_not_in?: ?$ReadOnlyArray<any>,
+  createdAt_lt?: ?any,
+  createdAt_lte?: ?any,
+  createdAt_gt?: ?any,
+  createdAt_gte?: ?any,
+  description?: ?string,
+  description_not?: ?string,
+  description_in?: ?$ReadOnlyArray<string>,
+  description_not_in?: ?$ReadOnlyArray<string>,
+  description_lt?: ?string,
+  description_lte?: ?string,
+  description_gt?: ?string,
+  description_gte?: ?string,
+  description_contains?: ?string,
+  description_not_contains?: ?string,
+  description_starts_with?: ?string,
+  description_not_starts_with?: ?string,
+  description_ends_with?: ?string,
+  description_not_ends_with?: ?string,
+  id?: ?string,
+  id_not?: ?string,
+  id_in?: ?$ReadOnlyArray<string>,
+  id_not_in?: ?$ReadOnlyArray<string>,
+  id_lt?: ?string,
+  id_lte?: ?string,
+  id_gt?: ?string,
+  id_gte?: ?string,
+  id_contains?: ?string,
+  id_not_contains?: ?string,
+  id_starts_with?: ?string,
+  id_not_starts_with?: ?string,
+  id_ends_with?: ?string,
+  id_not_ends_with?: ?string,
+  name?: ?string,
+  name_not?: ?string,
+  name_in?: ?$ReadOnlyArray<string>,
+  name_not_in?: ?$ReadOnlyArray<string>,
+  name_lt?: ?string,
+  name_lte?: ?string,
+  name_gt?: ?string,
+  name_gte?: ?string,
+  name_contains?: ?string,
+  name_not_contains?: ?string,
+  name_starts_with?: ?string,
+  name_not_starts_with?: ?string,
+  name_ends_with?: ?string,
+  name_not_ends_with?: ?string,
+  updatedAt?: ?any,
+  updatedAt_not?: ?any,
+  updatedAt_in?: ?$ReadOnlyArray<any>,
+  updatedAt_not_in?: ?$ReadOnlyArray<any>,
+  updatedAt_lt?: ?any,
+  updatedAt_lte?: ?any,
+  updatedAt_gt?: ?any,
+  updatedAt_gte?: ?any,
+  notes_every?: ?NoteFilter,
+  notes_some?: ?NoteFilter,
+  notes_none?: ?NoteFilter,
+  owner?: ?UserFilter,
+};
+export type NoteFilter = {
+  AND?: ?$ReadOnlyArray<NoteFilter>,
+  OR?: ?$ReadOnlyArray<NoteFilter>,
+  createdAt?: ?any,
+  createdAt_not?: ?any,
+  createdAt_in?: ?$ReadOnlyArray<any>,
+  createdAt_not_in?: ?$ReadOnlyArray<any>,
+  createdAt_lt?: ?any,
+  createdAt_lte?: ?any,
+  createdAt_gt?: ?any,
+  createdAt_gte?: ?any,
+  id?: ?string,
+  id_not?: ?string,
+  id_in?: ?$ReadOnlyArray<string>,
+  id_not_in?: ?$ReadOnlyArray<string>,
+  id_lt?: ?string,
+  id_lte?: ?string,
+  id_gt?: ?string,
+  id_gte?: ?string,
+  id_contains?: ?string,
+  id_not_contains?: ?string,
+  id_starts_with?: ?string,
+  id_not_starts_with?: ?string,
+  id_ends_with?: ?string,
+  id_not_ends_with?: ?string,
+  text?: ?string,
+  text_not?: ?string,
+  text_in?: ?$ReadOnlyArray<string>,
+  text_not_in?: ?$ReadOnlyArray<string>,
+  text_lt?: ?string,
+  text_lte?: ?string,
+  text_gt?: ?string,
+  text_gte?: ?string,
+  text_contains?: ?string,
+  text_not_contains?: ?string,
+  text_starts_with?: ?string,
+  text_not_starts_with?: ?string,
+  text_ends_with?: ?string,
+  text_not_ends_with?: ?string,
+  updatedAt?: ?any,
+  updatedAt_not?: ?any,
+  updatedAt_in?: ?$ReadOnlyArray<any>,
+  updatedAt_not_in?: ?$ReadOnlyArray<any>,
+  updatedAt_lt?: ?any,
+  updatedAt_lte?: ?any,
+  updatedAt_gt?: ?any,
+  updatedAt_gte?: ?any,
+  jar?: ?JarFilter,
+};
 export type FriendRequestsQueryVariables = {|
-  userId?: ?string
+  userId?: ?string,
+  friendRequestFilter?: ?FriendRequestFilter,
 |};
 export type FriendRequestsQueryResponse = {|
   +viewer: {|
     +User: ?{|
       +email: string,
-      +$fragmentRefs: FriendRequestList_user$ref,
+      +$fragmentRefs: ReceivedFriendRequestList_user$ref,
     |}
   |}
 |};
@@ -31,23 +262,29 @@ export type FriendRequestsQuery = {|
 /*
 query FriendRequestsQuery(
   $userId: ID
+  $friendRequestFilter: FriendRequestFilter
 ) {
   viewer {
     User(id: $userId) {
       email
-      ...FriendRequestList_user
+      ...ReceivedFriendRequestList_user_2yZ5GC
       id
     }
     id
   }
 }
 
-fragment FriendRequestList_user on User {
-  receivedFriendRequests(last: 100, orderBy: createdAt_DESC) {
+fragment ReceivedFriendRequestList_user_2yZ5GC on User {
+  receivedFriendRequests(last: 100, orderBy: createdAt_DESC, filter: $friendRequestFilter) {
     edges {
       node {
-        ...FriendRequest_friendRequest
         id
+        status
+        createdAt
+        sender {
+          email
+          id
+        }
         __typename
       }
       cursor
@@ -58,14 +295,6 @@ fragment FriendRequestList_user on User {
     }
   }
 }
-
-fragment FriendRequest_friendRequest on FriendRequest {
-  id
-  sender {
-    email
-    id
-  }
-}
 */
 
 const node/*: ConcreteRequest*/ = (function(){
@@ -74,6 +303,12 @@ var v0 = [
     "kind": "LocalArgument",
     "name": "userId",
     "type": "ID",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "friendRequestFilter",
+    "type": "FriendRequestFilter",
     "defaultValue": null
   }
 ],
@@ -93,6 +328,12 @@ v2 = {
   "storageKey": null
 },
 v3 = [
+  {
+    "kind": "Variable",
+    "name": "filter",
+    "variableName": "friendRequestFilter",
+    "type": "FriendRequestFilter"
+  },
   {
     "kind": "Literal",
     "name": "last",
@@ -118,7 +359,7 @@ return {
   "operationKind": "query",
   "name": "FriendRequestsQuery",
   "id": null,
-  "text": "query FriendRequestsQuery(\n  $userId: ID\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...FriendRequestList_user\n      id\n    }\n    id\n  }\n}\n\nfragment FriendRequestList_user on User {\n  receivedFriendRequests(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...FriendRequest_friendRequest\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment FriendRequest_friendRequest on FriendRequest {\n  id\n  sender {\n    email\n    id\n  }\n}\n",
+  "text": "query FriendRequestsQuery(\n  $userId: ID\n  $friendRequestFilter: FriendRequestFilter\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...ReceivedFriendRequestList_user_2yZ5GC\n      id\n    }\n    id\n  }\n}\n\nfragment ReceivedFriendRequestList_user_2yZ5GC on User {\n  receivedFriendRequests(last: 100, orderBy: createdAt_DESC, filter: $friendRequestFilter) {\n    edges {\n      node {\n        id\n        status\n        createdAt\n        sender {\n          email\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -148,8 +389,15 @@ return {
               v2,
               {
                 "kind": "FragmentSpread",
-                "name": "FriendRequestList_user",
-                "args": null
+                "name": "ReceivedFriendRequestList_user",
+                "args": [
+                  {
+                    "kind": "Variable",
+                    "name": "friendRequestFilter",
+                    "variableName": "friendRequestFilter",
+                    "type": null
+                  }
+                ]
               }
             ]
           }
@@ -185,7 +433,7 @@ return {
                 "kind": "LinkedField",
                 "alias": null,
                 "name": "receivedFriendRequests",
-                "storageKey": "receivedFriendRequests(last:100,orderBy:\"createdAt_DESC\")",
+                "storageKey": null,
                 "args": v3,
                 "concreteType": "FriendRequestConnection",
                 "plural": false,
@@ -209,6 +457,20 @@ return {
                         "plural": false,
                         "selections": [
                           v4,
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "name": "status",
+                            "args": null,
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "name": "createdAt",
+                            "args": null,
+                            "storageKey": null
+                          },
                           {
                             "kind": "LinkedField",
                             "alias": null,
@@ -287,5 +549,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '7bf409b755e5ca6e37c21dd86031ec6c';
+(node/*: any*/).hash = '7dbfe2463e27a1a9159d5e790b207600';
 module.exports = node;

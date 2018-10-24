@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { createFragmentContainer, graphql } from 'react-relay'
+import { GC_USER_ID } from '../constants'
 
 import CreateFriendRequestMutation from '../mutations/CreateFriendRequestMutation'
 
@@ -14,7 +14,7 @@ class CreateFriendRequest extends Component {
 
   _createFriendRequest = () => {
     const { email } = this.state
-    const senderId = this.props.viewer.loggedInUser.id
+    const senderId = localStorage.getItem(GC_USER_ID)
 
     if (senderId && email) {
       CreateFriendRequestMutation(senderId, email)
@@ -44,10 +44,4 @@ class CreateFriendRequest extends Component {
   }
 }
 
-export default createFragmentContainer(CreateFriendRequest, graphql`
-  fragment CreateFriendRequest_viewer on Viewer {
-    loggedInUser {
-      id
-    }
-  }
-`)
+export default CreateFriendRequest
