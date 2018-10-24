@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import { QueryRenderer, graphql } from 'react-relay'
 import environment from '../Environment'
+import { GC_USER_ID } from '../constants'
 
 import HeaderNavLink from './HeaderNavLink'
+import LogoutButton from './LogoutButton'
 
-import { GC_USER_ID, GC_AUTH_TOKEN } from '../constants'
 
 const HeaderQuery = graphql`
   query HeaderQuery($id: ID) {
@@ -18,12 +19,6 @@ const HeaderQuery = graphql`
 `
 
 class Header extends Component {
-
-  _logout = () => {
-    localStorage.removeItem(GC_USER_ID)
-    localStorage.removeItem(GC_AUTH_TOKEN)
-    this.props.history.push('/login')
-  }
 
   render() {
     const id = localStorage.getItem(GC_USER_ID)
@@ -56,7 +51,7 @@ class Header extends Component {
                 { loggedIn &&
                   <div>
                      {props.viewer.User.email}
-                     <button onClick={this._logout}> Log out</button>
+                     <LogoutButton/>
                   </div>
                 }
               </div>

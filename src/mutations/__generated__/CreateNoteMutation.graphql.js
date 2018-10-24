@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 77f6c266e2c1a0b700a7285e62922018
+ * @relayHash 3734482973ff498d5283ce92da318862
  */
 
 /* eslint-disable */
@@ -106,6 +106,10 @@ export type CreateNoteMutationResponse = {|
       +jar: {|
         +id: string,
         +name: string,
+        +owner: {|
+          +id: string,
+          +email: string,
+        |},
       |},
     |},
   |}
@@ -132,6 +136,10 @@ mutation CreateNoteMutation(
       jar {
         id
         name
+        owner {
+          id
+          email
+        }
       }
     }
   }
@@ -223,6 +231,25 @@ v2 = [
                 "name": "name",
                 "args": null,
                 "storageKey": null
+              },
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "owner",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "User",
+                "plural": false,
+                "selections": [
+                  v1,
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "email",
+                    "args": null,
+                    "storageKey": null
+                  }
+                ]
               }
             ]
           }
@@ -236,7 +263,7 @@ return {
   "operationKind": "mutation",
   "name": "CreateNoteMutation",
   "id": null,
-  "text": "mutation CreateNoteMutation(\n  $input: CreateNoteInput!\n) {\n  createNote(input: $input) {\n    viewer {\n      id\n    }\n    note {\n      id\n      createdAt\n      text\n      jar {\n        id\n        name\n      }\n    }\n  }\n}\n",
+  "text": "mutation CreateNoteMutation(\n  $input: CreateNoteInput!\n) {\n  createNote(input: $input) {\n    viewer {\n      id\n    }\n    note {\n      id\n      createdAt\n      text\n      jar {\n        id\n        name\n        owner {\n          id\n          email\n        }\n      }\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -255,5 +282,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '71a800940db84738e71bc55e6476c1bd';
+(node/*: any*/).hash = 'f8520f455b62802313b8249760b1ba07';
 module.exports = node;

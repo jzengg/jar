@@ -19,7 +19,12 @@ const mutation = graphql`
         jar {
           id
           name
+          owner {
+            id
+            email
+          }
         }
+
       }
     }
   }

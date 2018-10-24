@@ -6,6 +6,7 @@ import Note from './Note'
 class NoteList extends React.Component {
 
   render () {
+    console.log(this.props)
     let notes = this.props.viewer.allNotes.edges
 
     return (
