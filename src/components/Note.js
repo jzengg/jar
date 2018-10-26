@@ -2,6 +2,7 @@ import moment from 'moment'
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
 
+import { css } from 'emotion'
 
 
 class Note extends React.Component {
@@ -10,7 +11,11 @@ class Note extends React.Component {
     const createdAt = moment(this.props.note.createdAt).calendar()
     return (
         <li>
-          <div>
+          <div
+            className={css`
+              color: red;
+              `}
+          >
             text: {this.props.note.text}
           </div>
           <div>
