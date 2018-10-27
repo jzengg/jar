@@ -4,7 +4,16 @@ import { createFragmentContainer, graphql } from 'react-relay'
 import JarList from './JarList'
 import CreateNoteMutation from '../mutations/CreateNoteMutation'
 
+import styled from 'react-emotion'
 
+const Button = styled.a `
+  color: white;
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 3px;
+  background-color: #28a745;
+  background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
+`
 
 class CreateNote extends Component {
   constructor(props) {
@@ -49,12 +58,12 @@ class CreateNote extends Component {
             placeholder='Text of the note'
           />
         </div>
-        <div
+        <Button
           className='button'
           onClick={() => this._createNote()}
         >
           submit
-        </div>
+        </Button>
       </div>
     )
 
