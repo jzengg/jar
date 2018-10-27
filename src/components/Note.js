@@ -12,7 +12,7 @@ const NoteContainer = styled.div`
   border: 1px solid #d1d5da;
   padding: 1rem;
   margin: 1rem 0 1rem;
-  border-radius: px;
+  border-radius: 3px;
 `
 
 const NoteHeader = styled.div`
@@ -27,12 +27,11 @@ const NoteFooter = styled.div`
 `
 
 const JarTag = styled.div`
-  background: yellow;
-  border: 1px solid black;
+  background: lightyellow;
+  padding: 0.25rem 0.5rem;
 `
 
 const TimestampTag = styled.div`
-  border: 1px solid black;
 `
 
 const AuthorTag = styled.div`
