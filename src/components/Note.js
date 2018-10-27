@@ -8,11 +8,11 @@ const secondary = css`
   font-size: 0.85rem
 `
 
-const ListItem = styled.div`
-  border: 1px solid black;
+const NoteContainer = styled.div`
+  border: 1px solid #d1d5da;
   padding: 1rem;
   margin: 1rem 0 1rem;
-  border-radius: 2px;
+  border-radius: px;
 `
 
 const NoteHeader = styled.div`
@@ -49,7 +49,7 @@ class Note extends React.Component {
   render () {
     const createdAt = moment(this.props.note.createdAt).calendar()
     return (
-        <ListItem>
+        <NoteContainer>
           <NoteHeader>
             <TimestampTag>
               {createdAt}
@@ -67,7 +67,7 @@ class Note extends React.Component {
               {this.props.note.jar.owner.email}
             </AuthorTag>
         </NoteFooter>
-        </ListItem>
+      </NoteContainer>
     )
   }
 }

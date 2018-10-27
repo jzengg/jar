@@ -6,12 +6,21 @@ import CreateNoteMutation from '../mutations/CreateNoteMutation'
 
 import BaseButton from '../css/BaseButton'
 
-import styled from 'react-emotion'
+import styled, { css } from 'react-emotion'
 
 const Button = styled.button `
   ${BaseButton}
   background-color: #28a745;
   background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
+`
+
+const TextInput = styled.input `
+    border: 1px solid #d1d5da;
+    border-radius: 3px;
+    max-width: 100%;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 6px 8px;
 `
 
 class CreateNote extends Component {
@@ -49,12 +58,17 @@ class CreateNote extends Component {
         />
 
         <div>
-          <input
-            className='mb2'
+          <label for='note_text' className={css`
+              font-weight: 600;
+                `}
+          >
+            Text
+          </label>
+          <TextInput
             value={this.state.text}
             onChange={(e) => this.setState({ text: e.target.value })}
             type='text'
-            placeholder='Text of the note'
+            id='note_text'
           />
         </div>
         <Button
