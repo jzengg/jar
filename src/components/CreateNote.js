@@ -8,7 +8,7 @@ import BaseButton from '../css/BaseButton'
 
 import styled, { css } from 'react-emotion'
 
-const Button = styled.button `
+const CreateButton = styled.button `
   ${BaseButton}
   background-color: #28a745;
   background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
@@ -76,12 +76,12 @@ class CreateNote extends Component {
             id='note_text'
           />
         </div>
-        <Button
+        <CreateButton
           className='button'
           onClick={() => this._createNote()}
         >
           submit
-        </Button>
+        </CreateButton>
       </FormContainer>
     )
 
