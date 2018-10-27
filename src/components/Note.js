@@ -21,7 +21,7 @@ const NoteHeader = styled.div`
 const NoteFooter = styled.div`
   ${secondary};
   display: flex;
-  justify-content: 'center'
+  justify-content: space-between
 `
 
 const JarTag = styled.div`
@@ -34,7 +34,6 @@ const TimestampTag = styled.div`
 `
 
 const AuthorTag = styled.div`
-  border: 1px solid black;
   font-style: italic;
 `
 
