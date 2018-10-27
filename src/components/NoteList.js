@@ -1,7 +1,23 @@
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
 
+import styled from 'react-emotion'
+
 import Note from './Note'
+
+const Container = styled('div')(props => ({
+  display: 'flex',
+  flexDirection: props.column && 'column',
+  // padding: '5%',
+  // margin: '5px',
+  // alignContent: 'space-between'
+}))
+
+const List = styled('ul')(props => ({
+  display: 'flex',
+  flexDirection: props.column && 'column'
+}))
+
 
 class NoteList extends React.Component {
 
@@ -9,14 +25,14 @@ class NoteList extends React.Component {
     let notes = this.props.viewer.allNotes.edges
 
     return (
-      <ul>
+      <Container column>
         {
           notes.map(( {node} ) =>
           <Note key={node.__id} note={node} />
 
         )
       }
-    </ul>
+    </Container>
   )
 }
 
