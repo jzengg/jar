@@ -45,6 +45,7 @@ class Friends extends Component {
               <div>
                 <h2> Friends </h2>
                 <FriendList user={props.viewer.User} />
+                <h2> Their notes </h2>
                 <NoteList viewer={props.viewer} />
               </div>
             )

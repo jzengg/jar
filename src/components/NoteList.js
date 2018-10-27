@@ -5,15 +5,13 @@ import styled from 'react-emotion'
 
 import Note from './Note'
 
-const Container = styled('div')(props => ({
+const Container = styled.div(props => ({
   display: 'flex',
   flexDirection: props.column && 'column',
-  // padding: '5%',
-  // margin: '5px',
-  // alignContent: 'space-between'
+  justifyContent: 'space-between'
 }))
 
-const List = styled('ul')(props => ({
+const List = styled.ul(props => ({
   display: 'flex',
   flexDirection: props.column && 'column'
 }))

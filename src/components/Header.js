@@ -7,6 +7,12 @@ import { GC_USER_ID } from '../constants'
 import HeaderNavLink from './HeaderNavLink'
 import LogoutButton from './LogoutButton'
 
+import styled from 'react-emotion'
+
+const HeaderContainer = styled.div`
+  display: flex;
+  // justify-content: space-evenly;
+`
 
 const HeaderQuery = graphql`
   query HeaderQuery($id: ID) {
@@ -40,14 +46,14 @@ class Header extends Component {
             return (
               <div>
                 <h1>Jar</h1>
-                <div>
+                <HeaderContainer>
                   <HeaderNavLink to='/'>Home </HeaderNavLink>
                   {loggedIn || <HeaderNavLink activeClassName='selected' to='/login' > Login </HeaderNavLink>}
                   <HeaderNavLink activeClassName='selected' to='/history' > History </HeaderNavLink>
                   <HeaderNavLink activeClassName='selected' to='/add' > Add friends </HeaderNavLink>
                   <HeaderNavLink activeClassName='selected' to='/requests' > Friend requests </HeaderNavLink>
                   <HeaderNavLink activeClassName='selected' to='/friends' > Friends </HeaderNavLink>
-                </div>
+                </HeaderContainer>
                 { loggedIn &&
                   <div>
                      {props.viewer.User.email}

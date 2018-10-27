@@ -11,6 +11,8 @@ const secondary = css`
 const ListItem = styled.div`
   border: 1px solid black;
   padding: 1rem;
+  margin: 1rem 0 1rem;
+  border-radius: 2px;
 `
 
 const NoteHeader = styled.div`

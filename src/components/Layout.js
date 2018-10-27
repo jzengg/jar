@@ -2,21 +2,21 @@ import React, { Component } from 'react'
 
 import Header from './Header'
 
-import { css } from 'react-emotion'
+import styled from 'react-emotion'
+
+const Container = styled.div `
+  max-width: 900px;
+  padding: 2rem;
+`
 
 class Layout extends Component {
 
   render() {
     return (
-      <div className={css`
-          max-width: 900px;
-          padding: 2rem;
-          `
-        }
-      >
+      <Container>
         <Header />
         {this.props.children}
-      </div>
+      </Container>
     )
   }
 
