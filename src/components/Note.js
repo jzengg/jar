@@ -8,37 +8,37 @@ const secondary = css`
   font-size: 0.85rem
 `
 
-const ListItem = styled('div')`
+const ListItem = styled.div`
   border: 1px solid black;
   padding: 1rem;
 `
 
-const NoteHeader = styled('div')`
+const NoteHeader = styled.div`
   ${secondary};
   display: flex;
 `
 
-const NoteFooter = styled('div')`
+const NoteFooter = styled.div`
   ${secondary};
   display: flex;
   justify-content: 'center'
 `
 
-const JarTag = styled('div')`
+const JarTag = styled.div`
   background: yellow;
   border: 1px solid black;
 `
 
-const TimestampTag = styled('div')`
+const TimestampTag = styled.div`
   border: 1px solid black;
 `
 
-const AuthorTag = styled('div')`
+const AuthorTag = styled.div`
   border: 1px solid black;
   font-style: italic;
 `
 
-const NoteText = styled('div')`
+const NoteText = styled.div`
   font-size: 2rem;
   padding: 1rem 0 1rem;
 `
