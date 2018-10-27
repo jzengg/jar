@@ -23,6 +23,11 @@ const TextInput = styled.input `
     padding: 6px 8px;
 `
 
+const FormContainer = styled.div `
+  display: flex;
+  flex-direction: column;
+`
+
 class CreateNote extends Component {
   constructor(props) {
     super(props)
@@ -50,7 +55,7 @@ class CreateNote extends Component {
 
   render() {
     return (
-      <div>
+      <FormContainer>
         <JarList
           handleClick={this._updateSelectedJar}
           selectedJarId={this.state.selectedJarId}
@@ -77,7 +82,7 @@ class CreateNote extends Component {
         >
           submit
         </Button>
-      </div>
+      </FormContainer>
     )
 
   }
