@@ -4,13 +4,12 @@ import { createFragmentContainer, graphql } from 'react-relay'
 import JarList from './JarList'
 import CreateNoteMutation from '../mutations/CreateNoteMutation'
 
+import BaseButton from '../css/BaseButton'
+
 import styled from 'react-emotion'
 
-const Button = styled.a `
-  color: white;
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 3px;
+const Button = styled.button `
+  ${BaseButton}
   background-color: #28a745;
   background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
 `
