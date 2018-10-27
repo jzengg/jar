@@ -11,12 +11,6 @@ const Container = styled.div(props => ({
   justifyContent: 'space-between'
 }))
 
-const List = styled.ul(props => ({
-  display: 'flex',
-  flexDirection: props.column && 'column'
-}))
-
-
 class NoteList extends React.Component {
 
   render () {

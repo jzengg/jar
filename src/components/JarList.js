@@ -3,14 +3,20 @@ import { createFragmentContainer, graphql } from 'react-relay'
 
 import Jar from './Jar'
 
+import styled from 'react-emotion'
+
+const JarListContainer = styled.ul`
+  display: flex;
+`
+
+
 class JarList extends React.Component {
 
   render () {
     let jars = this.props.user.jars.edges
     return (
       <div>
-        <h3> Jars </h3>
-        <ul>
+        <JarListContainer>
           {
             jars.map(( {node} ) =>
             <Jar
@@ -22,7 +28,7 @@ class JarList extends React.Component {
 
           )
         }
-      </ul>
+      </JarListContainer>
   </div>
     )
   }
