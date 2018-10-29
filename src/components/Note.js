@@ -4,44 +4,43 @@ import { createFragmentContainer, graphql } from 'react-relay'
 
 import styled, { css } from 'react-emotion'
 
-
 const secondary = css`
   font-size: 0.85rem
 `
 
-const NoteContainer = styled.div(props => ({
-  border: '1px solid #d1d5da',
-  padding: '1rem',
-  margin: '1rem 0 1rem',
-  borderRadius: '3px',
-}))
+export const NoteContainer = styled.div`
+  border: 1px solid #d1d5da;
+  padding: 1rem;
+  margin: 1rem 0 1rem;
+  border-radius: 3px;
+`
 
-const NoteHeader = styled.div`
+export const NoteHeader = styled.div`
   ${secondary};
   display: flex;
   justify-content: space-between;
   height: 1.5rem;
 `
 
-const NoteFooter = styled.div`
+export const NoteFooter = styled.div`
   ${secondary};
   display: flex;
   justify-content: space-between
 `
 
-const JarTag = styled.div`
+export const JarTag = styled.div`
   background: lightyellow;
   padding: 0.25rem 0.5rem;
 `
 
-const TimestampTag = styled.div`
+export const TimestampTag = styled.div`
 `
 
-const AuthorTag = styled.div`
+export const AuthorTag = styled.div`
   font-style: italic;
 `
 
-const NoteText = styled.div`
+export const NoteText = styled.div`
   font-size: 2rem;
   padding: 1rem 0 1rem;
 `

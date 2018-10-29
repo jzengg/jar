@@ -5,56 +5,18 @@ import { createFragmentContainer, graphql } from 'react-relay'
 import DeleteNoteMutation from '../mutations/DeleteNoteMutation'
 import UpdateNoteMutation from '../mutations/UpdateNoteMutation'
 
-import styled, { css } from 'react-emotion'
-// import 'airbnb-browser-shims'
+import styled from 'react-emotion'
 import OutsideClickHandler from 'react-outside-click-handler'
 
+import { NoteContainer, NoteHeader, NoteFooter, JarTag, TimestampTag, AuthorTag, NoteText } from './Note'
 
-const secondary = css`
-  font-size: 0.85rem
-`
-
-const NoteContainer = styled.div(props => ({
-  border: '1px solid #d1d5da',
-  padding: '1rem',
-  margin: '1rem 0 1rem',
-  borderRadius: '3px',
+const EditableNoteContainer = styled(NoteContainer)(props => ({
   opacity: props.editable && '0.6',
   cursor: 'pointer',
   '&:hover': {
     border: '1px solid black'
   },
 }))
-
-const NoteHeader = styled.div`
-  ${secondary};
-  display: flex;
-  justify-content: space-between;
-  height: 1.5rem;
-`
-
-const NoteFooter = styled.div`
-  ${secondary};
-  display: flex;
-  justify-content: space-between
-`
-
-const JarTag = styled.div`
-  background: lightyellow;
-  padding: 0.25rem 0.5rem;
-`
-
-const TimestampTag = styled.div`
-`
-
-const AuthorTag = styled.div`
-  font-style: italic;
-`
-
-const NoteText = styled.div`
-  font-size: 2rem;
-  padding: 1rem 0 1rem;
-`
 
 class EditableNote extends React.Component {
 
@@ -147,7 +109,7 @@ class EditableNote extends React.Component {
 
     return (
       <OutsideClickHandler onOutsideClick={ this._handleOutsideClick } >
-        <NoteContainer onClick={ this._enableEdit } editable={ this.state.editable }>
+        <EditableNoteContainer onClick={ this._enableEdit } editable={ this.state.editable }>
           <NoteHeader>
             <TimestampTag>
               {createdAt}
@@ -161,7 +123,7 @@ class EditableNote extends React.Component {
               {this.props.note.jar.owner.email}
             </AuthorTag>
         </NoteFooter>
-      </NoteContainer>
+      </EditableNoteContainer>
     </OutsideClickHandler>
     )
   }
