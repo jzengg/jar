@@ -14,15 +14,12 @@ class ReceivedFriendRequestList extends React.Component {
       <ul>
         {
           friendRequests.map(( {node} ) =>
-          <FriendRequest
-            key={node.id}
-          >
+          <FriendRequest key={node.id}>
             <div onClick={ this._acceptFriendRequest.bind(this, node.id) }>
               From: {node.sender.email}
               status: {node.status}
             </div>
           </FriendRequest>
-
         )
       }
     </ul>

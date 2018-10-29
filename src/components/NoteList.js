@@ -8,7 +8,6 @@ import Note from './Note'
 const Container = styled.div(props => ({
   display: 'flex',
   flexDirection: props.column && 'column',
-  justifyContent: 'space-between'
 }))
 
 class NoteList extends React.Component {
