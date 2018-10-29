@@ -81,7 +81,9 @@ class Note extends React.Component {
 
   _handleOutsideClick = () => {
     this._disableEdit()
-    if (this.state.text !== this.props.note.text || this.state.jarId !== this.props.note.jar.id) {
+
+    const changed = this.state.text !== this.props.note.text || this.state.jarId !== this.props.note.jar.id
+    if (changed) {
       this._updateNote(this.props.note.id, this.state.text, this.state.jarId)
     }
   }
@@ -164,8 +166,6 @@ class Note extends React.Component {
     )
   }
 }
-
-
 
 export default createFragmentContainer(Note, graphql`
   fragment Note_note on Note {
