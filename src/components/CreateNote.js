@@ -63,7 +63,7 @@ class CreateNote extends Component {
         />
 
         <div>
-          <label for='note_text' className={css`
+          <label htmlFor='note_text' className={css`
               font-weight: 600;
                 `}
           >

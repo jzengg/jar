@@ -3,6 +3,9 @@ import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
 
 import styled, { css } from 'react-emotion'
+// import 'airbnb-browser-shims'
+import OutsideClickHandler from 'react-outside-click-handler'
+
 
 const secondary = css`
   font-size: 0.85rem
@@ -18,6 +21,8 @@ const NoteContainer = styled.div`
 const NoteHeader = styled.div`
   ${secondary};
   display: flex;
+  justify-content: space-between;
+  height: 1.5rem;
 `
 
 const NoteFooter = styled.div`
@@ -45,14 +50,35 @@ const NoteText = styled.div`
 
 class Note extends React.Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      editable: false
+    }
+  }
+
+  _enableEdit = (e) => {
+    this.setState({
+      editable: true
+    })
+  }
+
+  _disableEdit = (e) => {
+    this.setState({
+      editable: false
+    })
+  }
+
   render () {
     const createdAt = moment(this.props.note.createdAt).calendar()
     return (
-        <NoteContainer>
+      <OutsideClickHandler onOutsideClick={ this._disableEdit } >
+        <NoteContainer onClick={ this._enableEdit }>
           <NoteHeader>
             <TimestampTag>
               {createdAt}
             </TimestampTag>
+            {this.state.editable && <button onClick={ this._deleteNote }> X </button>}
         </NoteHeader>
           <NoteText>
             {this.props.note.text}
@@ -67,6 +93,7 @@ class Note extends React.Component {
             </AuthorTag>
         </NoteFooter>
       </NoteContainer>
+    </OutsideClickHandler>
     )
   }
 }
