@@ -50,6 +50,10 @@ class CreateNote extends Component {
     const { text, selectedJarId } = this.state
     if (text && selectedJarId) {
       CreateNoteMutation(text, selectedJarId)
+      
+      this.setState({
+        text: ''
+      })
     }
   }
 
