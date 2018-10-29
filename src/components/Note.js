@@ -14,16 +14,17 @@ const secondary = css`
   font-size: 0.85rem
 `
 
-const NoteContainer = styled.div`
-  border: 1px solid #d1d5da;
-  padding: 1rem;
-  margin: 1rem 0 1rem;
-  border-radius: 3px;
-  cursor: pointer;
-  &:hover {
-    border: 1px solid black
+const NoteContainer = styled.div(props => ({
+  border: '1px solid #d1d5da',
+  padding: '1rem',
+  margin: '1rem 0 1rem',
+  borderRadius: '3px',
+  opacity: props.editable && '0.6',
+  cursor: 'pointer',
+  '&:hover': {
+    border: '1px solid black'
   },
-`
+}))
 
 const NoteHeader = styled.div`
   ${secondary};
@@ -144,7 +145,7 @@ class Note extends React.Component {
 
     return (
       <OutsideClickHandler onOutsideClick={ this._handleOutsideClick } >
-        <NoteContainer onClick={ this._enableEdit }>
+        <NoteContainer onClick={ this._enableEdit } editable={ this.state.editable }>
           <NoteHeader>
             <TimestampTag>
               {createdAt}
