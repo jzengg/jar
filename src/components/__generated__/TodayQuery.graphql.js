@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 85428ceaaac92540fa77793f84cd780b
+ * @relayHash fbd3235d8bd9ed644d9baec694ca434b
  */
 
 /* eslint-disable */
@@ -317,12 +317,20 @@ fragment Note_note on Note {
   text
   createdAt
   jar {
+    id
     name
     owner {
       email
+      jars {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
       id
     }
-    id
   }
 }
 
@@ -467,7 +475,7 @@ return {
   "operationKind": "query",
   "name": "TodayQuery",
   "id": null,
-  "text": "query TodayQuery(\n  $userId: ID\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...CreateNote_user\n      id\n    }\n    ...NoteList_viewer_bWUU2\n    id\n  }\n}\n\nfragment CreateNote_user on User {\n  ...JarList_user\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Jar_jar\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment NoteList_viewer_bWUU2 on Viewer {\n  allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n    edges {\n      node {\n        ...Note_note\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    name\n    owner {\n      email\n      id\n    }\n    id\n  }\n}\n\nfragment JarList_user on User {\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Jar_jar\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Jar_jar on Jar {\n  id\n  name\n}\n",
+  "text": "query TodayQuery(\n  $userId: ID\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...CreateNote_user\n      id\n    }\n    ...NoteList_viewer_bWUU2\n    id\n  }\n}\n\nfragment CreateNote_user on User {\n  ...JarList_user\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Jar_jar\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment NoteList_viewer_bWUU2 on Viewer {\n  allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n    edges {\n      node {\n        ...Note_note\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    id\n    name\n    owner {\n      email\n      jars {\n        edges {\n          node {\n            id\n            name\n          }\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment JarList_user on User {\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Jar_jar\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Jar_jar on Jar {\n  id\n  name\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -652,6 +660,7 @@ return {
                         "concreteType": "Jar",
                         "plural": false,
                         "selections": [
+                          v5,
                           v6,
                           {
                             "kind": "LinkedField",
@@ -663,10 +672,44 @@ return {
                             "plural": false,
                             "selections": [
                               v2,
+                              {
+                                "kind": "LinkedField",
+                                "alias": null,
+                                "name": "jars",
+                                "storageKey": null,
+                                "args": null,
+                                "concreteType": "JarConnection",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "kind": "LinkedField",
+                                    "alias": null,
+                                    "name": "edges",
+                                    "storageKey": null,
+                                    "args": null,
+                                    "concreteType": "JarEdge",
+                                    "plural": true,
+                                    "selections": [
+                                      {
+                                        "kind": "LinkedField",
+                                        "alias": null,
+                                        "name": "node",
+                                        "storageKey": null,
+                                        "args": null,
+                                        "concreteType": "Jar",
+                                        "plural": false,
+                                        "selections": [
+                                          v5,
+                                          v6
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
                               v5
                             ]
-                          },
-                          v5
+                          }
                         ]
                       },
                       v7

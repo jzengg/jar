@@ -61,7 +61,8 @@ class Note extends React.Component {
     super(props)
     this.state = {
       editable: false,
-      text: this.props.note.text
+      text: this.props.note.text,
+      jarId : this.props.note.jar.id,
     }
   }
 
@@ -79,15 +80,9 @@ class Note extends React.Component {
 
   _handleOutsideClick = () => {
     this._disableEdit()
-    this._updateNote(this.props.note.id, this.state.text)
-  }
-
-  _updateNote = (id, text) => {
-    UpdateNoteMutation(id, text)
-  }
-
-  _deleteNote = () => {
-    DeleteNoteMutation(this.props.note.id)
+    if (this.state.text !== this.props.note.text || this.state.jarId !== this.props.note.jar.id) {
+      this._updateNote(this.props.note.id, this.state.text, this.state.jarId)
+    }
   }
 
   _handleTextChange = (e) => {
@@ -96,11 +91,26 @@ class Note extends React.Component {
     })
   }
 
+  _handleJarChange = (e) => {
+    this.setState({
+      jarId: e.target.value,
+    })
+  }
+
+  _updateNote = (id, text, jarId) => {
+    UpdateNoteMutation(id, text, jarId)
+  }
+
+  _deleteNote = () => {
+    DeleteNoteMutation(this.props.note.id)
+  }
+
   render () {
     const createdAt = moment(this.props.note.createdAt).calendar()
     const text = this.state.text
+    const jars = this.props.note.jar.owner.jars.edges.map(edge => edge.node)
 
-    let NoteBody
+    let NoteBody, Jar
     if (this.state.editable) {
       NoteBody = (
         <NoteText>
@@ -111,8 +121,25 @@ class Note extends React.Component {
             />
         </NoteText>
       )
+
+      Jar = (
+        <select value={ this.state.jarId } onChange={ this._handleJarChange }>
+          {jars.map((jar) => {
+            return (
+              <option key={ jar.id } value={ jar.id }>
+                {jar.name}
+              </option>
+            )
+          })}
+
+        </select>
+      )
+
     } else {
       NoteBody = <NoteText> {text} </NoteText>
+      Jar = (
+        <JarTag> { this.props.note.jar.name }</JarTag>
+      )
     }
 
     return (
@@ -126,10 +153,7 @@ class Note extends React.Component {
           </NoteHeader>
           { NoteBody }
           <NoteFooter>
-            <JarTag>
-              {this.props.note.jar.name}
-            </JarTag>
-
+            {Jar}
             <AuthorTag>
               {this.props.note.jar.owner.email}
             </AuthorTag>
@@ -148,9 +172,18 @@ export default createFragmentContainer(Note, graphql`
     text
     createdAt
     jar {
+      id
       name
       owner {
         email
+        jars {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
       }
     }
   }

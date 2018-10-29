@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 1fb64a447db33ac24ec735f3bb583870
+ * @relayHash 3df7af304fcd6f9c5ea3686f5e90bf54
  */
 
 /* eslint-disable */
@@ -290,12 +290,20 @@ fragment Note_note on Note {
   text
   createdAt
   jar {
+    id
     name
     owner {
       email
+      jars {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
       id
     }
-    id
   }
 }
 */
@@ -341,13 +349,20 @@ v2 = {
   "name": "id",
   "args": null,
   "storageKey": null
+},
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "name",
+  "args": null,
+  "storageKey": null
 };
 return {
   "kind": "Request",
   "operationKind": "query",
   "name": "HistoryQuery",
   "id": null,
-  "text": "query HistoryQuery(\n  $noteFilter: NoteFilter\n  $orderBy: NoteOrderBy\n) {\n  viewer {\n    ...NoteList_viewer_25puJs\n    id\n  }\n}\n\nfragment NoteList_viewer_25puJs on Viewer {\n  allNotes(last: 100, orderBy: $orderBy, filter: $noteFilter) {\n    edges {\n      node {\n        ...Note_note\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    name\n    owner {\n      email\n      id\n    }\n    id\n  }\n}\n",
+  "text": "query HistoryQuery(\n  $noteFilter: NoteFilter\n  $orderBy: NoteOrderBy\n) {\n  viewer {\n    ...NoteList_viewer_25puJs\n    id\n  }\n}\n\nfragment NoteList_viewer_25puJs on Viewer {\n  allNotes(last: 100, orderBy: $orderBy, filter: $noteFilter) {\n    edges {\n      node {\n        ...Note_note\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    id\n    name\n    owner {\n      email\n      jars {\n        edges {\n          node {\n            id\n            name\n          }\n        }\n      }\n      id\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -452,13 +467,8 @@ return {
                         "concreteType": "Jar",
                         "plural": false,
                         "selections": [
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "name": "name",
-                            "args": null,
-                            "storageKey": null
-                          },
+                          v2,
+                          v3,
                           {
                             "kind": "LinkedField",
                             "alias": null,
@@ -475,10 +485,44 @@ return {
                                 "args": null,
                                 "storageKey": null
                               },
+                              {
+                                "kind": "LinkedField",
+                                "alias": null,
+                                "name": "jars",
+                                "storageKey": null,
+                                "args": null,
+                                "concreteType": "JarConnection",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "kind": "LinkedField",
+                                    "alias": null,
+                                    "name": "edges",
+                                    "storageKey": null,
+                                    "args": null,
+                                    "concreteType": "JarEdge",
+                                    "plural": true,
+                                    "selections": [
+                                      {
+                                        "kind": "LinkedField",
+                                        "alias": null,
+                                        "name": "node",
+                                        "storageKey": null,
+                                        "args": null,
+                                        "concreteType": "Jar",
+                                        "plural": false,
+                                        "selections": [
+                                          v2,
+                                          v3
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
                               v2
                             ]
-                          },
-                          v2
+                          }
                         ]
                       },
                       {

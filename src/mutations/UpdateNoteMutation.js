@@ -2,7 +2,6 @@ import {
   commitMutation,
   graphql,
 } from 'react-relay'
-import {ConnectionHandler} from 'relay-runtime';
 
 import environment from '../Environment'
 
@@ -30,10 +29,11 @@ const mutation = graphql`
   }
 `
 
-export default (id, text, callback) => {
+export default (id, text, jarId) => {
   const variables = {
     input: {
       id,
+      jarId,
       text,
       clientMutationId: ""
     },
@@ -44,13 +44,6 @@ export default (id, text, callback) => {
     {
       mutation,
       variables,
-      // updater: proxyStore => {
-      //   const payload = proxyStore.getRootField('deleteNote')
-      //   const viewer = payload.getLinkedRecord('viewer')
-      //   const deletedId = payload.getValue('deletedId')
-      //   const conn = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
-      //   ConnectionHandler.deleteNode(conn, deletedId)
-      // },
       onError: err => console.error(err),
     },
   )
