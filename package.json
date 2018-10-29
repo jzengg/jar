@@ -61,7 +61,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "deploy": "aws s3 sync build/ s3://jzeng-jar",
+    "deploy": "node scripts/build.js && aws s3 sync build/ s3://jzeng-jar --delete",
     "relay": "relay-compiler --src ./src --schema ./schema.graphql --extensions js jsx"
   },
   "devDependencies": {
