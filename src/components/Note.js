@@ -3,6 +3,7 @@ import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
 
 import DeleteNoteMutation from '../mutations/DeleteNoteMutation'
+import UpdateNoteMutation from '../mutations/UpdateNoteMutation'
 
 import styled, { css } from 'react-emotion'
 // import 'airbnb-browser-shims'
@@ -55,7 +56,8 @@ class Note extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      editable: false
+      editable: false,
+      text: this.props.note.text
     }
   }
 
@@ -71,24 +73,54 @@ class Note extends React.Component {
     })
   }
 
+  _handleOutsideClick = () => {
+    this._disableEdit()
+    this._updateNote(this.props.note.id, this.state.text)
+  }
+
+  _updateNote = (id, text) => {
+    UpdateNoteMutation(id, text)
+  }
+
   _deleteNote = () => {
     DeleteNoteMutation(this.props.note.id)
   }
 
+  _handleTextChange = (e) => {
+    this.setState({
+      text: e.target.value
+    })
+  }
+
   render () {
     const createdAt = moment(this.props.note.createdAt).calendar()
+    const text = this.state.text
+
+    let NoteBody
+    if (this.state.editable) {
+      NoteBody = (
+        <NoteText>
+          <input
+            type="text"
+            onChange={ this._handleTextChange }
+            value={text}
+            />
+        </NoteText>
+      )
+    } else {
+      NoteBody = <NoteText> {text} </NoteText>
+    }
+
     return (
-      <OutsideClickHandler onOutsideClick={ this._disableEdit } >
+      <OutsideClickHandler onOutsideClick={ this._handleOutsideClick } >
         <NoteContainer onClick={ this._enableEdit }>
           <NoteHeader>
             <TimestampTag>
               {createdAt}
             </TimestampTag>
             {this.state.editable && <button onClick={ this._deleteNote }> X </button>}
-        </NoteHeader>
-          <NoteText>
-            {this.props.note.text}
-          </NoteText>
+          </NoteHeader>
+          { NoteBody }
           <NoteFooter>
             <JarTag>
               {this.props.note.jar.name}
