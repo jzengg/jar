@@ -19,6 +19,10 @@ const NoteContainer = styled.div`
   padding: 1rem;
   margin: 1rem 0 1rem;
   border-radius: 3px;
+  cursor: pointer;
+  &:hover {
+    border: 1px solid black
+  },
 `
 
 const NoteHeader = styled.div`
