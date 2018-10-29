@@ -12,7 +12,8 @@ import { NoteContainer, NoteHeader, NoteFooter, JarTag, TimestampTag, AuthorTag,
 
 const EditableNoteContainer = styled(NoteContainer)(props => ({
   opacity: props.editable && '0.6',
-  border: '1px dashed #d1d5da',
+  backgroundColor: '#eff3f6',
+  backgroundImage: 'linear-gradient(-180deg,#fafbfc,#eff3f6 90%)',
   cursor: 'pointer',
   '&:hover': {
     border: '1px solid black'
