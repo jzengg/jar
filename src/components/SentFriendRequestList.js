@@ -6,7 +6,6 @@ import FriendRequest from './FriendRequest'
 class SentFriendRequestList extends React.Component {
 
   render () {
-    console.log(this.props)
     let friendRequests = this.props.user.sentFriendRequests.edges
     return (
       <ul>

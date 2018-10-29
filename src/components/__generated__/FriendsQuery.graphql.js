@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash cb843999f6a6efd1a31152cd883652d5
+ * @relayHash d467e772a9f64a576b401ffcf0678cac
  */
 
 /* eslint-disable */
@@ -10,7 +10,7 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type FriendList_user$ref = any;
-type NoteList_viewer$ref = any;
+type Note_note$ref = any;
 export type FriendRequestStatus = "ACCEPTED" | "IGNORED" | "PENDING" | "%future added value";
 export type NoteFilter = {
   AND?: ?$ReadOnlyArray<NoteFilter>,
@@ -251,7 +251,13 @@ export type FriendsQueryResponse = {|
       +email: string,
       +$fragmentRefs: FriendList_user$ref,
     |},
-    +$fragmentRefs: NoteList_viewer$ref,
+    +allNotes: {|
+      +edges: ?$ReadOnlyArray<?{|
+        +node: {|
+          +$fragmentRefs: Note_note$ref
+        |}
+      |}>
+    |},
   |}
 |};
 export type FriendsQuery = {|
@@ -272,7 +278,20 @@ query FriendsQuery(
       ...FriendList_user
       id
     }
-    ...NoteList_viewer_bWUU2
+    allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {
+      edges {
+        node {
+          ...Note_note
+          id
+          __typename
+        }
+        cursor
+      }
+      pageInfo {
+        hasPreviousPage
+        startCursor
+      }
+    }
     id
   }
 }
@@ -294,23 +313,6 @@ fragment FriendList_user on User {
   }
 }
 
-fragment NoteList_viewer_bWUU2 on Viewer {
-  allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {
-    edges {
-      node {
-        ...Note_note
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      hasPreviousPage
-      startCursor
-    }
-  }
-}
-
 fragment Note_note on Note {
   id
   text
@@ -320,14 +322,6 @@ fragment Note_note on Note {
     name
     owner {
       email
-      jars {
-        edges {
-          node {
-            id
-            name
-          }
-        }
-      }
       id
     }
   }
@@ -370,42 +364,20 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "kind": "Literal",
-  "name": "last",
-  "value": 100,
-  "type": "Int"
-},
-v4 = [
-  v3,
-  {
-    "kind": "Literal",
-    "name": "orderBy",
-    "value": "createdAt_DESC",
-    "type": "UserOrderBy"
-  }
-],
-v5 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "id",
-  "args": null,
-  "storageKey": null
-},
-v6 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "__typename",
   "args": null,
   "storageKey": null
 },
-v7 = {
+v4 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "cursor",
   "args": null,
   "storageKey": null
 },
-v8 = {
+v5 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "pageInfo",
@@ -430,6 +402,28 @@ v8 = {
     }
   ]
 },
+v6 = {
+  "kind": "Literal",
+  "name": "last",
+  "value": 100,
+  "type": "Int"
+},
+v7 = [
+  v6,
+  {
+    "kind": "Literal",
+    "name": "orderBy",
+    "value": "createdAt_DESC",
+    "type": "UserOrderBy"
+  }
+],
+v8 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
 v9 = [
   {
     "kind": "Variable",
@@ -437,28 +431,33 @@ v9 = [
     "variableName": "noteFilter",
     "type": "NoteFilter"
   },
-  v3,
+  v6,
   {
     "kind": "Literal",
     "name": "orderBy",
     "value": "createdAt_DESC",
     "type": "NoteOrderBy"
   }
-],
-v10 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "name",
-  "args": null,
-  "storageKey": null
-};
+];
 return {
   "kind": "Request",
   "operationKind": "query",
   "name": "FriendsQuery",
   "id": null,
-  "text": "query FriendsQuery(\n  $userId: ID\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...FriendList_user\n      id\n    }\n    ...NoteList_viewer_bWUU2\n    id\n  }\n}\n\nfragment FriendList_user on User {\n  friends(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Friend_friend\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment NoteList_viewer_bWUU2 on Viewer {\n  allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n    edges {\n      node {\n        ...Note_note\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    id\n    name\n    owner {\n      email\n      jars {\n        edges {\n          node {\n            id\n            name\n          }\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment Friend_friend on User {\n  id\n  email\n}\n",
-  "metadata": {},
+  "text": "query FriendsQuery(\n  $userId: ID\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...FriendList_user\n      id\n    }\n    allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n      edges {\n        node {\n          ...Note_note\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        hasPreviousPage\n        startCursor\n      }\n    }\n    id\n  }\n}\n\nfragment FriendList_user on User {\n  friends(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Friend_friend\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    id\n    name\n    owner {\n      email\n      id\n    }\n  }\n}\n\nfragment Friend_friend on User {\n  id\n  email\n}\n",
+  "metadata": {
+    "connection": [
+      {
+        "count": null,
+        "cursor": null,
+        "direction": "backward",
+        "path": [
+          "viewer",
+          "allNotes"
+        ]
+      }
+    ]
+  },
   "fragment": {
     "kind": "Fragment",
     "name": "FriendsQuery",
@@ -493,15 +492,44 @@ return {
             ]
           },
           {
-            "kind": "FragmentSpread",
-            "name": "NoteList_viewer",
-            "args": [
+            "kind": "LinkedField",
+            "alias": "allNotes",
+            "name": "__Friends_allNotes_connection",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "NoteConnection",
+            "plural": false,
+            "selections": [
               {
-                "kind": "Variable",
-                "name": "noteFilter",
-                "variableName": "noteFilter",
-                "type": null
-              }
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "edges",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "NoteEdge",
+                "plural": true,
+                "selections": [
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "node",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "Note",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "kind": "FragmentSpread",
+                        "name": "Note_note",
+                        "args": null
+                      },
+                      v3
+                    ]
+                  },
+                  v4
+                ]
+              },
+              v5
             ]
           }
         ]
@@ -537,7 +565,7 @@ return {
                 "alias": null,
                 "name": "friends",
                 "storageKey": "friends(last:100,orderBy:\"createdAt_DESC\")",
-                "args": v4,
+                "args": v7,
                 "concreteType": "UserConnection",
                 "plural": false,
                 "selections": [
@@ -559,27 +587,27 @@ return {
                         "concreteType": "User",
                         "plural": false,
                         "selections": [
-                          v5,
+                          v8,
                           v2,
-                          v6
+                          v3
                         ]
                       },
-                      v7
+                      v4
                     ]
                   },
-                  v8
+                  v5
                 ]
               },
               {
                 "kind": "LinkedHandle",
                 "alias": null,
                 "name": "friends",
-                "args": v4,
+                "args": v7,
                 "handle": "connection",
                 "key": "FriendList_friends",
                 "filters": []
               },
-              v5
+              v8
             ]
           },
           {
@@ -609,7 +637,7 @@ return {
                     "concreteType": "Note",
                     "plural": false,
                     "selections": [
-                      v5,
+                      v8,
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -633,8 +661,14 @@ return {
                         "concreteType": "Jar",
                         "plural": false,
                         "selections": [
-                          v5,
-                          v10,
+                          v8,
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "name": "name",
+                            "args": null,
+                            "storageKey": null
+                          },
                           {
                             "kind": "LinkedField",
                             "alias": null,
@@ -645,53 +679,18 @@ return {
                             "plural": false,
                             "selections": [
                               v2,
-                              {
-                                "kind": "LinkedField",
-                                "alias": null,
-                                "name": "jars",
-                                "storageKey": null,
-                                "args": null,
-                                "concreteType": "JarConnection",
-                                "plural": false,
-                                "selections": [
-                                  {
-                                    "kind": "LinkedField",
-                                    "alias": null,
-                                    "name": "edges",
-                                    "storageKey": null,
-                                    "args": null,
-                                    "concreteType": "JarEdge",
-                                    "plural": true,
-                                    "selections": [
-                                      {
-                                        "kind": "LinkedField",
-                                        "alias": null,
-                                        "name": "node",
-                                        "storageKey": null,
-                                        "args": null,
-                                        "concreteType": "Jar",
-                                        "plural": false,
-                                        "selections": [
-                                          v5,
-                                          v10
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              },
-                              v5
+                              v8
                             ]
                           }
                         ]
                       },
-                      v6
+                      v3
                     ]
                   },
-                  v7
+                  v4
                 ]
               },
-              v8
+              v5
             ]
           },
           {
@@ -700,10 +699,10 @@ return {
             "name": "allNotes",
             "args": v9,
             "handle": "connection",
-            "key": "NoteList_allNotes",
+            "key": "Friends_allNotes",
             "filters": []
           },
-          v5
+          v8
         ]
       }
     ]
@@ -711,5 +710,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'da4c4d4f6ed7a92190cbfbfa2dca1830';
+(node/*: any*/).hash = '1da486f69614fafe6fe8b4d5ef1adc3b';
 module.exports = node;

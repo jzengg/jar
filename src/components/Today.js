@@ -4,6 +4,7 @@ import moment from 'moment'
 
 import CreateNote from './CreateNote'
 import NoteList from './NoteList'
+import EditableNote from './EditableNote'
 
 import { QueryRenderer, graphql } from 'react-relay'
 import environment from '../Environment'
@@ -17,7 +18,13 @@ const TodayQuery = graphql`
         email
         ...CreateNote_user
       }
-      ...NoteList_viewer @arguments(noteFilter: $noteFilter)
+      allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) @connection(key: "NoteList_allNotes", filters: []) {
+        edges {
+          node {
+            ...EditableNote_note
+          }
+        }
+      }
     }
   }
 `
@@ -51,9 +58,13 @@ class Today extends Component {
               <div>
                 <h2> Add a New Note </h2>
                 <CreateNote user={props.viewer.User} />
-                
+
                 <h2> Notes from Today </h2>
-                <NoteList viewer={props.viewer} />
+                <NoteList>
+                  {props.viewer.allNotes.edges.map(edge =>
+                    <EditableNote key={edge.node.__id} note={edge.node} />
+                  )}
+                </NoteList>
               </div>
             )
 

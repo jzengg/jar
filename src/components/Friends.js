@@ -7,6 +7,7 @@ import { GC_USER_ID } from '../constants'
 
 import FriendList from './FriendList'
 import NoteList from './NoteList'
+import Note from './Note'
 
 const FriendsQuery = graphql`
   query FriendsQuery($userId: ID, $noteFilter: NoteFilter) {
@@ -15,7 +16,13 @@ const FriendsQuery = graphql`
         email
         ...FriendList_user
       }
-      ...NoteList_viewer @arguments(noteFilter: $noteFilter)
+      allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) @connection(key: "Friends_allNotes", filters: []) {
+        edges {
+          node {
+            ...Note_note
+          }
+        }
+      }
     }
   }
 `
@@ -46,7 +53,11 @@ class Friends extends Component {
                 <h2> Friends </h2>
                 <FriendList user={props.viewer.User} />
                 <h2> Their notes </h2>
-                <NoteList viewer={props.viewer} />
+                  <NoteList>
+                    {props.viewer.allNotes.edges.map(edge =>
+                      <Note key={edge.node.__id} note={edge.node} />
+                    )}
+                  </NoteList>
               </div>
             )
 

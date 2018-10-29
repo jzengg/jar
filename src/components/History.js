@@ -6,11 +6,18 @@ import { GC_USER_ID } from '../constants'
 import moment from 'moment'
 
 import NoteList from './NoteList'
+import EditableNote from './EditableNote'
 
 const HistoryQuery = graphql`
-  query HistoryQuery($noteFilter: NoteFilter, $orderBy: NoteOrderBy) {
+  query HistoryQuery($noteFilter: NoteFilter) {
     viewer {
-      ...NoteList_viewer @arguments(noteFilter: $noteFilter, orderBy: $orderBy)
+      allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) @connection(key: "NoteList_allNotes", filters: []) {
+        edges {
+          node {
+            ...EditableNote_note
+          }
+        }
+      }
     }
   }
 `
@@ -31,8 +38,7 @@ class History extends Component {
         jar: { owner: { id: userId } },
         createdAt_gt: this.state.dayStart,
         createdAt_lte: this.state.dayEnd
-      },
-      orderBy: "createdAt_ASC"
+      }
     }
 
     return (
@@ -47,7 +53,11 @@ class History extends Component {
             return (
               <div>
                 <h2> Notes from this week </h2>
-                <NoteList viewer={props.viewer} />
+                  <NoteList>
+                    {props.viewer.allNotes.edges.map(edge =>
+                      <EditableNote key={edge.node.__id} note={edge.node} />
+                    )}
+                  </NoteList>
               </div>
             )
 

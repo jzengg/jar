@@ -18,15 +18,7 @@ export type Note_note = {|
     +id: string,
     +name: string,
     +owner: {|
-      +email: string,
-      +jars: ?{|
-        +edges: ?$ReadOnlyArray<?{|
-          +node: {|
-            +id: string,
-            +name: string,
-          |}
-        |}>
-      |},
+      +email: string
     |},
   |},
   +$refType: Note_note$ref,
@@ -39,13 +31,6 @@ var v0 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
-  "args": null,
-  "storageKey": null
-},
-v1 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "name",
   "args": null,
   "storageKey": null
 };
@@ -81,7 +66,13 @@ return {
       "plural": false,
       "selections": [
         v0,
-        v1,
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "name",
+          "args": null,
+          "storageKey": null
+        },
         {
           "kind": "LinkedField",
           "alias": null,
@@ -97,41 +88,6 @@ return {
               "name": "email",
               "args": null,
               "storageKey": null
-            },
-            {
-              "kind": "LinkedField",
-              "alias": null,
-              "name": "jars",
-              "storageKey": null,
-              "args": null,
-              "concreteType": "JarConnection",
-              "plural": false,
-              "selections": [
-                {
-                  "kind": "LinkedField",
-                  "alias": null,
-                  "name": "edges",
-                  "storageKey": null,
-                  "args": null,
-                  "concreteType": "JarEdge",
-                  "plural": true,
-                  "selections": [
-                    {
-                      "kind": "LinkedField",
-                      "alias": null,
-                      "name": "node",
-                      "storageKey": null,
-                      "args": null,
-                      "concreteType": "Jar",
-                      "plural": false,
-                      "selections": [
-                        v0,
-                        v1
-                      ]
-                    }
-                  ]
-                }
-              ]
             }
           ]
         }
@@ -141,5 +97,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '051416c5d301afee375841320b17c35e';
+(node/*: any*/).hash = 'a2c3dcec55bcb96109138bef90649e9e';
 module.exports = node;

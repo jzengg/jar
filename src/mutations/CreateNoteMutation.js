@@ -56,7 +56,7 @@ export default (text, jarId, callback) => {
         const payload = proxyStore.getRootField('createNote')
         const viewer = payload.getLinkedRecord('viewer')
         const note = payload.getLinkedRecord('note')
-        
+
         const conn = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
         const edge = ConnectionHandler.createEdge(proxyStore, conn, note, 'NotesEdge')
         ConnectionHandler.insertEdgeBefore(conn, edge)
