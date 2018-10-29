@@ -2,6 +2,8 @@ import moment from 'moment'
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
 
+import DeleteNoteMutation from '../mutations/DeleteNoteMutation'
+
 import styled, { css } from 'react-emotion'
 // import 'airbnb-browser-shims'
 import OutsideClickHandler from 'react-outside-click-handler'
@@ -67,6 +69,10 @@ class Note extends React.Component {
     this.setState({
       editable: false
     })
+  }
+
+  _deleteNote = () => {
+    DeleteNoteMutation(this.props.note.id)
   }
 
   render () {
