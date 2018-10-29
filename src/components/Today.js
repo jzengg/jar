@@ -5,6 +5,7 @@ import moment from 'moment'
 import CreateNote from './CreateNote'
 import NoteList from './NoteList'
 import EditableNote from './EditableNote'
+import Note from './Note'
 
 import { QueryRenderer, graphql } from 'react-relay'
 import environment from '../Environment'
@@ -22,6 +23,12 @@ const TodayQuery = graphql`
         edges {
           node {
             ...EditableNote_note
+            ...Note_note
+            jar {
+              owner {
+                id
+              }
+            }
           }
         }
       }
@@ -33,12 +40,17 @@ class Today extends Component {
 
   render() {
     const userId = localStorage.getItem(GC_USER_ID)
-    const dayStart = moment().startOf('day')
+    const dayStart = moment().startOf('month')
     const dayEnd = moment().endOf('day')
 
     const variables = {
       noteFilter: {
-        jar: { owner: { id: userId } },
+        jar: {
+          OR: [
+            { owner: { id: userId } },
+            { owner: { friends_every: { id: userId } } }
+          ],
+        },
         createdAt_gt: dayStart,
         createdAt_lte: dayEnd
       },
@@ -62,8 +74,15 @@ class Today extends Component {
 
                 <h2> Notes from Today </h2>
                 <NoteList>
-                  {props.viewer.allNotes.edges.map(edge =>
-                    <EditableNote key={edge.node.__id} note={edge.node} />
+                  {props.viewer.allNotes.edges.map(({ node }) => {
+                    const isAuthor = node.jar.owner.id === userId
+                    
+                    if (isAuthor) {
+                      return <EditableNote key={node.__id} note={node} />
+                    } else {
+                      return <Note key={node.__id} note={node} />
+                    }
+                  }
                   )}
                 </NoteList>
               </div>
