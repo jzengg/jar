@@ -54,6 +54,7 @@ class Today extends Component {
           if (error) {
             return <div>{error.message}</div>
           } else if (props) {
+            const notesCount = props.viewer.allNotes.edges.length
             return (
               <div>
                 <h2> Add a New Note </h2>
