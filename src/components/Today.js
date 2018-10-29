@@ -49,10 +49,11 @@ class Today extends Component {
           } else if (props) {
             return (
               <div>
-                <h2> Notes from Today </h2>
-                <NoteList viewer={props.viewer} />
                 <h2> Add a New Note </h2>
                 <CreateNote user={props.viewer.User} />
+                
+                <h2> Notes from Today </h2>
+                <NoteList viewer={props.viewer} />
               </div>
             )
 

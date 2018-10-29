@@ -22,6 +22,14 @@ const mutation = graphql`
           owner {
             id
             email
+            jars {
+              edges {
+                node {
+                  id
+                  name
+                }
+              }
+            }
           }
         }
 
@@ -48,9 +56,10 @@ export default (text, jarId, callback) => {
         const payload = proxyStore.getRootField('createNote')
         const viewer = payload.getLinkedRecord('viewer')
         const note = payload.getLinkedRecord('note')
-        const notes = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
-        const edge = ConnectionHandler.createEdge(proxyStore, notes, note, 'NotesEdge')
-        ConnectionHandler.insertEdgeBefore(notes, edge)
+        
+        const conn = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
+        const edge = ConnectionHandler.createEdge(proxyStore, conn, note, 'NotesEdge')
+        ConnectionHandler.insertEdgeBefore(conn, edge)
       },
       onError: err => console.error(err),
     },

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 3734482973ff498d5283ce92da318862
+ * @relayHash 9a499733236285ac89e6e094c1be8f49
  */
 
 /* eslint-disable */
@@ -109,6 +109,14 @@ export type CreateNoteMutationResponse = {|
         +owner: {|
           +id: string,
           +email: string,
+          +jars: ?{|
+            +edges: ?$ReadOnlyArray<?{|
+              +node: {|
+                +id: string,
+                +name: string,
+              |}
+            |}>
+          |},
         |},
       |},
     |},
@@ -139,6 +147,14 @@ mutation CreateNoteMutation(
         owner {
           id
           email
+          jars {
+            edges {
+              node {
+                id
+                name
+              }
+            }
+          }
         }
       }
     }
@@ -162,7 +178,14 @@ v1 = {
   "args": null,
   "storageKey": null
 },
-v2 = [
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "name",
+  "args": null,
+  "storageKey": null
+},
+v3 = [
   {
     "kind": "LinkedField",
     "alias": null,
@@ -225,13 +248,7 @@ v2 = [
             "plural": false,
             "selections": [
               v1,
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "name",
-                "args": null,
-                "storageKey": null
-              },
+              v2,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -248,6 +265,41 @@ v2 = [
                     "name": "email",
                     "args": null,
                     "storageKey": null
+                  },
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "jars",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "JarConnection",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "kind": "LinkedField",
+                        "alias": null,
+                        "name": "edges",
+                        "storageKey": null,
+                        "args": null,
+                        "concreteType": "JarEdge",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "kind": "LinkedField",
+                            "alias": null,
+                            "name": "node",
+                            "storageKey": null,
+                            "args": null,
+                            "concreteType": "Jar",
+                            "plural": false,
+                            "selections": [
+                              v1,
+                              v2
+                            ]
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -263,7 +315,7 @@ return {
   "operationKind": "mutation",
   "name": "CreateNoteMutation",
   "id": null,
-  "text": "mutation CreateNoteMutation(\n  $input: CreateNoteInput!\n) {\n  createNote(input: $input) {\n    viewer {\n      id\n    }\n    note {\n      id\n      createdAt\n      text\n      jar {\n        id\n        name\n        owner {\n          id\n          email\n        }\n      }\n    }\n  }\n}\n",
+  "text": "mutation CreateNoteMutation(\n  $input: CreateNoteInput!\n) {\n  createNote(input: $input) {\n    viewer {\n      id\n    }\n    note {\n      id\n      createdAt\n      text\n      jar {\n        id\n        name\n        owner {\n          id\n          email\n          jars {\n            edges {\n              node {\n                id\n                name\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -271,16 +323,16 @@ return {
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": v0,
-    "selections": v2
+    "selections": v3
   },
   "operation": {
     "kind": "Operation",
     "name": "CreateNoteMutation",
     "argumentDefinitions": v0,
-    "selections": v2
+    "selections": v3
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'f8520f455b62802313b8249760b1ba07';
+(node/*: any*/).hash = '217d6afa4d0a8c8f2a890dc840c00c8c';
 module.exports = node;
