@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
-
 import moment from 'moment'
+import { QueryRenderer, graphql } from 'react-relay'
+
+import environment from '../Environment'
+import { GC_USER_ID } from '../constants'
+
+import NewFriendNoteSubscription from '../subscriptions/NewFriendNoteSubscription'
 
 import CreateNote from './CreateNote'
 import NoteList from './NoteList'
 import EditableNote from './EditableNote'
 import Note from './Note'
-
-import { QueryRenderer, graphql } from 'react-relay'
-import environment from '../Environment'
-
-import { GC_USER_ID } from '../constants'
 
 const TodayQuery = graphql`
   query TodayQuery($userId: ID, $noteFilter: NoteFilter) {
@@ -37,6 +37,10 @@ const TodayQuery = graphql`
 `
 
 class Today extends Component {
+  componentDidMount() {
+    const userId = localStorage.getItem(GC_USER_ID)
+    userId && NewFriendNoteSubscription(userId)
+  }
 
   render() {
     const userId = localStorage.getItem(GC_USER_ID)
@@ -76,7 +80,7 @@ class Today extends Component {
                 <NoteList>
                   {props.viewer.allNotes.edges.map(({ node }) => {
                     const isAuthor = node.jar.owner.id === userId
-                    
+
                     if (isAuthor) {
                       return <EditableNote key={node.__id} note={node} />
                     } else {

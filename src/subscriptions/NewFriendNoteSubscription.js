@@ -6,7 +6,7 @@ import {
 import environment from '../Environment'
 
 const newFriendNoteSubscription = graphql`
-  subscription NewFriendNoteSubscription($filter: NoteSubscriptionFilter!) {
+  subscription NewFriendNoteSubscription($filter: NoteSubscriptionFilter) {
     Note(filter: $filter) {
      node {
        id

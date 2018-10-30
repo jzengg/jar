@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 462b8df8f82aec6fac1dc31353e0267d
+ * @relayHash a4756a3333ebfba34de983a42ebb4b77
  */
 
 /* eslint-disable */
@@ -297,7 +297,7 @@ export type FriendRequestFilter = {
   sender?: ?UserFilter,
 };
 export type NewFriendNoteSubscriptionVariables = {|
-  filter: NoteSubscriptionFilter
+  filter?: ?NoteSubscriptionFilter
 |};
 export type NewFriendNoteSubscriptionResponse = {|
   +Note: ?{|
@@ -315,7 +315,7 @@ export type NewFriendNoteSubscription = {|
 
 /*
 subscription NewFriendNoteSubscription(
-  $filter: NoteSubscriptionFilter!
+  $filter: NoteSubscriptionFilter
 ) {
   Note(filter: $filter) {
     node {
@@ -330,7 +330,7 @@ var v0 = [
   {
     "kind": "LocalArgument",
     "name": "filter",
-    "type": "NoteSubscriptionFilter!",
+    "type": "NoteSubscriptionFilter",
     "defaultValue": null
   }
 ],
@@ -377,7 +377,7 @@ return {
   "operationKind": "subscription",
   "name": "NewFriendNoteSubscription",
   "id": null,
-  "text": "subscription NewFriendNoteSubscription(\n  $filter: NoteSubscriptionFilter!\n) {\n  Note(filter: $filter) {\n    node {\n      id\n    }\n  }\n}\n",
+  "text": "subscription NewFriendNoteSubscription(\n  $filter: NoteSubscriptionFilter\n) {\n  Note(filter: $filter) {\n    node {\n      id\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -396,5 +396,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '0719bd981050e16f49d1bd30eb05a43a';
+(node/*: any*/).hash = '0c2dd1d6481a85baf4d6407f4e92c286';
 module.exports = node;

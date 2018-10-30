@@ -30,7 +30,13 @@ const fetchQuery = (operation,variables) => {
 const setupSubscription = (config, variables, cacheConfig, observer) => {
   const query = config.text
 
-  const subscriptionClient = new SubscriptionClient('wss://subscriptions.us-west-2.graph.cool/v1/cjn6n3fw25jr50120xugu4ged', {reconnect: true})
+  const subscriptionClient = new SubscriptionClient('wss://subscriptions.us-west-2.graph.cool/v1/cjn6n3fw25jr50120xugu4ged', {
+    reconnect: true,
+    timeout: 30000,
+    connectionParams: {
+      authToken: localStorage.getItem(GC_AUTH_TOKEN),
+    }
+  })
   subscriptionClient.subscribe({query, variables}, (error, result) => {
     observer.onNext({data: result})
   })
