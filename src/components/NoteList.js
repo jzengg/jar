@@ -10,6 +10,15 @@ const Container = styled.div(props => ({
 
 class NoteList extends React.Component {
 
+  componentDidMount() {
+    const subscribe = this.props.subscribeToFriendNotes
+    this.subscription = subscribe && subscribe(this.props.viewer.id)
+  }
+
+  componentWillUnmount() {
+    this.subscription && this.subscription.dispose()
+  }
+
   render () {
     return (
       <Container column>

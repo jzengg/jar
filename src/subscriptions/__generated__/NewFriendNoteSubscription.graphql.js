@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash a4756a3333ebfba34de983a42ebb4b77
+ * @relayHash 3794f16f8e1f57869a4717dcef116ba6
  */
 
 /* eslint-disable */
@@ -301,9 +301,18 @@ export type NewFriendNoteSubscriptionVariables = {|
 |};
 export type NewFriendNoteSubscriptionResponse = {|
   +Note: ?{|
+    +mutation: _ModelMutationType,
     +node: ?{|
-      +id: string
-    |}
+      +id: string,
+      +text: string,
+      +createdAt: any,
+      +jar: {|
+        +owner: {|
+          +id: string,
+          +email: string,
+        |}
+      |},
+    |},
   |}
 |};
 export type NewFriendNoteSubscription = {|
@@ -318,8 +327,18 @@ subscription NewFriendNoteSubscription(
   $filter: NoteSubscriptionFilter
 ) {
   Note(filter: $filter) {
+    mutation
     node {
       id
+      text
+      createdAt
+      jar {
+        owner {
+          id
+          email
+        }
+        id
+      }
     }
   }
 }
@@ -336,48 +355,65 @@ var v0 = [
 ],
 v1 = [
   {
-    "kind": "LinkedField",
-    "alias": null,
-    "name": "Note",
-    "storageKey": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "filter",
-        "variableName": "filter",
-        "type": "NoteSubscriptionFilter"
-      }
-    ],
-    "concreteType": "NoteSubscriptionPayload",
-    "plural": false,
-    "selections": [
-      {
-        "kind": "LinkedField",
-        "alias": null,
-        "name": "node",
-        "storageKey": null,
-        "args": null,
-        "concreteType": "Note",
-        "plural": false,
-        "selections": [
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "name": "id",
-            "args": null,
-            "storageKey": null
-          }
-        ]
-      }
-    ]
+    "kind": "Variable",
+    "name": "filter",
+    "variableName": "filter",
+    "type": "NoteSubscriptionFilter"
   }
-];
+],
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "mutation",
+  "args": null,
+  "storageKey": null
+},
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "text",
+  "args": null,
+  "storageKey": null
+},
+v5 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "createdAt",
+  "args": null,
+  "storageKey": null
+},
+v6 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "owner",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "User",
+  "plural": false,
+  "selections": [
+    v3,
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "email",
+      "args": null,
+      "storageKey": null
+    }
+  ]
+};
 return {
   "kind": "Request",
   "operationKind": "subscription",
   "name": "NewFriendNoteSubscription",
   "id": null,
-  "text": "subscription NewFriendNoteSubscription(\n  $filter: NoteSubscriptionFilter\n) {\n  Note(filter: $filter) {\n    node {\n      id\n    }\n  }\n}\n",
+  "text": "subscription NewFriendNoteSubscription(\n  $filter: NoteSubscriptionFilter\n) {\n  Note(filter: $filter) {\n    mutation\n    node {\n      id\n      text\n      createdAt\n      jar {\n        owner {\n          id\n          email\n        }\n        id\n      }\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -385,16 +421,95 @@ return {
     "type": "Subscription",
     "metadata": null,
     "argumentDefinitions": v0,
-    "selections": v1
+    "selections": [
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "Note",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "NoteSubscriptionPayload",
+        "plural": false,
+        "selections": [
+          v2,
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "node",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "Note",
+            "plural": false,
+            "selections": [
+              v3,
+              v4,
+              v5,
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "jar",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "Jar",
+                "plural": false,
+                "selections": [
+                  v6
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "operation": {
     "kind": "Operation",
     "name": "NewFriendNoteSubscription",
     "argumentDefinitions": v0,
-    "selections": v1
+    "selections": [
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "Note",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "NoteSubscriptionPayload",
+        "plural": false,
+        "selections": [
+          v2,
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "node",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "Note",
+            "plural": false,
+            "selections": [
+              v3,
+              v4,
+              v5,
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "jar",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "Jar",
+                "plural": false,
+                "selections": [
+                  v6,
+                  v3
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '0c2dd1d6481a85baf4d6407f4e92c286';
+(node/*: any*/).hash = 'd4405e7f45326d1146321bfefb644e0d';
 module.exports = node;

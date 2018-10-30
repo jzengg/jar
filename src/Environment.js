@@ -37,9 +37,22 @@ const setupSubscription = (config, variables, cacheConfig, observer) => {
       authToken: localStorage.getItem(GC_AUTH_TOKEN),
     }
   })
-  subscriptionClient.subscribe({query, variables}, (error, result) => {
-    observer.onNext({data: result})
-  })
+  const client = subscriptionClient.request({ query, variables }).subscribe({
+    next: result => {
+      observer.onNext({ data: result.data });
+    },
+    complete: () => {
+      observer.onCompleted();
+    },
+    error: error => {
+      observer.onError(error);
+    }
+  });
+
+  return {
+    dispose: client.unsubscribe
+  };
+
 }
 
 const network = Network.create(fetchQuery, setupSubscription)

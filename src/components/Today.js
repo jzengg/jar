@@ -15,6 +15,7 @@ import Note from './Note'
 const TodayQuery = graphql`
   query TodayQuery($userId: ID, $noteFilter: NoteFilter) {
     viewer {
+      id
       User(id: $userId) {
         email
         ...CreateNote_user
@@ -37,9 +38,10 @@ const TodayQuery = graphql`
 `
 
 class Today extends Component {
-  componentDidMount() {
+
+  _subscribeToFriendNotes(viewerId) {
     const userId = localStorage.getItem(GC_USER_ID)
-    userId && NewFriendNoteSubscription(userId)
+    return NewFriendNoteSubscription(viewerId, userId)
   }
 
   render() {
@@ -52,7 +54,7 @@ class Today extends Component {
         jar: {
           OR: [
             { owner: { id: userId } },
-            { owner: { friends_every: { id: userId } } }
+            { owner: { friends_some: { id: userId } } }
           ],
         },
         createdAt_gt: dayStart,
@@ -70,14 +72,13 @@ class Today extends Component {
           if (error) {
             return <div>{error.message}</div>
           } else if (props) {
-
             return (
               <div>
                 <h2> Add a New Note </h2>
                 <CreateNote user={props.viewer.User} />
 
                 <h2> Notes from Today </h2>
-                <NoteList>
+                <NoteList subscribeToFriendNotes={this._subscribeToFriendNotes} viewer={props.viewer}>
                   {props.viewer.allNotes.edges.map(({ node }) => {
                     const isAuthor = node.jar.owner.id === userId
 

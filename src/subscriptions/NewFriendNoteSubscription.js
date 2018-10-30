@@ -3,39 +3,62 @@ import {
   requestSubscription
 } from 'react-relay'
 
+import {ConnectionHandler} from 'relay-runtime';
+
 import environment from '../Environment'
 
 const newFriendNoteSubscription = graphql`
   subscription NewFriendNoteSubscription($filter: NoteSubscriptionFilter) {
     Note(filter: $filter) {
-     node {
-       id
-     }
-   }
+      mutation
+      node {
+        id
+        text
+        createdAt
+        jar {
+          owner {
+            id
+            email
+          }
+        }
+      }
+    }
   }
 `
 
-export default (userId) => {
+export default (viewerId, userId) => {
+  const filter = {
+    node: {
+      jar: {
+        owner: {
+        AND: [
+          {friends_some: {
+            id: userId
+          }},
+          {id_not: userId}
+        ]
+        }
+      }
+    }
+  }
 
   const subscriptionConfig = {
     subscription: newFriendNoteSubscription,
-    variables: { userId },
-    onCompleted: () => console.log('new note'),
-    // updater: proxyStore => {
-    //   const createVoteField = proxyStore.getRootField('Vote')
-    //   const newVote = createVoteField.getLinkedRecord('node')
-    //   const updatedLink = newVote.getLinkedRecord('link')
-    //   const linkId = updatedLink.getValue('id')
-    //   const newVotes = updatedLink.getLinkedRecord('_votesMeta')
-    //   const newVoteCount = newVotes.getValue('count')
-    //
-    //   const link = proxyStore.get(linkId)
-    //   link.getLinkedRecord('votes').setValue(newVoteCount, 'count')
-    // },
+    variables: { userId, filter },
+    updater: proxyStore => {
+      const payload = proxyStore.getRootField('Note')
+      const note = payload.getLinkedRecord('node')
+      const viewer = proxyStore.get(viewerId)
+
+      const conn = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
+      const edge = ConnectionHandler.createEdge(proxyStore, conn, note, 'NotesEdge')
+      ConnectionHandler.insertEdgeBefore(conn, edge)
+    },
     onError: error => console.log(`An error occured:`, error)
   }
 
-  requestSubscription(
+
+  return requestSubscription(
     environment,
     subscriptionConfig
   )
