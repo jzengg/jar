@@ -11,6 +11,9 @@ const newFriendNoteSubscription = graphql`
   subscription NewFriendNoteSubscription($filter: NoteSubscriptionFilter) {
     Note(filter: $filter) {
       mutation
+      previousValues {
+        id
+      }
       node {
         id
         text
@@ -48,17 +51,15 @@ export default (viewerId, userId) => {
     updater: proxyStore => {
       const payload = proxyStore.getRootField('Note')
       const mutation = payload.getValue('mutation')
+      const viewer = proxyStore.get(viewerId)
+      const conn = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
       if (mutation === 'CREATED') {
         const note = payload.getLinkedRecord('node')
-        const viewer = proxyStore.get(viewerId)
-
-        const conn = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
         const edge = ConnectionHandler.createEdge(proxyStore, conn, note, 'NotesEdge')
         ConnectionHandler.insertEdgeBefore(conn, edge)
       } else if (mutation === 'DELETED') {
-
-      } else if (mutation === 'UPDATED') {
-
+        const deletedId = payload.getLinkedRecord('previousValues').getValue('id')
+        ConnectionHandler.deleteNode(conn, deletedId)
       }
     },
     onError: error => console.log(`An error occured:`, error)

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 3794f16f8e1f57869a4717dcef116ba6
+ * @relayHash abb3b6fc2abd1bd1bdf2cc11e5d58b0a
  */
 
 /* eslint-disable */
@@ -302,6 +302,9 @@ export type NewFriendNoteSubscriptionVariables = {|
 export type NewFriendNoteSubscriptionResponse = {|
   +Note: ?{|
     +mutation: _ModelMutationType,
+    +previousValues: ?{|
+      +id: string
+    |},
     +node: ?{|
       +id: string,
       +text: string,
@@ -328,6 +331,9 @@ subscription NewFriendNoteSubscription(
 ) {
   Note(filter: $filter) {
     mutation
+    previousValues {
+      id
+    }
     node {
       id
       text
@@ -376,20 +382,32 @@ v3 = {
   "storageKey": null
 },
 v4 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "previousValues",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "NotePreviousValues",
+  "plural": false,
+  "selections": [
+    v3
+  ]
+},
+v5 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "text",
   "args": null,
   "storageKey": null
 },
-v5 = {
+v6 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "createdAt",
   "args": null,
   "storageKey": null
 },
-v6 = {
+v7 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "owner",
@@ -413,7 +431,7 @@ return {
   "operationKind": "subscription",
   "name": "NewFriendNoteSubscription",
   "id": null,
-  "text": "subscription NewFriendNoteSubscription(\n  $filter: NoteSubscriptionFilter\n) {\n  Note(filter: $filter) {\n    mutation\n    node {\n      id\n      text\n      createdAt\n      jar {\n        owner {\n          id\n          email\n        }\n        id\n      }\n    }\n  }\n}\n",
+  "text": "subscription NewFriendNoteSubscription(\n  $filter: NoteSubscriptionFilter\n) {\n  Note(filter: $filter) {\n    mutation\n    previousValues {\n      id\n    }\n    node {\n      id\n      text\n      createdAt\n      jar {\n        owner {\n          id\n          email\n        }\n        id\n      }\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -432,6 +450,7 @@ return {
         "plural": false,
         "selections": [
           v2,
+          v4,
           {
             "kind": "LinkedField",
             "alias": null,
@@ -442,8 +461,8 @@ return {
             "plural": false,
             "selections": [
               v3,
-              v4,
               v5,
+              v6,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -453,7 +472,7 @@ return {
                 "concreteType": "Jar",
                 "plural": false,
                 "selections": [
-                  v6
+                  v7
                 ]
               }
             ]
@@ -477,6 +496,7 @@ return {
         "plural": false,
         "selections": [
           v2,
+          v4,
           {
             "kind": "LinkedField",
             "alias": null,
@@ -487,8 +507,8 @@ return {
             "plural": false,
             "selections": [
               v3,
-              v4,
               v5,
+              v6,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -498,7 +518,7 @@ return {
                 "concreteType": "Jar",
                 "plural": false,
                 "selections": [
-                  v6,
+                  v7,
                   v3
                 ]
               }
@@ -511,5 +531,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'd4405e7f45326d1146321bfefb644e0d';
+(node/*: any*/).hash = '27c065e50d1787e0d4a78ba27ff7d6dc';
 module.exports = node;
