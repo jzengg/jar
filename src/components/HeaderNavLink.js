@@ -7,8 +7,7 @@ const HeaderNavLink = ({ component: Component, ...rest }) => (
   <NavLink
     activeStyle={{
       fontWeight: 'bold',
-      color: 'black',
-      textDecoration: 'underline'
+      color: 'black'
     }}
     exact
     className={css`

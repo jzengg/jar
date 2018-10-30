@@ -37,7 +37,6 @@ export const TimestampTag = styled.div`
 `
 
 export const AuthorTag = styled.div`
-  font-style: italic;
 `
 
 export const NoteText = styled.div`
