@@ -47,12 +47,19 @@ export default (viewerId, userId) => {
     variables: { userId, filter },
     updater: proxyStore => {
       const payload = proxyStore.getRootField('Note')
-      const note = payload.getLinkedRecord('node')
-      const viewer = proxyStore.get(viewerId)
+      const mutation = payload.getValue('mutation')
+      if (mutation === 'CREATED') {
+        const note = payload.getLinkedRecord('node')
+        const viewer = proxyStore.get(viewerId)
 
-      const conn = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
-      const edge = ConnectionHandler.createEdge(proxyStore, conn, note, 'NotesEdge')
-      ConnectionHandler.insertEdgeBefore(conn, edge)
+        const conn = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
+        const edge = ConnectionHandler.createEdge(proxyStore, conn, note, 'NotesEdge')
+        ConnectionHandler.insertEdgeBefore(conn, edge)
+      } else if (mutation === 'DELETED') {
+
+      } else if (mutation === 'UPDATED') {
+
+      }
     },
     onError: error => console.log(`An error occured:`, error)
   }
