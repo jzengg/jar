@@ -24,7 +24,7 @@ class FriendRequests extends Component {
     const userId = localStorage.getItem(GC_USER_ID)
 
     const variables = {
-      userId: userId,
+      userId,
       friendRequestFilter: { status: "PENDING" }
     }
 

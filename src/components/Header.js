@@ -4,6 +4,8 @@ import { QueryRenderer, graphql } from 'react-relay'
 import environment from '../Environment'
 import { GC_USER_ID } from '../constants'
 
+import ReceivedFriendRequestBadge from './ReceivedFriendRequestBadge'
+
 import HeaderNavLink from './HeaderNavLink'
 import LogoutButton from './LogoutButton'
 
@@ -15,10 +17,11 @@ const HeaderContainer = styled.div`
 `
 
 const HeaderQuery = graphql`
-  query HeaderQuery($id: ID) {
+  query HeaderQuery($id: ID, $friendRequestFilter: FriendRequestFilter) {
     viewer {
       User(id: $id) {
         email
+        ...ReceivedFriendRequestBadge_user @arguments(friendRequestFilter: $friendRequestFilter)
       }
     }
   }
@@ -30,7 +33,8 @@ class Header extends Component {
     const id = localStorage.getItem(GC_USER_ID)
 
     const variables = {
-      id
+      id,
+      friendRequestFilter: { status: "PENDING" }
     }
 
     return (
@@ -51,7 +55,9 @@ class Header extends Component {
                   {loggedIn || <HeaderNavLink activeClassName='selected' to='/login' > Login </HeaderNavLink>}
                   <HeaderNavLink activeClassName='selected' to='/history' > History </HeaderNavLink>
                   <HeaderNavLink activeClassName='selected' to='/add' > Add friends </HeaderNavLink>
-                  <HeaderNavLink activeClassName='selected' to='/requests' > Friend requests </HeaderNavLink>
+                  <HeaderNavLink activeClassName='selected' to='/requests' >
+                    Friend requests {loggedIn && <ReceivedFriendRequestBadge user={ props.viewer.User }/>}
+                  </HeaderNavLink>
                   <HeaderNavLink activeClassName='selected' to='/friends' > Friends </HeaderNavLink>
                 </HeaderContainer>
                 { loggedIn &&

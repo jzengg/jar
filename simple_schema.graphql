@@ -4,6 +4,11 @@ enum _ModelMutationType {
   DELETED
 }
 
+# Meta information about the query.
+type _QueryMeta {
+  count: Int!
+}
+
 # acceptFriendRequestPayload
 type acceptFriendRequestPayload {
   user1Id: ID!
@@ -16,78 +21,28 @@ type addFriendByEmailPayload {
 }
 
 type AddToFriendsPayload {
-  viewer: Viewer!
-  clientMutationId: String!
   friends2User: User
   friends1User: User
-  friends2UserEdge: UserEdge
-  friends1UserEdge: UserEdge
-}
-
-input AddToFriendsUserInput {
-  friends1UserId: ID!
-  friends2UserId: ID!
-  clientMutationId: String!
-}
-
-input AddToJarNotesJarInput {
-  notesNoteId: ID!
-  jarJarId: ID!
-  clientMutationId: String!
 }
 
 type AddToJarNotesPayload {
-  viewer: Viewer!
-  clientMutationId: String!
   jarJar: Jar
   notesNote: Note
-  jarJarEdge: JarEdge
-  notesNoteEdge: NoteEdge
 }
 
 type AddToJarOwnerPayload {
-  viewer: Viewer!
-  clientMutationId: String!
   ownerUser: User
   jarsJar: Jar
-  ownerUserEdge: UserEdge
-  jarsJarEdge: JarEdge
-}
-
-input AddToJarOwnerUserInput {
-  jarsJarId: ID!
-  ownerUserId: ID!
-  clientMutationId: String!
 }
 
 type AddToReceivedFriendRequestsPayload {
-  viewer: Viewer!
-  clientMutationId: String!
   recipientUser: User
   receivedFriendRequestsFriendRequest: FriendRequest
-  recipientUserEdge: UserEdge
-  receivedFriendRequestsFriendRequestEdge: FriendRequestEdge
-}
-
-input AddToReceivedFriendRequestsUserInput {
-  receivedFriendRequestsFriendRequestId: ID!
-  recipientUserId: ID!
-  clientMutationId: String!
 }
 
 type AddToSentFriendRequestsPayload {
-  viewer: Viewer!
-  clientMutationId: String!
   senderUser: User
   sentFriendRequestsFriendRequest: FriendRequest
-  senderUserEdge: UserEdge
-  sentFriendRequestsFriendRequestEdge: FriendRequestEdge
-}
-
-input AddToSentFriendRequestsUserInput {
-  sentFriendRequestsFriendRequestId: ID!
-  senderUserId: ID!
-  clientMutationId: String!
 }
 
 # AuthenticateUserPayload
@@ -104,24 +59,6 @@ input CreateFriendRequest {
   sender: FriendRequestsenderUser
 }
 
-input CreateFriendRequestInput {
-  status: FriendRequestStatus
-  recipientId: ID
-  recipient: FriendRequestrecipientUser
-  senderId: ID
-  sender: FriendRequestsenderUser
-  clientMutationId: String!
-}
-
-type CreateFriendRequestPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  friendRequest: FriendRequest
-  edge: FriendRequestEdge
-  recipient: User
-  sender: User
-}
-
 input CreateJar {
   description: String
   name: String!
@@ -131,43 +68,10 @@ input CreateJar {
   notes: [JarnotesNote!]
 }
 
-input CreateJarInput {
-  description: String
-  name: String!
-  ownerId: ID
-  owner: JarownerUser
-  notesIds: [ID!]
-  notes: [JarnotesNote!]
-  clientMutationId: String!
-}
-
-type CreateJarPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  jar: Jar
-  edge: JarEdge
-  owner: User
-}
-
 input CreateNote {
   text: String!
   jarId: ID
   jar: NotejarJar
-}
-
-input CreateNoteInput {
-  text: String!
-  jarId: ID
-  jar: NotejarJar
-  clientMutationId: String!
-}
-
-type CreateNotePayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  note: Note
-  edge: NoteEdge
-  jar: Jar
 }
 
 input CreateUser {
@@ -183,70 +87,7 @@ input CreateUser {
   sentFriendRequests: [UsersentFriendRequestsFriendRequest!]
 }
 
-# If authentication was successful the payload contains the user and a token. If unsuccessful this payload is null.
-type CreateUserPayload {
-  user: User
-  clientMutationId: String
-  viewer: Viewer!
-}
-
 scalar DateTime
-
-input DeleteFriendRequestInput {
-  id: ID!
-  clientMutationId: String!
-}
-
-type DeleteFriendRequestPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  friendRequest: FriendRequest
-  edge: FriendRequestEdge
-  recipient: User
-  sender: User
-  deletedId: ID
-}
-
-input DeleteJarInput {
-  id: ID!
-  clientMutationId: String!
-}
-
-type DeleteJarPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  jar: Jar
-  edge: JarEdge
-  owner: User
-  deletedId: ID
-}
-
-input DeleteNoteInput {
-  id: ID!
-  clientMutationId: String!
-}
-
-type DeleteNotePayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  note: Note
-  edge: NoteEdge
-  jar: Jar
-  deletedId: ID
-}
-
-input DeleteUserInput {
-  id: ID!
-  clientMutationId: String!
-}
-
-type DeleteUserPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  user: User
-  edge: UserEdge
-  deletedId: ID
-}
 
 type FriendRequest implements Node {
   createdAt: DateTime!
@@ -255,27 +96,6 @@ type FriendRequest implements Node {
   sender(filter: UserFilter): User!
   status: FriendRequestStatus!
   updatedAt: DateTime!
-}
-
-# A connection to a list of items.
-type FriendRequestConnection {
-  # Information to aid in pagination.
-  pageInfo: PageInfo!
-
-  # A list of edges.
-  edges: [FriendRequestEdge]
-
-  # Count of filtered result set without considering pagination arguments
-  count: Int!
-}
-
-# An edge in a connection.
-type FriendRequestEdge {
-  # The item at the end of the edge.
-  node: FriendRequest!
-
-  # A cursor for use in pagination.
-  cursor: String!
 }
 
 input FriendRequestFilter {
@@ -393,6 +213,13 @@ enum FriendRequestOrderBy {
   updatedAt_DESC
 }
 
+type FriendRequestPreviousValues {
+  createdAt: DateTime!
+  id: ID!
+  status: FriendRequestStatus!
+  updatedAt: DateTime!
+}
+
 input FriendRequestrecipientUser {
   email: String!
   password: String!
@@ -425,6 +252,133 @@ enum FriendRequestStatus {
   IGNORED
 }
 
+input FriendRequestSubscriptionFilter {
+  # Logical AND on all given filters.
+  AND: [FriendRequestSubscriptionFilter!]
+
+  # Logical OR on all given filters.
+  OR: [FriendRequestSubscriptionFilter!]
+
+  # The subscription event gets dispatched when it's listed in mutation_in
+  mutation_in: [_ModelMutationType!]
+
+  # The subscription event gets only dispatched when one of the updated fields names is included in this list
+  updatedFields_contains: String
+
+  # The subscription event gets only dispatched when all of the field names included in this list have been updated
+  updatedFields_contains_every: [String!]
+
+  # The subscription event gets only dispatched when some of the field names included in this list have been updated
+  updatedFields_contains_some: [String!]
+  node: FriendRequestSubscriptionFilterNode
+}
+
+input FriendRequestSubscriptionFilterNode {
+  createdAt: DateTime
+
+  # All values that are not equal to given value.
+  createdAt_not: DateTime
+
+  # All values that are contained in given list.
+  createdAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  createdAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  createdAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  createdAt_lte: DateTime
+
+  # All values greater than the given value.
+  createdAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  createdAt_gte: DateTime
+  id: ID
+
+  # All values that are not equal to given value.
+  id_not: ID
+
+  # All values that are contained in given list.
+  id_in: [ID!]
+
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+
+  # All values less than the given value.
+  id_lt: ID
+
+  # All values less than or equal the given value.
+  id_lte: ID
+
+  # All values greater than the given value.
+  id_gt: ID
+
+  # All values greater than or equal the given value.
+  id_gte: ID
+
+  # All values containing the given string.
+  id_contains: ID
+
+  # All values not containing the given string.
+  id_not_contains: ID
+
+  # All values starting with the given string.
+  id_starts_with: ID
+
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+
+  # All values ending with the given string.
+  id_ends_with: ID
+
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  status: FriendRequestStatus
+
+  # All values that are not equal to given value.
+  status_not: FriendRequestStatus
+
+  # All values that are contained in given list.
+  status_in: [FriendRequestStatus!]
+
+  # All values that are not contained in given list.
+  status_not_in: [FriendRequestStatus!]
+  updatedAt: DateTime
+
+  # All values that are not equal to given value.
+  updatedAt_not: DateTime
+
+  # All values that are contained in given list.
+  updatedAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  updatedAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  updatedAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  updatedAt_lte: DateTime
+
+  # All values greater than the given value.
+  updatedAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  updatedAt_gte: DateTime
+  recipient: UserFilter
+  sender: UserFilter
+}
+
+type FriendRequestSubscriptionPayload {
+  mutation: _ModelMutationType!
+  node: FriendRequest
+  updatedFields: [String!]
+  previousValues: FriendRequestPreviousValues
+}
+
 input InvokeFunctionInput {
   name: String!
   input: String!
@@ -441,30 +395,12 @@ type Jar implements Node {
   description: String
   id: ID!
   name: String!
-  notes(filter: NoteFilter, orderBy: NoteOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): NoteConnection
+  notes(filter: NoteFilter, orderBy: NoteOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): [Note!]
   owner(filter: UserFilter): User!
   updatedAt: DateTime!
-}
 
-# A connection to a list of items.
-type JarConnection {
-  # Information to aid in pagination.
-  pageInfo: PageInfo!
-
-  # A list of edges.
-  edges: [JarEdge]
-
-  # Count of filtered result set without considering pagination arguments
-  count: Int!
-}
-
-# An edge in a connection.
-type JarEdge {
-  # The item at the end of the edge.
-  node: Jar!
-
-  # A cursor for use in pagination.
-  cursor: String!
+  # Meta information about the query.
+  _notesMeta(filter: NoteFilter, orderBy: NoteOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): _QueryMeta!
 }
 
 input JarFilter {
@@ -673,34 +609,241 @@ input JarownerUser {
   sentFriendRequests: [UsersentFriendRequestsFriendRequest!]
 }
 
+type JarPreviousValues {
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  name: String!
+  updatedAt: DateTime!
+}
+
+input JarSubscriptionFilter {
+  # Logical AND on all given filters.
+  AND: [JarSubscriptionFilter!]
+
+  # Logical OR on all given filters.
+  OR: [JarSubscriptionFilter!]
+
+  # The subscription event gets dispatched when it's listed in mutation_in
+  mutation_in: [_ModelMutationType!]
+
+  # The subscription event gets only dispatched when one of the updated fields names is included in this list
+  updatedFields_contains: String
+
+  # The subscription event gets only dispatched when all of the field names included in this list have been updated
+  updatedFields_contains_every: [String!]
+
+  # The subscription event gets only dispatched when some of the field names included in this list have been updated
+  updatedFields_contains_some: [String!]
+  node: JarSubscriptionFilterNode
+}
+
+input JarSubscriptionFilterNode {
+  createdAt: DateTime
+
+  # All values that are not equal to given value.
+  createdAt_not: DateTime
+
+  # All values that are contained in given list.
+  createdAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  createdAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  createdAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  createdAt_lte: DateTime
+
+  # All values greater than the given value.
+  createdAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  createdAt_gte: DateTime
+  description: String
+
+  # All values that are not equal to given value.
+  description_not: String
+
+  # All values that are contained in given list.
+  description_in: [String!]
+
+  # All values that are not contained in given list.
+  description_not_in: [String!]
+
+  # All values less than the given value.
+  description_lt: String
+
+  # All values less than or equal the given value.
+  description_lte: String
+
+  # All values greater than the given value.
+  description_gt: String
+
+  # All values greater than or equal the given value.
+  description_gte: String
+
+  # All values containing the given string.
+  description_contains: String
+
+  # All values not containing the given string.
+  description_not_contains: String
+
+  # All values starting with the given string.
+  description_starts_with: String
+
+  # All values not starting with the given string.
+  description_not_starts_with: String
+
+  # All values ending with the given string.
+  description_ends_with: String
+
+  # All values not ending with the given string.
+  description_not_ends_with: String
+  id: ID
+
+  # All values that are not equal to given value.
+  id_not: ID
+
+  # All values that are contained in given list.
+  id_in: [ID!]
+
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+
+  # All values less than the given value.
+  id_lt: ID
+
+  # All values less than or equal the given value.
+  id_lte: ID
+
+  # All values greater than the given value.
+  id_gt: ID
+
+  # All values greater than or equal the given value.
+  id_gte: ID
+
+  # All values containing the given string.
+  id_contains: ID
+
+  # All values not containing the given string.
+  id_not_contains: ID
+
+  # All values starting with the given string.
+  id_starts_with: ID
+
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+
+  # All values ending with the given string.
+  id_ends_with: ID
+
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  name: String
+
+  # All values that are not equal to given value.
+  name_not: String
+
+  # All values that are contained in given list.
+  name_in: [String!]
+
+  # All values that are not contained in given list.
+  name_not_in: [String!]
+
+  # All values less than the given value.
+  name_lt: String
+
+  # All values less than or equal the given value.
+  name_lte: String
+
+  # All values greater than the given value.
+  name_gt: String
+
+  # All values greater than or equal the given value.
+  name_gte: String
+
+  # All values containing the given string.
+  name_contains: String
+
+  # All values not containing the given string.
+  name_not_contains: String
+
+  # All values starting with the given string.
+  name_starts_with: String
+
+  # All values not starting with the given string.
+  name_not_starts_with: String
+
+  # All values ending with the given string.
+  name_ends_with: String
+
+  # All values not ending with the given string.
+  name_not_ends_with: String
+  updatedAt: DateTime
+
+  # All values that are not equal to given value.
+  updatedAt_not: DateTime
+
+  # All values that are contained in given list.
+  updatedAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  updatedAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  updatedAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  updatedAt_lte: DateTime
+
+  # All values greater than the given value.
+  updatedAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  updatedAt_gte: DateTime
+  notes_every: NoteFilter
+  notes_some: NoteFilter
+  notes_none: NoteFilter
+  owner: UserFilter
+}
+
+type JarSubscriptionPayload {
+  mutation: _ModelMutationType!
+  node: Jar
+  updatedFields: [String!]
+  previousValues: JarPreviousValues
+}
+
 # LoggedInUserPayload
 type LoggedInUserPayload {
   id: ID!
 }
 
 type Mutation {
-  createFriendRequest(input: CreateFriendRequestInput!): CreateFriendRequestPayload
-  createJar(input: CreateJarInput!): CreateJarPayload
-  createNote(input: CreateNoteInput!): CreateNotePayload
-  updateFriendRequest(input: UpdateFriendRequestInput!): UpdateFriendRequestPayload
-  updateJar(input: UpdateJarInput!): UpdateJarPayload
-  updateNote(input: UpdateNoteInput!): UpdateNotePayload
-  updateUser(input: UpdateUserInput!): UpdateUserPayload
-  updateOrCreateFriendRequest(input: UpdateOrCreateFriendRequestInput!): UpdateOrCreateFriendRequestPayload
-  updateOrCreateJar(input: UpdateOrCreateJarInput!): UpdateOrCreateJarPayload
-  updateOrCreateNote(input: UpdateOrCreateNoteInput!): UpdateOrCreateNotePayload
-  updateOrCreateUser(input: UpdateOrCreateUserInput!): UpdateOrCreateUserPayload
-  deleteFriendRequest(input: DeleteFriendRequestInput!): DeleteFriendRequestPayload
-  deleteJar(input: DeleteJarInput!): DeleteJarPayload
-  deleteNote(input: DeleteNoteInput!): DeleteNotePayload
-  deleteUser(input: DeleteUserInput!): DeleteUserPayload
-  addToFriends(input: AddToFriendsUserInput!): AddToFriendsPayload
-  addToJarNotes(input: AddToJarNotesJarInput!): AddToJarNotesPayload
-  addToJarOwner(input: AddToJarOwnerUserInput!): AddToJarOwnerPayload
-  addToReceivedFriendRequests(input: AddToReceivedFriendRequestsUserInput!): AddToReceivedFriendRequestsPayload
-  addToSentFriendRequests(input: AddToSentFriendRequestsUserInput!): AddToSentFriendRequestsPayload
-  removeFromFriends(input: RemoveFromFriendsUserInput!): RemoveFromFriendsPayload
-  createUser(input: SignupUserInput!): CreateUserPayload!
+  createFriendRequest(status: FriendRequestStatus, recipientId: ID, recipient: FriendRequestrecipientUser, senderId: ID, sender: FriendRequestsenderUser): FriendRequest
+  createJar(description: String, name: String!, ownerId: ID, owner: JarownerUser, notesIds: [ID!], notes: [JarnotesNote!]): Jar
+  createNote(text: String!, jarId: ID, jar: NotejarJar): Note
+  updateFriendRequest(id: ID!, status: FriendRequestStatus, recipientId: ID, recipient: FriendRequestrecipientUser, senderId: ID, sender: FriendRequestsenderUser): FriendRequest
+  updateJar(description: String, id: ID!, name: String, ownerId: ID, owner: JarownerUser, notesIds: [ID!], notes: [JarnotesNote!]): Jar
+  updateNote(id: ID!, text: String, jarId: ID, jar: NotejarJar): Note
+  updateUser(email: String, id: ID!, password: String, friendsIds: [ID!], friends: [UserfriendsUser!], jarsIds: [ID!], jars: [UserjarsJar!], receivedFriendRequestsIds: [ID!], receivedFriendRequests: [UserreceivedFriendRequestsFriendRequest!], sentFriendRequestsIds: [ID!], sentFriendRequests: [UsersentFriendRequestsFriendRequest!]): User
+  updateOrCreateFriendRequest(update: UpdateFriendRequest!, create: CreateFriendRequest!): FriendRequest
+  updateOrCreateJar(update: UpdateJar!, create: CreateJar!): Jar
+  updateOrCreateNote(update: UpdateNote!, create: CreateNote!): Note
+  updateOrCreateUser(update: UpdateUser!, create: CreateUser!): User
+  deleteFriendRequest(id: ID!): FriendRequest
+  deleteJar(id: ID!): Jar
+  deleteNote(id: ID!): Note
+  deleteUser(id: ID!): User
+  addToFriends(friends1UserId: ID!, friends2UserId: ID!): AddToFriendsPayload
+  addToJarNotes(notesNoteId: ID!, jarJarId: ID!): AddToJarNotesPayload
+  addToJarOwner(jarsJarId: ID!, ownerUserId: ID!): AddToJarOwnerPayload
+  addToReceivedFriendRequests(receivedFriendRequestsFriendRequestId: ID!, recipientUserId: ID!): AddToReceivedFriendRequestsPayload
+  addToSentFriendRequests(sentFriendRequestsFriendRequestId: ID!, senderUserId: ID!): AddToSentFriendRequestsPayload
+  removeFromFriends(friends1UserId: ID!, friends2UserId: ID!): RemoveFromFriendsPayload
+  createUser(email: String!, password: String!, friendsIds: [ID!], friends: [UserfriendsUser!], jarsIds: [ID!], jars: [UserjarsJar!], receivedFriendRequestsIds: [ID!], receivedFriendRequests: [UserreceivedFriendRequestsFriendRequest!], sentFriendRequestsIds: [ID!], sentFriendRequests: [UsersentFriendRequestsFriendRequest!]): User
 
   # acceptFriendRequest
   acceptFriendRequest(id: ID!): acceptFriendRequestPayload
@@ -728,27 +871,6 @@ type Note implements Node {
   jar(filter: JarFilter): Jar!
   text: String!
   updatedAt: DateTime!
-}
-
-# A connection to a list of items.
-type NoteConnection {
-  # Information to aid in pagination.
-  pageInfo: PageInfo!
-
-  # A list of edges.
-  edges: [NoteEdge]
-
-  # Count of filtered result set without considering pagination arguments
-  count: Int!
-}
-
-# An edge in a connection.
-type NoteEdge {
-  # The item at the end of the edge.
-  node: Note!
-
-  # A cursor for use in pagination.
-  cursor: String!
 }
 
 input NoteFilter {
@@ -904,23 +1026,186 @@ enum NoteOrderBy {
   updatedAt_DESC
 }
 
-# Information about pagination in a connection.
-type PageInfo {
-  # When paginating forwards, are there more items?
-  hasNextPage: Boolean!
+type NotePreviousValues {
+  createdAt: DateTime!
+  id: ID!
+  text: String!
+  updatedAt: DateTime!
+}
 
-  # When paginating backwards, are there more items?
-  hasPreviousPage: Boolean!
+input NoteSubscriptionFilter {
+  # Logical AND on all given filters.
+  AND: [NoteSubscriptionFilter!]
 
-  # When paginating backwards, the cursor to continue.
-  startCursor: String
+  # Logical OR on all given filters.
+  OR: [NoteSubscriptionFilter!]
 
-  # When paginating forwards, the cursor to continue.
-  endCursor: String
+  # The subscription event gets dispatched when it's listed in mutation_in
+  mutation_in: [_ModelMutationType!]
+
+  # The subscription event gets only dispatched when one of the updated fields names is included in this list
+  updatedFields_contains: String
+
+  # The subscription event gets only dispatched when all of the field names included in this list have been updated
+  updatedFields_contains_every: [String!]
+
+  # The subscription event gets only dispatched when some of the field names included in this list have been updated
+  updatedFields_contains_some: [String!]
+  node: NoteSubscriptionFilterNode
+}
+
+input NoteSubscriptionFilterNode {
+  createdAt: DateTime
+
+  # All values that are not equal to given value.
+  createdAt_not: DateTime
+
+  # All values that are contained in given list.
+  createdAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  createdAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  createdAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  createdAt_lte: DateTime
+
+  # All values greater than the given value.
+  createdAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  createdAt_gte: DateTime
+  id: ID
+
+  # All values that are not equal to given value.
+  id_not: ID
+
+  # All values that are contained in given list.
+  id_in: [ID!]
+
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+
+  # All values less than the given value.
+  id_lt: ID
+
+  # All values less than or equal the given value.
+  id_lte: ID
+
+  # All values greater than the given value.
+  id_gt: ID
+
+  # All values greater than or equal the given value.
+  id_gte: ID
+
+  # All values containing the given string.
+  id_contains: ID
+
+  # All values not containing the given string.
+  id_not_contains: ID
+
+  # All values starting with the given string.
+  id_starts_with: ID
+
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+
+  # All values ending with the given string.
+  id_ends_with: ID
+
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  text: String
+
+  # All values that are not equal to given value.
+  text_not: String
+
+  # All values that are contained in given list.
+  text_in: [String!]
+
+  # All values that are not contained in given list.
+  text_not_in: [String!]
+
+  # All values less than the given value.
+  text_lt: String
+
+  # All values less than or equal the given value.
+  text_lte: String
+
+  # All values greater than the given value.
+  text_gt: String
+
+  # All values greater than or equal the given value.
+  text_gte: String
+
+  # All values containing the given string.
+  text_contains: String
+
+  # All values not containing the given string.
+  text_not_contains: String
+
+  # All values starting with the given string.
+  text_starts_with: String
+
+  # All values not starting with the given string.
+  text_not_starts_with: String
+
+  # All values ending with the given string.
+  text_ends_with: String
+
+  # All values not ending with the given string.
+  text_not_ends_with: String
+  updatedAt: DateTime
+
+  # All values that are not equal to given value.
+  updatedAt_not: DateTime
+
+  # All values that are contained in given list.
+  updatedAt_in: [DateTime!]
+
+  # All values that are not contained in given list.
+  updatedAt_not_in: [DateTime!]
+
+  # All values less than the given value.
+  updatedAt_lt: DateTime
+
+  # All values less than or equal the given value.
+  updatedAt_lte: DateTime
+
+  # All values greater than the given value.
+  updatedAt_gt: DateTime
+
+  # All values greater than or equal the given value.
+  updatedAt_gte: DateTime
+  jar: JarFilter
+}
+
+type NoteSubscriptionPayload {
+  mutation: _ModelMutationType!
+  node: Note
+  updatedFields: [String!]
+  previousValues: NotePreviousValues
 }
 
 type Query {
-  viewer: Viewer!
+  allFriendRequests(filter: FriendRequestFilter, orderBy: FriendRequestOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): [FriendRequest!]!
+  allJars(filter: JarFilter, orderBy: JarOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): [Jar!]!
+  allNotes(filter: NoteFilter, orderBy: NoteOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): [Note!]!
+  allUsers(filter: UserFilter, orderBy: UserOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): [User!]!
+  _allFriendRequestsMeta(filter: FriendRequestFilter, orderBy: FriendRequestOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): _QueryMeta!
+  _allJarsMeta(filter: JarFilter, orderBy: JarOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): _QueryMeta!
+  _allNotesMeta(filter: NoteFilter, orderBy: NoteOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): _QueryMeta!
+  _allUsersMeta(filter: UserFilter, orderBy: UserOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): _QueryMeta!
+  FriendRequest(id: ID): FriendRequest
+  Jar(id: ID): Jar
+  Note(id: ID): Note
+  User(email: String, id: ID): User
+
+  # loggedInUser
+  loggedInUser: LoggedInUserPayload
+  user: User
 
   # Fetches an object given its ID
   node(
@@ -930,38 +1215,21 @@ type Query {
 }
 
 type RemoveFromFriendsPayload {
-  viewer: Viewer!
-  clientMutationId: String!
   friends2User: User
   friends1User: User
-  friends2UserEdge: UserEdge
-  friends1UserEdge: UserEdge
-}
-
-input RemoveFromFriendsUserInput {
-  friends1UserId: ID!
-  friends2UserId: ID!
-  clientMutationId: String!
-}
-
-input SignupUserInput {
-  email: String!
-  password: String!
-  friendsIds: [ID!]
-  friends: [UserfriendsUser!]
-  jarsIds: [ID!]
-  jars: [UserjarsJar!]
-  receivedFriendRequestsIds: [ID!]
-  receivedFriendRequests: [UserreceivedFriendRequestsFriendRequest!]
-  sentFriendRequestsIds: [ID!]
-  sentFriendRequests: [UsersentFriendRequestsFriendRequest!]
-  clientMutationId: String!
 }
 
 # SignupUserPayload
 type SignupUserPayload {
   id: ID!
   token: String!
+}
+
+type Subscription {
+  FriendRequest(filter: FriendRequestSubscriptionFilter): FriendRequestSubscriptionPayload
+  Jar(filter: JarSubscriptionFilter): JarSubscriptionPayload
+  Note(filter: NoteSubscriptionFilter): NoteSubscriptionPayload
+  User(filter: UserSubscriptionFilter): UserSubscriptionPayload
 }
 
 input UpdateFriendRequest {
@@ -971,25 +1239,6 @@ input UpdateFriendRequest {
   recipient: FriendRequestrecipientUser
   senderId: ID
   sender: FriendRequestsenderUser
-}
-
-input UpdateFriendRequestInput {
-  id: ID!
-  status: FriendRequestStatus
-  recipientId: ID
-  recipient: FriendRequestrecipientUser
-  senderId: ID
-  sender: FriendRequestsenderUser
-  clientMutationId: String!
-}
-
-type UpdateFriendRequestPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  friendRequest: FriendRequest
-  edge: FriendRequestEdge
-  recipient: User
-  sender: User
 }
 
 input UpdateJar {
@@ -1002,102 +1251,11 @@ input UpdateJar {
   notes: [JarnotesNote!]
 }
 
-input UpdateJarInput {
-  description: String
-  id: ID!
-  name: String
-  ownerId: ID
-  owner: JarownerUser
-  notesIds: [ID!]
-  notes: [JarnotesNote!]
-  clientMutationId: String!
-}
-
-type UpdateJarPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  jar: Jar
-  edge: JarEdge
-  owner: User
-}
-
 input UpdateNote {
   id: ID!
   text: String
   jarId: ID
   jar: NotejarJar
-}
-
-input UpdateNoteInput {
-  id: ID!
-  text: String
-  jarId: ID
-  jar: NotejarJar
-  clientMutationId: String!
-}
-
-type UpdateNotePayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  note: Note
-  edge: NoteEdge
-  jar: Jar
-}
-
-input UpdateOrCreateFriendRequestInput {
-  update: UpdateFriendRequest!
-  create: CreateFriendRequest!
-  clientMutationId: String!
-}
-
-type UpdateOrCreateFriendRequestPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  friendRequest: FriendRequest
-  edge: FriendRequestEdge
-  recipient: User
-  sender: User
-}
-
-input UpdateOrCreateJarInput {
-  update: UpdateJar!
-  create: CreateJar!
-  clientMutationId: String!
-}
-
-type UpdateOrCreateJarPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  jar: Jar
-  edge: JarEdge
-  owner: User
-}
-
-input UpdateOrCreateNoteInput {
-  update: UpdateNote!
-  create: CreateNote!
-  clientMutationId: String!
-}
-
-type UpdateOrCreateNotePayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  note: Note
-  edge: NoteEdge
-  jar: Jar
-}
-
-input UpdateOrCreateUserInput {
-  update: UpdateUser!
-  create: CreateUser!
-  clientMutationId: String!
-}
-
-type UpdateOrCreateUserPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  user: User
-  edge: UserEdge
 }
 
 input UpdateUser {
@@ -1114,59 +1272,28 @@ input UpdateUser {
   sentFriendRequests: [UsersentFriendRequestsFriendRequest!]
 }
 
-input UpdateUserInput {
-  email: String
-  id: ID!
-  password: String
-  friendsIds: [ID!]
-  friends: [UserfriendsUser!]
-  jarsIds: [ID!]
-  jars: [UserjarsJar!]
-  receivedFriendRequestsIds: [ID!]
-  receivedFriendRequests: [UserreceivedFriendRequestsFriendRequest!]
-  sentFriendRequestsIds: [ID!]
-  sentFriendRequests: [UsersentFriendRequestsFriendRequest!]
-  clientMutationId: String!
-}
-
-type UpdateUserPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  user: User
-  edge: UserEdge
-}
-
 type User implements Node {
   createdAt: DateTime!
   email: String!
-  friends(filter: UserFilter, orderBy: UserOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection
+  friends(filter: UserFilter, orderBy: UserOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   id: ID!
-  jars(filter: JarFilter, orderBy: JarOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): JarConnection
+  jars(filter: JarFilter, orderBy: JarOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): [Jar!]
   password: String!
-  receivedFriendRequests(filter: FriendRequestFilter, orderBy: FriendRequestOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): FriendRequestConnection
-  sentFriendRequests(filter: FriendRequestFilter, orderBy: FriendRequestOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): FriendRequestConnection
+  receivedFriendRequests(filter: FriendRequestFilter, orderBy: FriendRequestOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): [FriendRequest!]
+  sentFriendRequests(filter: FriendRequestFilter, orderBy: FriendRequestOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): [FriendRequest!]
   updatedAt: DateTime!
-}
 
-# A connection to a list of items.
-type UserConnection {
-  # Information to aid in pagination.
-  pageInfo: PageInfo!
+  # Meta information about the query.
+  _friendsMeta(filter: UserFilter, orderBy: UserOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): _QueryMeta!
 
-  # A list of edges.
-  edges: [UserEdge]
+  # Meta information about the query.
+  _jarsMeta(filter: JarFilter, orderBy: JarOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): _QueryMeta!
 
-  # Count of filtered result set without considering pagination arguments
-  count: Int!
-}
+  # Meta information about the query.
+  _receivedFriendRequestsMeta(filter: FriendRequestFilter, orderBy: FriendRequestOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): _QueryMeta!
 
-# An edge in a connection.
-type UserEdge {
-  # The item at the end of the edge.
-  node: User!
-
-  # A cursor for use in pagination.
-  cursor: String!
+  # Meta information about the query.
+  _sentFriendRequestsMeta(filter: FriendRequestFilter, orderBy: FriendRequestOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): _QueryMeta!
 }
 
 input UserFilter {
@@ -1386,6 +1513,14 @@ enum UserOrderBy {
   updatedAt_DESC
 }
 
+type UserPreviousValues {
+  createdAt: DateTime!
+  email: String!
+  id: ID!
+  password: String!
+  updatedAt: DateTime!
+}
+
 input UserreceivedFriendRequestsFriendRequest {
   status: FriendRequestStatus
   senderId: ID
@@ -1396,313 +1531,6 @@ input UsersentFriendRequestsFriendRequest {
   status: FriendRequestStatus
   recipientId: ID
   recipient: FriendRequestrecipientUser
-}
-
-# This is the famous Relay viewer object
-type Viewer {
-  allFriendRequests(filter: FriendRequestFilter, orderBy: FriendRequestOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): FriendRequestConnection!
-  allJars(filter: JarFilter, orderBy: JarOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): JarConnection!
-  allNotes(filter: NoteFilter, orderBy: NoteOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): NoteConnection!
-  allUsers(filter: UserFilter, orderBy: UserOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  user: User
-  FriendRequest(id: ID): FriendRequest
-  Jar(id: ID): Jar
-  Note(id: ID): Note
-  User(email: String, id: ID): User
-
-  # loggedInUser
-  loggedInUser: LoggedInUserPayload
-  id: ID!
-}
-
-type NotePreviousValues {
-  createdAt: DateTime!
-  id: ID!
-  text: String!
-  updatedAt: DateTime!
-}
-
-input NoteSubscriptionFilter {
-  # Logical AND on all given filters.
-  AND: [NoteSubscriptionFilter!]
-
-  # Logical OR on all given filters.
-  OR: [NoteSubscriptionFilter!]
-
-  # The subscription event gets dispatched when it's listed in mutation_in
-  mutation_in: [_ModelMutationType!]
-
-  # The subscription event gets only dispatched when one of the updated fields names is included in this list
-  updatedFields_contains: String
-
-  # The subscription event gets only dispatched when all of the field names included in this list have been updated
-  updatedFields_contains_every: [String!]
-
-  # The subscription event gets only dispatched when some of the field names included in this list have been updated
-  updatedFields_contains_some: [String!]
-  node: NoteSubscriptionFilterNode
-}
-
-input NoteSubscriptionFilterNode {
-  createdAt: DateTime
-
-  # All values that are not equal to given value.
-  createdAt_not: DateTime
-
-  # All values that are contained in given list.
-  createdAt_in: [DateTime!]
-
-  # All values that are not contained in given list.
-  createdAt_not_in: [DateTime!]
-
-  # All values less than the given value.
-  createdAt_lt: DateTime
-
-  # All values less than or equal the given value.
-  createdAt_lte: DateTime
-
-  # All values greater than the given value.
-  createdAt_gt: DateTime
-
-  # All values greater than or equal the given value.
-  createdAt_gte: DateTime
-  id: ID
-
-  # All values that are not equal to given value.
-  id_not: ID
-
-  # All values that are contained in given list.
-  id_in: [ID!]
-
-  # All values that are not contained in given list.
-  id_not_in: [ID!]
-
-  # All values less than the given value.
-  id_lt: ID
-
-  # All values less than or equal the given value.
-  id_lte: ID
-
-  # All values greater than the given value.
-  id_gt: ID
-
-  # All values greater than or equal the given value.
-  id_gte: ID
-
-  # All values containing the given string.
-  id_contains: ID
-
-  # All values not containing the given string.
-  id_not_contains: ID
-
-  # All values starting with the given string.
-  id_starts_with: ID
-
-  # All values not starting with the given string.
-  id_not_starts_with: ID
-
-  # All values ending with the given string.
-  id_ends_with: ID
-
-  # All values not ending with the given string.
-  id_not_ends_with: ID
-  text: String
-
-  # All values that are not equal to given value.
-  text_not: String
-
-  # All values that are contained in given list.
-  text_in: [String!]
-
-  # All values that are not contained in given list.
-  text_not_in: [String!]
-
-  # All values less than the given value.
-  text_lt: String
-
-  # All values less than or equal the given value.
-  text_lte: String
-
-  # All values greater than the given value.
-  text_gt: String
-
-  # All values greater than or equal the given value.
-  text_gte: String
-
-  # All values containing the given string.
-  text_contains: String
-
-  # All values not containing the given string.
-  text_not_contains: String
-
-  # All values starting with the given string.
-  text_starts_with: String
-
-  # All values not starting with the given string.
-  text_not_starts_with: String
-
-  # All values ending with the given string.
-  text_ends_with: String
-
-  # All values not ending with the given string.
-  text_not_ends_with: String
-  updatedAt: DateTime
-
-  # All values that are not equal to given value.
-  updatedAt_not: DateTime
-
-  # All values that are contained in given list.
-  updatedAt_in: [DateTime!]
-
-  # All values that are not contained in given list.
-  updatedAt_not_in: [DateTime!]
-
-  # All values less than the given value.
-  updatedAt_lt: DateTime
-
-  # All values less than or equal the given value.
-  updatedAt_lte: DateTime
-
-  # All values greater than the given value.
-  updatedAt_gt: DateTime
-
-  # All values greater than or equal the given value.
-  updatedAt_gte: DateTime
-  jar: JarFilter
-}
-
-type NoteSubscriptionPayload {
-  mutation: _ModelMutationType!
-  node: Note
-  updatedFields: [String!]
-  previousValues: NotePreviousValues
-}
-
-input FriendRequestSubscriptionFilter {
-  # Logical AND on all given filters.
-  AND: [FriendRequestSubscriptionFilter!]
-
-  # Logical OR on all given filters.
-  OR: [FriendRequestSubscriptionFilter!]
-
-  # The subscription event gets dispatched when it's listed in mutation_in
-  mutation_in: [_ModelMutationType!]
-
-  # The subscription event gets only dispatched when one of the updated fields names is included in this list
-  updatedFields_contains: String
-
-  # The subscription event gets only dispatched when all of the field names included in this list have been updated
-  updatedFields_contains_every: [String!]
-
-  # The subscription event gets only dispatched when some of the field names included in this list have been updated
-  updatedFields_contains_some: [String!]
-  node: FriendRequestSubscriptionFilterNode
-}
-
-input FriendRequestSubscriptionFilterNode {
-  createdAt: DateTime
-
-  # All values that are not equal to given value.
-  createdAt_not: DateTime
-
-  # All values that are contained in given list.
-  createdAt_in: [DateTime!]
-
-  # All values that are not contained in given list.
-  createdAt_not_in: [DateTime!]
-
-  # All values less than the given value.
-  createdAt_lt: DateTime
-
-  # All values less than or equal the given value.
-  createdAt_lte: DateTime
-
-  # All values greater than the given value.
-  createdAt_gt: DateTime
-
-  # All values greater than or equal the given value.
-  createdAt_gte: DateTime
-  id: ID
-
-  # All values that are not equal to given value.
-  id_not: ID
-
-  # All values that are contained in given list.
-  id_in: [ID!]
-
-  # All values that are not contained in given list.
-  id_not_in: [ID!]
-
-  # All values less than the given value.
-  id_lt: ID
-
-  # All values less than or equal the given value.
-  id_lte: ID
-
-  # All values greater than the given value.
-  id_gt: ID
-
-  # All values greater than or equal the given value.
-  id_gte: ID
-
-  # All values containing the given string.
-  id_contains: ID
-
-  # All values not containing the given string.
-  id_not_contains: ID
-
-  # All values starting with the given string.
-  id_starts_with: ID
-
-  # All values not starting with the given string.
-  id_not_starts_with: ID
-
-  # All values ending with the given string.
-  id_ends_with: ID
-
-  # All values not ending with the given string.
-  id_not_ends_with: ID
-  status: FriendRequestStatus
-
-  # All values that are not equal to given value.
-  status_not: FriendRequestStatus
-
-  # All values that are contained in given list.
-  status_in: [FriendRequestStatus!]
-
-  # All values that are not contained in given list.
-  status_not_in: [FriendRequestStatus!]
-  updatedAt: DateTime
-
-  # All values that are not equal to given value.
-  updatedAt_not: DateTime
-
-  # All values that are contained in given list.
-  updatedAt_in: [DateTime!]
-
-  # All values that are not contained in given list.
-  updatedAt_not_in: [DateTime!]
-
-  # All values less than the given value.
-  updatedAt_lt: DateTime
-
-  # All values less than or equal the given value.
-  updatedAt_lte: DateTime
-
-  # All values greater than the given value.
-  updatedAt_gt: DateTime
-
-  # All values greater than or equal the given value.
-  updatedAt_gte: DateTime
-  recipient: UserFilter
-  sender: UserFilter
-}
-
-type FriendRequestSubscriptionPayload {
-  mutation: _ModelMutationType!
-  node: FriendRequest
-  updatedFields: [String!]
-  previousValues: FriendRequestPreviousValues
 }
 
 input UserSubscriptionFilter {
@@ -1912,23 +1740,3 @@ type UserSubscriptionPayload {
   previousValues: UserPreviousValues
 }
 
-type UserPreviousValues {
-  createdAt: DateTime!
-  email: String!
-  id: ID!
-  password: String!
-  updatedAt: DateTime!
-}
-
-type FriendRequestPreviousValues {
-  createdAt: DateTime!
-  id: ID!
-  status: FriendRequestStatus!
-  updatedAt: DateTime!
-}
-
-type Subscription {
-  User(filter: UserSubscriptionFilter): UserSubscriptionPayload
-  Note(filter: NoteSubscriptionFilter): NoteSubscriptionPayload
-  FriendRequest(filter: FriendRequestSubscriptionFilter): FriendRequestSubscriptionPayload
-}
