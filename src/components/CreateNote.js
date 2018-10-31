@@ -77,10 +77,17 @@ class CreateNote extends Component {
       <FormContainer>
         <h2 css={`
             font-size: 1.5rem;
-            margin-bottom: 1rem;
             `}>
           Add a New Note
         </h2>
+        <hr css={`
+          height: 0;
+          margin: 10px 0;
+          overflow: hidden;
+          background: transparent;
+          border: 0;
+          border-bottom: 1px solid #dfe2e5;
+            `}/>
 
         <JarList
           handleClick={this._updateSelectedJar}
