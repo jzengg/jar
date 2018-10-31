@@ -41,7 +41,6 @@ const FormContainer = styled.div `
   border: 1px solid rgba(27,31,35,0.35);
   border-radius: 5px;
   padding: 1rem;
-  width: 768px;
   margin-bottom: 1rem;
 `
 
@@ -89,9 +88,9 @@ class CreateNote extends Component {
 
         <label htmlFor='note_text' css={`
             font-weight: 600;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
                 `}
         >
           Text

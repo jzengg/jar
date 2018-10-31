@@ -72,9 +72,9 @@ class Today extends Component {
               <div>
                 <CreateNote user={props.viewer.User} />
 
-                <SubHeading> Notes from Today </SubHeading>
-                <Divider/>
                 <NoteList subscribe>
+                  <SubHeading> Notes from Today </SubHeading>
+                  <Divider/>
                   {props.viewer.allNotes.edges.map(({ node }) => {
                     const isAuthor = node.jar.owner.id === userId
 

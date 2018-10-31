@@ -9,6 +9,7 @@ import styled from 'react-emotion'
 const Container = styled.div(props => ({
   display: 'flex',
   flexDirection: props.column && 'column',
+  width: '100%',
 }))
 
 class NoteList extends React.Component {
