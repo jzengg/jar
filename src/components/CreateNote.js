@@ -118,8 +118,8 @@ class CreateNote extends Component {
           id='note_text'
         />
       { this.state.text === '' ?
-        <DisabledButton disabled> Submit </DisabledButton> :
-        <CreateButton onClick={() => this._createNote()}> Submit </CreateButton>
+        <DisabledButton disabled> Add Note </DisabledButton> :
+        <CreateButton onClick={() => this._createNote()}> Add Note </CreateButton>
         }
     </FormContainer>
     )
