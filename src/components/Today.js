@@ -39,7 +39,7 @@ class Today extends Component {
 
   render() {
     const userId = localStorage.getItem(GC_USER_ID)
-    const dayStart = moment().startOf('month')
+    const dayStart = moment().startOf('day')
     const dayEnd = moment().endOf('day')
 
     const variables = {
