@@ -22,7 +22,7 @@ class Jar extends React.Component {
 
   render () {
     return (
-        <JarContainer active={this.props.active} onClick={this.props.handleClick.bind(this, this.props.jar.id)}>
+        <JarContainer active={this.props.active} onClick={this.props.handleClick.bind(this, this.props.jar)}>
           {this.props.jar.name}
         </JarContainer>
     )
@@ -33,5 +33,6 @@ export default createFragmentContainer(Jar, graphql`
   fragment Jar_jar on Jar {
     id
     name
+    description
   }
 `)

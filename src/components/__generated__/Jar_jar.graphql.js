@@ -13,6 +13,7 @@ declare export opaque type Jar_jar$ref: FragmentReference;
 export type Jar_jar = {|
   +id: string,
   +name: string,
+  +description: ?string,
   +$refType: Jar_jar$ref,
 |};
 */
@@ -38,9 +39,16 @@ const node/*: ConcreteFragment*/ = {
       "name": "name",
       "args": null,
       "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "description",
+      "args": null,
+      "storageKey": null
     }
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '6b1509ceed1621adaf0d8675486e92d6';
+(node/*: any*/).hash = '13240a2f45d598cf3718d5e9d132d414';
 module.exports = node;

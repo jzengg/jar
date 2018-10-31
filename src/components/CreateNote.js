@@ -65,16 +65,19 @@ class CreateNote extends Component {
     super(props)
 
     const jars = this.props.user.jars.edges
-
+    const defaultJar = jars[0].node
+    
     this.state = {
-      selectedJarId: jars[0].node.__id,
+      selectedJarId: defaultJar.id,
+      placeholder: defaultJar.description,
       text: ''
     }
   }
 
-  _updateSelectedJar = (id) => {
+  _updateSelectedJar = ({ id, description }) => {
     this.setState({
-      selectedJarId: id
+      selectedJarId: id,
+      placeholder: description
     })
   }
 
@@ -115,7 +118,7 @@ class CreateNote extends Component {
           type='text'
           value={this.state.text}
           onChange={(e) => this.setState({ text: e.target.value })}
-          placeholder='Something nice that happened today'
+          placeholder={this.state.placeholder}
           id='note_text'
         />
       { this.state.text === '' ?
@@ -137,6 +140,8 @@ export default createFragmentContainer(CreateNote, graphql`
       edges {
         node {
           ...Jar_jar
+          id
+          description
         }
       }
     }

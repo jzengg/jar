@@ -17,7 +17,9 @@ export type CreateNote_user = {|
   +jars: ?{|
     +edges: ?$ReadOnlyArray<?{|
       +node: {|
-        +$fragmentRefs: Jar_jar$ref
+        +id: string,
+        +description: ?string,
+        +$fragmentRefs: Jar_jar$ref,
       |}
     |}>
   |},
@@ -27,7 +29,15 @@ export type CreateNote_user = {|
 */
 
 
-const node/*: ConcreteFragment*/ = {
+const node/*: ConcreteFragment*/ = (function(){
+var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+};
+return {
   "kind": "Fragment",
   "name": "CreateNote_user",
   "type": "User",
@@ -50,13 +60,7 @@ const node/*: ConcreteFragment*/ = {
       "name": "JarList_user",
       "args": null
     },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "id",
-      "args": null,
-      "storageKey": null
-    },
+    v0,
     {
       "kind": "LinkedField",
       "alias": "jars",
@@ -88,6 +92,14 @@ const node/*: ConcreteFragment*/ = {
                   "kind": "FragmentSpread",
                   "name": "Jar_jar",
                   "args": null
+                },
+                v0,
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "description",
+                  "args": null,
+                  "storageKey": null
                 },
                 {
                   "kind": "ScalarField",
@@ -136,6 +148,7 @@ const node/*: ConcreteFragment*/ = {
     }
   ]
 };
+})();
 // prettier-ignore
-(node/*: any*/).hash = '426ce8520072cfc2933cdc47c3613c43';
+(node/*: any*/).hash = 'e6b337c9974e7a311bfe76d2c91eaa95';
 module.exports = node;
