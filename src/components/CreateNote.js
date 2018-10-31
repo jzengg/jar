@@ -6,7 +6,7 @@ import CreateNoteMutation from '../mutations/CreateNoteMutation'
 
 import BaseButton from '../css/BaseButton'
 
-import styled, { css } from 'react-emotion'
+import styled from 'react-emotion'
 
 const CreateButton = styled.button `
   ${BaseButton}
@@ -14,18 +14,20 @@ const CreateButton = styled.button `
   background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
 `
 
-const TextInput = styled.input `
+const TextInput = styled.textarea `
     border: 1px solid #d1d5da;
     border-radius: 3px;
     max-width: 100%;
     font-size: 14px;
-    line-height: 20px;
     padding: 6px 8px;
 `
 
 const FormContainer = styled.div `
   display: flex;
   flex-direction: column;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 1rem;
 `
 
 class CreateNote extends Component {
@@ -67,9 +69,10 @@ class CreateNote extends Component {
         />
 
         <div>
-          <label htmlFor='note_text' className={css`
+          <label htmlFor='note_text' css={`
               font-weight: 600;
-                `}
+              display: block;
+                  `}
           >
             Text
           </label>
@@ -81,10 +84,9 @@ class CreateNote extends Component {
           />
         </div>
         <CreateButton
-          className='button'
           onClick={() => this._createNote()}
         >
-          submit
+          Submit
         </CreateButton>
       </FormContainer>
     )

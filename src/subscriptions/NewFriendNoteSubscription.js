@@ -19,6 +19,8 @@ const newFriendNoteSubscription = graphql`
         text
         createdAt
         jar {
+          id
+          name
           owner {
             id
             email

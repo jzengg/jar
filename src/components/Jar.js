@@ -8,7 +8,7 @@ const JarContainer = styled.li(props => ({
   padding: '0.5rem 0.75rem',
   '&:hover': {border: '1px solid black'},
   cursor: 'pointer',
-  margin: '1rem',
+  // margin: '1rem',
   borderRadius: '3px',
   backgroundColor: '#eff3f6',
   backgroundImage: 'linear-gradient(-180deg,#fafbfc,#eff3f6 90%)',

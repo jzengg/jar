@@ -15,21 +15,19 @@ class JarList extends React.Component {
   render () {
     let jars = this.props.user.jars.edges
     return (
-      <div>
-        <JarListContainer>
-          {
-            jars.map(( {node} ) =>
-            <Jar
-              key={node.__id}
-              jar={node}
-              active={this.props.selectedJarId === node.__id }
-              handleClick={this.props.handleClick}
-            />
+      <JarListContainer>
+        {
+          jars.map(( {node} ) =>
+          <Jar
+            key={node.__id}
+            jar={node}
+            active={this.props.selectedJarId === node.__id }
+            handleClick={this.props.handleClick}
+          />
 
-          )
-        }
-      </JarListContainer>
-  </div>
+        )
+      }
+    </JarListContainer>
     )
   }
 }
