@@ -13,6 +13,7 @@ import styled, { css } from 'react-emotion'
 
 const CreateBase = css`
   ${BaseButton}
+  font-weight: 600;
   background-color: #28a745;
   background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
   border: 1px solid rgba(27,31,35,0.2);
