@@ -12,10 +12,15 @@ const CreateButton = styled.button `
   ${BaseButton}
   background-color: #28a745;
   background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
-  font-weight: 600;
   padding: 6px 12px;
   font-size: 14px;
   align-self: flex-start;
+  border: 1px solid rgba(27,31,35,0.2);
+  &:hover {
+    background-color: #269f42;
+    background-image: linear-gradient(-180deg,#2fcb53,#269f42 90%);
+    border: 1px solid rgba(27,31,35,0.5);
+  }
 `
 
 const TextInput = styled.textarea `
