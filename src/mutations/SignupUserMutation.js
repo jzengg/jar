@@ -13,23 +13,26 @@ const mutation = graphql`
   }
 `
 
-export default (email, password, callback) => {
-  const variables = {
+export default (email, password) =>
+  new Promise((resolve, reject) => {
+    const variables = {
       email,
       password,
       clientMutationId: ""
     }
 
-  commitMutation(
-    environment,
-    {
-      mutation,
-      variables,
-      onCompleted: (response) => {
-        const { id, token } = response.signupUser
-        callback(id, token)
-      },
-      onError: err => console.error(err),
-    },
-  )
-}
+    commitMutation(
+      environment,
+      {
+        mutation,
+        variables,
+        onCompleted: (resp, err) => {
+          if (err) return reject(err)
+          return resolve(resp.signupUser)
+        },
+        onError: (err) => {
+          return reject(err)
+        }
+      }
+    )
+  })

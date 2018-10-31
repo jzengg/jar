@@ -10,6 +10,7 @@ class Login extends Component {
     login: true, // switch between Login and SignUp
     email: '',
     password: '',
+    errorMessage: '',
   }
 
   render() {
@@ -32,35 +33,64 @@ class Login extends Component {
           />
         </div>
         <div>
-          <div
+          <button
             onClick={() => this._confirm()}
           >
             {this.state.login ? 'login' : 'create Account' }
-          </div>
-          <div
+          </button>
+          <button
             onClick={() => this.setState({ login: !this.state.login })}
           >
             {this.state.login ? 'need to create an account?' : 'already have an account?'}
-          </div>
+          </button>
+        </div>
+        <div>
+          {this.state.errorMessage &&
+            <span css={`
+                color: red;
+                `}>
+              { this.state.errorMessage }
+            </span>}
         </div>
       </div>
     )
+  }
+
+  _login = (id, token) => {
+    this._saveUserData(id, token)
+    this.props.history.push(`/`)
+  }
+
+  _handleApiError = (err) => {
+    const { functionError: { message } } = err
+    this.setState({
+      errorMessage: message
+    })
   }
 
   _confirm = () => {
     const { email, password } = this.state
     if (email && password) {
       if (this.state.login) {
-        AuthenticateUserMutation(email, password, (id, token) => {
-          this._saveUserData(id, token)
-          this.props.history.push(`/`)
-        })
+        AuthenticateUserMutation(email, password)
+          .then(({ id, token }) => {
+            this._login(id, token)
+          })
+          .catch(err => {
+            console.log(err)
+            this._handleApiError(err[0])
+
+          })
       } else {
-        SignupUserMutation(email, password, (id, token) => {
-          this._saveUserData(id, token)
-          this.props.history.push(`/`)
-        })
-      }
+        SignupUserMutation(email, password)
+          .then(({ id, token }) => {
+            this._login(id, token)
+          })
+          .catch(err => {
+            console.log(err)
+            this._handleApiError(err[0])
+          })
+        }
     }
   }
 

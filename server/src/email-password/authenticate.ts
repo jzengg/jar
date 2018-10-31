@@ -29,14 +29,18 @@ export default async (event: FunctionEvent<EventData>) => {
 
     // no user with this email
     if (!user) {
-      return { error: 'Invalid credentials!' }
-    }
+    return { error: {
+      message: "Invalid email/password combination",
+      debugMessage: "No user with this email found"
+    } }    }
 
     // check password
     const passwordIsCorrect = await bcrypt.compare(password, user.password)
     if (!passwordIsCorrect) {
-      return { error: 'Invalid credentials!' }
-    }
+      return { error: {
+        message: "Invalid email/password combination",
+        debugMessage: "Bad password"
+      } }    }
 
     // generate node token for existing User node
     const token = await graphcool.generateNodeToken(user.id, 'User')
@@ -44,7 +48,10 @@ export default async (event: FunctionEvent<EventData>) => {
     return { data: { id: user.id, token} }
   } catch (e) {
     console.log(e)
-    return { error: 'An unexpected error occured during authentication.' }
+    return { error: {
+      message: "An unexpected error occuring during authentication",
+      debugMessage: "Server error, check function logs for authentication"
+    } }
   }
 }
 

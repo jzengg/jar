@@ -24,15 +24,20 @@ export default async (event: FunctionEvent<EventData>) => {
     const { email, password } = event.data
 
     if (!validator.isEmail(email)) {
-      return { error: 'Not a valid email' }
+      return { error: {
+        message: "Please enter a valid email",
+        debugMessage: "Invalid email"
+      } }
     }
 
     // check if user exists already
     const userExists: boolean = await getUser(api, email)
       .then(r => r.User !== null)
     if (userExists) {
-      return { error: 'Email already in use' }
-    }
+      return { error: {
+        message: "Email already in use",
+        debugMessage: "Email exists"
+      } }    }
 
     // create password hash
     const salt = bcrypt.genSaltSync(SALT_ROUNDS)
@@ -52,8 +57,10 @@ export default async (event: FunctionEvent<EventData>) => {
     return { data: { id: userId, token } }
   } catch (e) {
     console.log(e)
-    return { error: 'An unexpected error occured during signup.' }
-  }
+    return { error: {
+      message: "An unexpected error occurred during signup",
+      debugMessage: "Server error, check function logs for signup"
+    } }  }
 }
 
 async function createDefaultJar(api: GraphQLClient, ownerId: string, name: string, description: string): Promise<{ Jar }> {
