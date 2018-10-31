@@ -19,6 +19,7 @@ const HeaderContainer = styled.div`
 const HeaderQuery = graphql`
   query HeaderQuery($id: ID, $friendRequestFilter: FriendRequestFilter) {
     viewer {
+      id
       User(id: $id) {
         email
         ...ReceivedFriendRequestBadge_user @arguments(friendRequestFilter: $friendRequestFilter)
@@ -56,7 +57,11 @@ class Header extends Component {
                   <HeaderNavLink activeClassName='selected' to='/history' > History </HeaderNavLink>
                   <HeaderNavLink activeClassName='selected' to='/add' > Add friends </HeaderNavLink>
                   <HeaderNavLink activeClassName='selected' to='/requests' >
-                    Friend requests {loggedIn && <ReceivedFriendRequestBadge user={ props.viewer.User }/>}
+                    Friend requests {loggedIn &&
+                      <ReceivedFriendRequestBadge
+                        user={ props.viewer.User }
+                        />
+                    }
                   </HeaderNavLink>
                   <HeaderNavLink activeClassName='selected' to='/friends' > Friends </HeaderNavLink>
                 </HeaderContainer>

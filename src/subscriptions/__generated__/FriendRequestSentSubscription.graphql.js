@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash a469be88f114b6cb016ba440f8c670f0
+ * @relayHash a4ae608835e633f630329611cfba7eb6
  */
 
 /* eslint-disable */
@@ -287,14 +287,15 @@ export type FriendRequestFilter = {
   recipient?: ?UserFilter,
   sender?: ?UserFilter,
 };
-export type NewFriendRequestReceivedSubscriptionVariables = {|
+export type FriendRequestSentSubscriptionVariables = {|
   filter?: ?FriendRequestSubscriptionFilter
 |};
-export type NewFriendRequestReceivedSubscriptionResponse = {|
+export type FriendRequestSentSubscriptionResponse = {|
   +FriendRequest: ?{|
     +mutation: _ModelMutationType,
     +node: ?{|
       +id: string,
+      +status: FriendRequestStatus,
       +recipient: {|
         +id: string,
         +email: string,
@@ -306,21 +307,22 @@ export type NewFriendRequestReceivedSubscriptionResponse = {|
     |},
   |}
 |};
-export type NewFriendRequestReceivedSubscription = {|
-  variables: NewFriendRequestReceivedSubscriptionVariables,
-  response: NewFriendRequestReceivedSubscriptionResponse,
+export type FriendRequestSentSubscription = {|
+  variables: FriendRequestSentSubscriptionVariables,
+  response: FriendRequestSentSubscriptionResponse,
 |};
 */
 
 
 /*
-subscription NewFriendRequestReceivedSubscription(
+subscription FriendRequestSentSubscription(
   $filter: FriendRequestSubscriptionFilter
 ) {
   FriendRequest(filter: $filter) {
     mutation
     node {
       id
+      status
       recipient {
         id
         email
@@ -395,6 +397,13 @@ v3 = [
         "selections": [
           v1,
           {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "status",
+            "args": null,
+            "storageKey": null
+          },
+          {
             "kind": "LinkedField",
             "alias": null,
             "name": "recipient",
@@ -422,13 +431,13 @@ v3 = [
 return {
   "kind": "Request",
   "operationKind": "subscription",
-  "name": "NewFriendRequestReceivedSubscription",
+  "name": "FriendRequestSentSubscription",
   "id": null,
-  "text": "subscription NewFriendRequestReceivedSubscription(\n  $filter: FriendRequestSubscriptionFilter\n) {\n  FriendRequest(filter: $filter) {\n    mutation\n    node {\n      id\n      recipient {\n        id\n        email\n      }\n      sender {\n        id\n        email\n      }\n    }\n  }\n}\n",
+  "text": "subscription FriendRequestSentSubscription(\n  $filter: FriendRequestSubscriptionFilter\n) {\n  FriendRequest(filter: $filter) {\n    mutation\n    node {\n      id\n      status\n      recipient {\n        id\n        email\n      }\n      sender {\n        id\n        email\n      }\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "NewFriendRequestReceivedSubscription",
+    "name": "FriendRequestSentSubscription",
     "type": "Subscription",
     "metadata": null,
     "argumentDefinitions": v0,
@@ -436,12 +445,12 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "NewFriendRequestReceivedSubscription",
+    "name": "FriendRequestSentSubscription",
     "argumentDefinitions": v0,
     "selections": v3
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '1751fcb2346180f2fbb092e1f5577733';
+(node/*: any*/).hash = '14c3ee81040d0bcb7607e45ab96ccfd2';
 module.exports = node;

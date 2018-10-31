@@ -1,8 +1,8 @@
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
 
-class ReceivedFriendRequestBadge extends React.Component {
 
+class ReceivedFriendRequestBadge extends React.Component {
   render () {
     const receivedFriendRequests = this.props.user.receivedFriendRequests.edges
     return (

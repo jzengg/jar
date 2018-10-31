@@ -29,7 +29,7 @@ const newFriendNoteSubscription = graphql`
   }
 `
 
-export default (viewerId, userId) => {
+export default (userId) => {
   const filter = {
     node: {
       jar: {
@@ -47,11 +47,11 @@ export default (viewerId, userId) => {
 
   const subscriptionConfig = {
     subscription: newFriendNoteSubscription,
-    variables: { userId, filter },
+    variables: { filter },
     updater: proxyStore => {
       const payload = proxyStore.getRootField('Note')
       const mutation = payload.getValue('mutation')
-      const viewer = proxyStore.get(viewerId)
+      const viewer = proxyStore.getRoot().getLinkedRecord('viewer');
       const conn = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
       if (mutation === 'CREATED') {
         const note = payload.getLinkedRecord('node')

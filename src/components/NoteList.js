@@ -1,4 +1,7 @@
 import React from 'react';
+import { GC_USER_ID } from '../constants'
+
+import NewFriendNoteSubscription from '../subscriptions/NewFriendNoteSubscription'
 
 import styled from 'react-emotion'
 
@@ -10,9 +13,13 @@ const Container = styled.div(props => ({
 
 class NoteList extends React.Component {
 
+  _subscribeToFriendNotes(userId) {
+    return NewFriendNoteSubscription(userId)
+  }
+
   componentDidMount() {
-    const subscribe = this.props.subscribeToFriendNotes
-    this.subscription = subscribe && subscribe(this.props.viewer.id)
+    const userId = localStorage.getItem(GC_USER_ID)
+    this.subscription = this.props.subscribe && this._subscribeToFriendNotes(userId)
   }
 
   componentWillUnmount() {

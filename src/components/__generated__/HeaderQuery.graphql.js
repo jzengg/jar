@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash fe41d24a28848af714e11aadab55bf62
+ * @relayHash cbbfbbf4b17fe99250d9dd2fb004953c
  */
 
 /* eslint-disable */
@@ -246,10 +246,11 @@ export type HeaderQueryVariables = {|
 |};
 export type HeaderQueryResponse = {|
   +viewer: {|
+    +id: string,
     +User: ?{|
       +email: string,
       +$fragmentRefs: ReceivedFriendRequestBadge_user$ref,
-    |}
+    |},
   |}
 |};
 export type HeaderQuery = {|
@@ -265,12 +266,12 @@ query HeaderQuery(
   $friendRequestFilter: FriendRequestFilter
 ) {
   viewer {
+    id
     User(id: $id) {
       email
       ...ReceivedFriendRequestBadge_user_2yZ5GC
       id
     }
-    id
   }
 }
 
@@ -311,7 +312,14 @@ var v0 = [
     "defaultValue": null
   }
 ],
-v1 = [
+v1 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v2 = [
   {
     "kind": "Variable",
     "name": "id",
@@ -319,14 +327,14 @@ v1 = [
     "type": "ID"
   }
 ],
-v2 = {
+v3 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "email",
   "args": null,
   "storageKey": null
 },
-v3 = [
+v4 = [
   {
     "kind": "Variable",
     "name": "filter",
@@ -345,20 +353,13 @@ v3 = [
     "value": "createdAt_DESC",
     "type": "FriendRequestOrderBy"
   }
-],
-v4 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "id",
-  "args": null,
-  "storageKey": null
-};
+];
 return {
   "kind": "Request",
   "operationKind": "query",
   "name": "HeaderQuery",
   "id": null,
-  "text": "query HeaderQuery(\n  $id: ID\n  $friendRequestFilter: FriendRequestFilter\n) {\n  viewer {\n    User(id: $id) {\n      email\n      ...ReceivedFriendRequestBadge_user_2yZ5GC\n      id\n    }\n    id\n  }\n}\n\nfragment ReceivedFriendRequestBadge_user_2yZ5GC on User {\n  receivedFriendRequests(last: 100, orderBy: createdAt_DESC, filter: $friendRequestFilter) {\n    edges {\n      node {\n        id\n        status\n        sender {\n          id\n          email\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n",
+  "text": "query HeaderQuery(\n  $id: ID\n  $friendRequestFilter: FriendRequestFilter\n) {\n  viewer {\n    id\n    User(id: $id) {\n      email\n      ...ReceivedFriendRequestBadge_user_2yZ5GC\n      id\n    }\n  }\n}\n\nfragment ReceivedFriendRequestBadge_user_2yZ5GC on User {\n  receivedFriendRequests(last: 100, orderBy: createdAt_DESC, filter: $friendRequestFilter) {\n    edges {\n      node {\n        id\n        status\n        sender {\n          id\n          email\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -376,16 +377,17 @@ return {
         "concreteType": "Viewer",
         "plural": false,
         "selections": [
+          v1,
           {
             "kind": "LinkedField",
             "alias": null,
             "name": "User",
             "storageKey": null,
-            "args": v1,
+            "args": v2,
             "concreteType": "User",
             "plural": false,
             "selections": [
-              v2,
+              v3,
               {
                 "kind": "FragmentSpread",
                 "name": "ReceivedFriendRequestBadge_user",
@@ -418,22 +420,23 @@ return {
         "concreteType": "Viewer",
         "plural": false,
         "selections": [
+          v1,
           {
             "kind": "LinkedField",
             "alias": null,
             "name": "User",
             "storageKey": null,
-            "args": v1,
+            "args": v2,
             "concreteType": "User",
             "plural": false,
             "selections": [
-              v2,
+              v3,
               {
                 "kind": "LinkedField",
                 "alias": null,
                 "name": "receivedFriendRequests",
                 "storageKey": null,
-                "args": v3,
+                "args": v4,
                 "concreteType": "FriendRequestConnection",
                 "plural": false,
                 "selections": [
@@ -455,7 +458,7 @@ return {
                         "concreteType": "FriendRequest",
                         "plural": false,
                         "selections": [
-                          v4,
+                          v1,
                           {
                             "kind": "ScalarField",
                             "alias": null,
@@ -472,8 +475,8 @@ return {
                             "concreteType": "User",
                             "plural": false,
                             "selections": [
-                              v4,
-                              v2
+                              v1,
+                              v3
                             ]
                           },
                           {
@@ -525,15 +528,14 @@ return {
                 "kind": "LinkedHandle",
                 "alias": null,
                 "name": "receivedFriendRequests",
-                "args": v3,
+                "args": v4,
                 "handle": "connection",
                 "key": "ReceivedFriendRequestBadge_receivedFriendRequests",
                 "filters": []
               },
-              v4
+              v1
             ]
-          },
-          v4
+          }
         ]
       }
     ]
@@ -541,5 +543,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'a2fee902945205f7bb2a98e416c6cf96';
+(node/*: any*/).hash = 'f0392dfff8395d25888a9b1b9af1528c';
 module.exports = node;

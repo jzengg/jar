@@ -7,7 +7,6 @@ import AcceptFriendRequestMutation from '../mutations/AcceptFriendRequestMutatio
 import FriendRequest from './FriendRequest'
 
 class ReceivedFriendRequestList extends React.Component {
-
   render () {
     let friendRequests = this.props.user.receivedFriendRequests.edges
     return (

@@ -41,7 +41,7 @@ class AddFriend extends Component {
               <div>
                 <div>
                   <h2> Pending Requests </h2>
-                  <SentFriendRequestList user={props.viewer.User} />
+                  <SentFriendRequestList user={props.viewer.User} subscribe />
                 </div>
                 <div>
                   <h2> Add a friend </h2>

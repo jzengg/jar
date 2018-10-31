@@ -1,9 +1,25 @@
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
+import { GC_USER_ID } from '../constants'
+
+import FriendRequestSentSubscription from '../subscriptions/FriendRequestSentSubscription'
 
 import FriendRequest from './FriendRequest'
 
 class SentFriendRequestList extends React.Component {
+
+    _subscribeToFriendRequestSent(userId) {
+      return FriendRequestSentSubscription(userId)
+    }
+
+    componentDidMount() {
+      const userId = localStorage.getItem(GC_USER_ID)
+      this.subscription = this.props.subscribe && this._subscribeToFriendRequestSent(userId)
+    }
+
+    componentWillUnmount() {
+      this.subscription && this.subscription.dispose()
+    }
 
   render () {
     let friendRequests = this.props.user.sentFriendRequests.edges
