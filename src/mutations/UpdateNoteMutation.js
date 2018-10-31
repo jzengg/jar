@@ -44,6 +44,13 @@ export default (id, text, jarId) => {
     {
       mutation,
       variables,
+      optimisticUpdater: (proxyStore) => {
+        const jar = proxyStore.get(jarId)
+        const node = proxyStore.get(id)
+        node.setValue(text, 'text')
+        node.setValue(id, 'id')
+        node.setLinkedRecord(jar, 'jar')
+      },
       onError: err => console.error(err),
     },
   )
