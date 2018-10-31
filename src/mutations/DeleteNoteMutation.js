@@ -17,6 +17,12 @@ const mutation = graphql`
   }
 `
 
+const sharedUpdater = (proxyStore, id) => {
+  const viewer = proxyStore.getRoot().getLinkedRecord('viewer')
+  const conn = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
+  ConnectionHandler.deleteNode(conn, id)
+}
+
 export default (id, callback) => {
   const variables = {
     input: {
@@ -30,12 +36,11 @@ export default (id, callback) => {
     {
       mutation,
       variables,
+      optimisticUpdater: proxyStore => {
+        sharedUpdater(proxyStore, id)
+      },
       updater: proxyStore => {
-        const payload = proxyStore.getRootField('deleteNote')
-        const viewer = payload.getLinkedRecord('viewer')
-        const deletedId = payload.getValue('deletedId')
-        const conn = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
-        ConnectionHandler.deleteNode(conn, deletedId)
+        sharedUpdater(proxyStore, id)
       },
       onError: err => console.error(err),
     },
