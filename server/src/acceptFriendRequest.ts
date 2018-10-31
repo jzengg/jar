@@ -24,7 +24,6 @@ export default async (event: FunctionEvent<EventData>) => {
     const recipientId = friendRequest.recipient.id
 
     const addFriendsPayload = await addFriend(api, senderId, recipientId).then(r => r.addToFriends)
-    console.log("ADD FRIENDS PAYLOAD", addFriendsPayload)
 
     return { data: { user1Id: addFriendsPayload.friends1User.id, user2Id: addFriendsPayload.friends2User.id } }
   } catch (e) {

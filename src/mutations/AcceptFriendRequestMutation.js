@@ -3,6 +3,8 @@ import {
   graphql,
 } from 'react-relay'
 
+import {ConnectionHandler} from 'relay-runtime';
+
 import environment from '../Environment'
 
 const mutation = graphql`
@@ -25,17 +27,14 @@ export default (id, callback) => {
     {
       mutation,
       variables,
-      onCompleted: (response) => {
-        console.log('accepted fr')
+      updater: proxyStore => {
+        const payload = proxyStore.getRootField('acceptFriendRequest')
+        const user = proxyStore.get(payload.getValue('user2Id'))
+        const conn = ConnectionHandler.getConnection(user, 'FriendRequestList_receivedFriendRequests')
+        const badge_conn = ConnectionHandler.getConnection(user, 'ReceivedFriendRequestBadge_receivedFriendRequests')
+        ConnectionHandler.deleteNode(conn, id)
+        ConnectionHandler.deleteNode(badge_conn, id)
       },
-      // updater: proxyStore => {
-      //   const payload = proxyStore.getRootField('createNote')
-      //   const viewer = payload.getLinkedRecord('viewer')
-      //   const note = payload.getLinkedRecord('note')
-      //   const notes = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
-      //   const edge = ConnectionHandler.createEdge(proxyStore, notes, note, 'NotesEdge')
-      //   ConnectionHandler.insertEdgeBefore(notes, edge)
-      // },
       onError: err => console.error(err),
     },
   )
