@@ -44,7 +44,9 @@ class EditableNote extends React.Component {
   }
 
   _handleOutsideClick = () => {
-    this._disableEdit()
+    if (this.state.editable) {
+      this._disableEdit()
+    }
 
     const changed = this.state.text !== this.props.note.text || this.state.jarId !== this.props.note.jar.id
     if (changed) {
@@ -120,7 +122,7 @@ class EditableNote extends React.Component {
           </NoteHeader>
           { NoteBody }
           <NoteFooter>
-            {Jar}
+            { Jar }
             <AuthorTag>
               {this.props.note.jar.owner.email}
             </AuthorTag>

@@ -13,6 +13,7 @@ type Jar_jar$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type CreateNote_user$ref: FragmentReference;
 export type CreateNote_user = {|
+  +id: string,
   +jars: ?{|
     +edges: ?$ReadOnlyArray<?{|
       +node: {|
@@ -48,6 +49,13 @@ const node/*: ConcreteFragment*/ = {
       "kind": "FragmentSpread",
       "name": "JarList_user",
       "args": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "id",
+      "args": null,
+      "storageKey": null
     },
     {
       "kind": "LinkedField",
@@ -129,5 +137,5 @@ const node/*: ConcreteFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '36b4877be5ccbe69c6c471c119b53667';
+(node/*: any*/).hash = '426ce8520072cfc2933cdc47c3613c43';
 module.exports = node;

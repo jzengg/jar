@@ -49,8 +49,8 @@ class CreateNote extends Component {
   _createNote = () => {
     const { text, selectedJarId } = this.state
     if (text && selectedJarId) {
-      CreateNoteMutation(text, selectedJarId)
-      
+      CreateNoteMutation(text, selectedJarId, this.props.user.id)
+
       this.setState({
         text: ''
       })
@@ -95,6 +95,7 @@ class CreateNote extends Component {
 export default createFragmentContainer(CreateNote, graphql`
   fragment CreateNote_user on User {
     ...JarList_user
+    id
     jars(last: 100, orderBy: createdAt_DESC)
       @connection(key: "CreateNote_jars", filters: []) {
       edges {

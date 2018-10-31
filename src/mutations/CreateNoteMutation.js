@@ -47,7 +47,7 @@ const sharedUpdater = (proxyStore, node) => {
   ConnectionHandler.insertEdgeBefore(conn, edge)
 }
 
-export default (text, jarId, callback) => {
+export default (text, jarId, userId) => {
   const variables = {
     input: {
       text,
@@ -63,20 +63,29 @@ export default (text, jarId, callback) => {
     {
       mutation,
       variables,
-      optimisticUpdater: proxyStore => {
-        const jar = proxyStore.get(jarId)
-        const node = proxyStore.create(`create-note${id}`, 'Note')
-        node.setValue(text, 'text')
-        node.setValue(id, 'id')
-        node.setLinkedRecord(jar, 'jar')
-
-        const newEdge = proxyStore.create(
-          `new-edge-${id}`,
-          'NoteEdge',
-        )
-        newEdge.setLinkedRecord(node, 'node')
-        sharedUpdater(proxyStore, node)
-      },
+      // optimisticUpdater: proxyStore => {
+      //   const jar = proxyStore.get(jarId)
+      //   const owner = proxyStore.get(userId)
+      //   const node = proxyStore.create(`create-note${id}`, 'Note')
+      //   node.setValue(text, 'text')
+      //   node.setValue(id, 'id')
+      //   node.setLinkedRecord(jar, 'jar')
+      //   jar.setLinkedRecord(owner, 'owner')
+      //   owner.setLinkedRecords([jar], 'jars')
+      //   // const jarEdge = proxyStore.create(
+      //   //   `jar-edge-${id}`,
+      //   //   'JarEdge',
+      //   // )
+      //   // jarEdge.setLinkedRecord(jar, 'node')
+      //
+      //
+      //   const newEdge = proxyStore.create(
+      //     `new-edge-${id}`,
+      //     'NoteEdge',
+      //   )
+      //   newEdge.setLinkedRecord(node, 'node')
+      //   sharedUpdater(proxyStore, node)
+      // },
       updater: proxyStore => {
         const payload = proxyStore.getRootField('createNote')
         const note = payload.getLinkedRecord('note')
