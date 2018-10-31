@@ -7,7 +7,7 @@ import styled from 'react-emotion'
 
 const JarListContainer = styled.ul`
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 `
 
 

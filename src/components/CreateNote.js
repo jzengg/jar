@@ -41,17 +41,17 @@ const DisabledButton = styled.button `
   box-shadow: none;
 `
 
-const TextInput = styled.textarea `
-    border: 1px solid #d1d5da;
-    border-radius: 3px;
-    width: 100%
-    min-height: 50px;
-    font-size: 1.2rem;
-    resize: vertical;
-    margin-bottom: 1rem;
+const TextInput = styled.input `
+  border: 1px solid #d1d5da;
+  border-radius: 5px;
+  padding: 6px 8px;
+  width: 100%
+  min-height: 50px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 `
 
-const FormContainer = styled.div `
+const FormContainer = styled.form `
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(27,31,35,0.35);
@@ -112,6 +112,7 @@ class CreateNote extends Component {
           Text
         </label>
         <TextInput
+          type='text'
           value={this.state.text}
           onChange={(e) => this.setState({ text: e.target.value })}
           placeholder='Something nice that happened today'

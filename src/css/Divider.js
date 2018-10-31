@@ -2,7 +2,7 @@ import styled from 'react-emotion'
 
 export default styled.hr`
   height: 0;
-  margin: 10px 0;
+  margin: 12px 0;
   overflow: hidden;
   background: transparent;
   border: 0;
