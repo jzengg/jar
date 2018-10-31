@@ -18,6 +18,9 @@ class CreateFriendRequest extends Component {
 
     if (senderId && email) {
       CreateFriendRequestMutation(senderId, email)
+      this.setState({
+        email: ''
+      })
     }
   }
 

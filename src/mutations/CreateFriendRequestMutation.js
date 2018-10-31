@@ -26,9 +26,6 @@ export default (senderId, email, callback) => {
     {
       mutation,
       variables,
-      onCompleted: (response) => {
-        console.log('created fr')
-      },
       // updater: proxyStore => {
       //   const payload = proxyStore.getRootField('createNote')
       //   const viewer = payload.getLinkedRecord('viewer')
