@@ -4,6 +4,8 @@ import {
 } from 'react-relay'
 import {ConnectionHandler} from 'relay-runtime';
 
+import cuid from 'cuid'
+
 import environment from '../Environment'
 
 const mutation = graphql`
@@ -38,6 +40,13 @@ const mutation = graphql`
   }
 `
 
+const sharedUpdater = (proxyStore, node) => {
+  const viewer = proxyStore.getRoot().getLinkedRecord('viewer')
+  const conn = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
+  const edge = ConnectionHandler.createEdge(proxyStore, conn, node, 'NotesEdge')
+  ConnectionHandler.insertEdgeBefore(conn, edge)
+}
+
 export default (text, jarId, callback) => {
   const variables = {
     input: {
@@ -47,19 +56,32 @@ export default (text, jarId, callback) => {
     },
   }
 
+  const id = cuid()
+
   commitMutation(
     environment,
     {
       mutation,
       variables,
+      optimisticUpdater: proxyStore => {
+        const jar = proxyStore.get(jarId)
+        const node = proxyStore.create(`create-note${id}`, 'Note')
+        node.setValue(text, 'text')
+        node.setValue(id, 'id')
+        node.setLinkedRecord(jar, 'jar')
+
+        const newEdge = proxyStore.create(
+          `new-edge-${id}`,
+          'NoteEdge',
+        )
+        newEdge.setLinkedRecord(node, 'node')
+        sharedUpdater(proxyStore, node)
+      },
       updater: proxyStore => {
         const payload = proxyStore.getRootField('createNote')
-        const viewer = payload.getLinkedRecord('viewer')
         const note = payload.getLinkedRecord('note')
 
-        const conn = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
-        const edge = ConnectionHandler.createEdge(proxyStore, conn, note, 'NotesEdge')
-        ConnectionHandler.insertEdgeBefore(conn, edge)
+        sharedUpdater(proxyStore, note)
       },
       onError: err => console.error(err),
     },
