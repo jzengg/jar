@@ -45,9 +45,12 @@ export default (userId) => {
       if (mutation === 'CREATED') {
         const user = proxyStore.get(userId)
         const conn = ConnectionHandler.getConnection(user, 'FriendRequestList_sentFriendRequests')
+        const badge_conn = ConnectionHandler.getConnection(user, 'SentFriendRequestBadge_sentFriendRequests')
         const friendRequest = payload.getLinkedRecord('node')
         const edge = ConnectionHandler.createEdge(proxyStore, conn, friendRequest, 'SentFriendsRequestsEdge')
         ConnectionHandler.insertEdgeBefore(conn, edge)
+        const badge_edge = ConnectionHandler.createEdge(proxyStore, badge_conn, friendRequest, 'SentFriendsRequestsEdge')
+        ConnectionHandler.insertEdgeBefore(badge_conn, badge_edge)
       }
     },
     onError: error => console.log(`An error occured:`, error)

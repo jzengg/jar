@@ -5,6 +5,7 @@ import environment from '../Environment'
 import { GC_USER_ID } from '../constants'
 
 import ReceivedFriendRequestBadge from './ReceivedFriendRequestBadge'
+import SentFriendRequestBadge from './SentFriendRequestBadge'
 
 import HeaderNavLink from './HeaderNavLink'
 import LogoutButton from './LogoutButton'
@@ -23,6 +24,7 @@ const HeaderQuery = graphql`
       User(id: $id) {
         email
         ...ReceivedFriendRequestBadge_user @arguments(friendRequestFilter: $friendRequestFilter)
+        ...SentFriendRequestBadge_user @arguments(friendRequestFilter: $friendRequestFilter)
       }
     }
   }
@@ -55,7 +57,13 @@ class Header extends Component {
                   <HeaderNavLink to='/'>Home </HeaderNavLink>
                   {loggedIn || <HeaderNavLink activeClassName='selected' to='/login' > Login </HeaderNavLink>}
                   <HeaderNavLink activeClassName='selected' to='/history' > History </HeaderNavLink>
-                  <HeaderNavLink activeClassName='selected' to='/add' > Add friends </HeaderNavLink>
+                  <HeaderNavLink activeClassName='selected' to='/add' >
+                    Add Friends {loggedIn &&
+                      <SentFriendRequestBadge
+                        user={ props.viewer.User }
+                        />
+                    }
+                  </HeaderNavLink>
                   <HeaderNavLink activeClassName='selected' to='/requests' >
                     Friend requests {loggedIn &&
                       <ReceivedFriendRequestBadge
