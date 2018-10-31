@@ -5,6 +5,8 @@ import JarList from './JarList'
 import CreateNoteMutation from '../mutations/CreateNoteMutation'
 
 import BaseButton from '../css/BaseButton'
+import Divider from '../css/Divider'
+import SubHeading from '../css/SubHeading'
 
 import styled from 'react-emotion'
 
@@ -75,20 +77,10 @@ class CreateNote extends Component {
   render() {
     return (
       <FormContainer>
-        <h2 css={`
-            font-size: 1.5rem;
-            `}>
+        <SubHeading>
           Add a New Note
-        </h2>
-        <hr css={`
-          height: 0;
-          margin: 10px 0;
-          overflow: hidden;
-          background: transparent;
-          border: 0;
-          border-bottom: 1px solid #dfe2e5;
-            `}/>
-
+        </SubHeading>
+        <Divider/>
         <JarList
           handleClick={this._updateSelectedJar}
           selectedJarId={this.state.selectedJarId}

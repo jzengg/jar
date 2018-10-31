@@ -10,6 +10,9 @@ import NoteList from './NoteList'
 import EditableNote from './EditableNote'
 import Note from './Note'
 
+import Divider  from '../css/Divider'
+import SubHeading  from '../css/SubHeading'
+
 const TodayQuery = graphql`
   query TodayQuery($userId: ID, $noteFilter: NoteFilter) {
     viewer {
@@ -69,7 +72,8 @@ class Today extends Component {
               <div>
                 <CreateNote user={props.viewer.User} />
 
-                <h2> Notes from Today </h2>
+                <SubHeading> Notes from Today </SubHeading>
+                <Divider/>
                 <NoteList subscribe>
                   {props.viewer.allNotes.edges.map(({ node }) => {
                     const isAuthor = node.jar.owner.id === userId
