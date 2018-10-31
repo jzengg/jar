@@ -8,21 +8,36 @@ import BaseButton from '../css/BaseButton'
 import Divider from '../css/Divider'
 import SubHeading from '../css/SubHeading'
 
-import styled from 'react-emotion'
+import styled, { css } from 'react-emotion'
 
-const CreateButton = styled.button `
+
+const CreateBase = css`
   ${BaseButton}
   background-color: #28a745;
   background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
+  border: 1px solid rgba(27,31,35,0.2);
   padding: 6px 12px;
   font-size: 14px;
   align-self: flex-start;
-  border: 1px solid rgba(27,31,35,0.2);
+`
+
+const CreateButton = styled.button `
+  ${CreateBase}
   &:hover {
     background-color: #269f42;
     background-image: linear-gradient(-180deg,#2fcb53,#269f42 90%);
     border: 1px solid rgba(27,31,35,0.5);
   }
+`
+
+const DisabledButton = styled.button `
+  ${CreateBase}
+  cursor: auto;
+  color: hsla(0,0%,100%,0.75);
+  background-color: #94d3a2;
+  background-image: none;
+  border-color: rgba(27,31,35,0.2);
+  box-shadow: none;
 `
 
 const TextInput = styled.textarea `
@@ -101,11 +116,10 @@ class CreateNote extends Component {
           placeholder='Something nice that happened today'
           id='note_text'
         />
-      <CreateButton
-        onClick={() => this._createNote()}
-      >
-        Submit
-      </CreateButton>
+      { this.state.text === '' ?
+        <DisabledButton disabled> Submit </DisabledButton> :
+        <CreateButton onClick={() => this._createNote()}> Submit </CreateButton>
+        }
     </FormContainer>
     )
 
