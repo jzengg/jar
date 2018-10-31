@@ -12,22 +12,30 @@ const CreateButton = styled.button `
   ${BaseButton}
   background-color: #28a745;
   background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
+  font-weight: 600;
+  padding: 6px 12px;
+  font-size: 14px;
+  align-self: flex-start;
 `
 
 const TextInput = styled.textarea `
     border: 1px solid #d1d5da;
     border-radius: 3px;
-    max-width: 100%;
-    font-size: 14px;
-    padding: 6px 8px;
+    width: 100%
+    min-height: 50px;
+    font-size: 1.2rem;
+    resize: vertical;
+    margin-bottom: 1rem;
 `
 
 const FormContainer = styled.div `
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  border: 1px solid rgba(27,31,35,0.35);
   border-radius: 5px;
   padding: 1rem;
+  width: 768px;
+  margin-bottom: 1rem;
 `
 
 class CreateNote extends Component {
@@ -62,33 +70,40 @@ class CreateNote extends Component {
   render() {
     return (
       <FormContainer>
+        <h2 css={`
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            `}>
+          Add a New Note
+        </h2>
+
         <JarList
           handleClick={this._updateSelectedJar}
           selectedJarId={this.state.selectedJarId}
           user={this.props.user}
         />
 
-        <div>
-          <label htmlFor='note_text' css={`
-              font-weight: 600;
-              display: block;
-                  `}
-          >
-            Text
-          </label>
-          <TextInput
-            value={this.state.text}
-            onChange={(e) => this.setState({ text: e.target.value })}
-            type='text'
-            id='note_text'
-          />
-        </div>
-        <CreateButton
-          onClick={() => this._createNote()}
+        <label htmlFor='note_text' css={`
+            font-weight: 600;
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+                `}
         >
-          Submit
-        </CreateButton>
-      </FormContainer>
+          Text
+        </label>
+        <TextInput
+          value={this.state.text}
+          onChange={(e) => this.setState({ text: e.target.value })}
+          placeholder='Something nice that happened today'
+          id='note_text'
+        />
+      <CreateButton
+        onClick={() => this._createNote()}
+      >
+        Submit
+      </CreateButton>
+    </FormContainer>
     )
 
   }

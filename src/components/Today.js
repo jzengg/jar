@@ -39,7 +39,7 @@ class Today extends Component {
 
   render() {
     const userId = localStorage.getItem(GC_USER_ID)
-    const dayStart = moment().startOf('day')
+    const dayStart = moment().startOf('day  ')
     const dayEnd = moment().endOf('day')
 
     const variables = {
@@ -67,7 +67,6 @@ class Today extends Component {
           } else if (props) {
             return (
               <div>
-                <h2> Add a New Note </h2>
                 <CreateNote user={props.viewer.User} />
 
                 <h2> Notes from Today </h2>
