@@ -7,7 +7,14 @@ import AuthenticateUserMutation from '../mutations/AuthenticateUserMutation'
 import SubHeading from '../css/SubHeading'
 import { FormContainer, WideInput, WideLabel } from '../css/BaseForm'
 import { Container } from '../css/BaseLayout'
-import { PrimaryButton, LinkButton } from '../css/BaseButton'
+import { PrimaryButton, LinkButton, DisabledPrimaryButton } from '../css/BaseButton'
+
+import { css } from 'react-emotion'
+
+const WideButton = css `
+  width: 100%;
+  margin-bottom: 1rem;
+`
 
 class Login extends Component {
 
@@ -16,6 +23,7 @@ class Login extends Component {
     email: '',
     password: '',
     errorMessage: '',
+    loading: false
   }
 
   render() {
@@ -60,13 +68,11 @@ class Login extends Component {
               id="password"
               placeholder='Choose a safe password'
             />
+          { this.state.loading ?
+            <DisabledPrimaryButton css={`${WideButton}`}> {this.state.login ? 'Log in' : 'Sign up' } </DisabledPrimaryButton> :
 
-            <PrimaryButton css={`
-                width: 100%;
-                margin-bottom: 1rem;
-                `}>
-                {this.state.login ? 'Log in' : 'Sign up' }
-            </PrimaryButton>
+            <PrimaryButton css={`${WideButton}`}> {this.state.login ? 'Log in' : 'Sign up' } </PrimaryButton>
+          }
               {this.state.errorMessage &&
                 <span css={`
                     color: red;
@@ -89,17 +95,27 @@ class Login extends Component {
   _login = (id, token) => {
     this._saveUserData(id, token)
     this.props.history.push(`/`)
+    this.setState({
+      loading: false
+    })
   }
 
   _handleApiError = (err) => {
     const { functionError: { message } } = err
     this.setState({
-      errorMessage: message
+      errorMessage: message,
+      loading: false
     })
   }
 
   _handleSubmit = (e) => {
     e.preventDefault()
+    if (this.state.loading) return
+
+    this.setState({
+      loading: true
+    })
+
     const { email, password } = this.state
     if (email && password) {
       if (this.state.login) {
