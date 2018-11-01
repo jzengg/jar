@@ -11,13 +11,11 @@ const Main = styled.main `
 `
 
 const Section = styled.section`
-  width: 100%;
   display: flex;
 `
 
 const Column = styled.article`
   flex: 1;
-  flex-basis: 100%;
 `
 
 class Layout extends Component {
