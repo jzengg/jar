@@ -17,6 +17,7 @@ export const NoteContainer = styled.div`
 
 export const NoteHeader = styled.div`
   ${secondary};
+  display: flex;
   justify-content: space-between;
   height: 1.5rem;
 `
