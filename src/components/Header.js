@@ -52,31 +52,22 @@ class Header extends Component {
             const loggedIn = !!props.viewer.User
             return (
               <div>
-                <HeaderContainer>
-                  <HeaderNavLink to='/'>Home </HeaderNavLink>
-                  {loggedIn || <HeaderNavLink activeClassName='selected' to='/login' > Login </HeaderNavLink>}
-                  <HeaderNavLink activeClassName='selected' to='/history' > History </HeaderNavLink>
-                  <HeaderNavLink activeClassName='selected' to='/add' >
-                    Add Friends {loggedIn &&
-                      <SentFriendRequestBadge
-                        user={ props.viewer.User }
-                        />
-                    }
-                  </HeaderNavLink>
-                  <HeaderNavLink activeClassName='selected' to='/requests' >
-                    Friend requests {loggedIn &&
-                      <ReceivedFriendRequestBadge
-                        user={ props.viewer.User }
-                        />
-                    }
-                  </HeaderNavLink>
-                  <HeaderNavLink activeClassName='selected' to='/friends' > Friends </HeaderNavLink>
-                </HeaderContainer>
                 { loggedIn &&
-                  <div>
-                     {props.viewer.User.email}
-                     <LogoutButton/>
-                  </div>
+                  <HeaderContainer>
+                    <HeaderNavLink to='/'>Home </HeaderNavLink>
+                    <HeaderNavLink activeClassName='selected' to='/history' > History </HeaderNavLink>
+                    <HeaderNavLink activeClassName='selected' to='/add' >
+                      Add Friends
+                      <SentFriendRequestBadge user={ props.viewer.User } />
+                    </HeaderNavLink>
+
+                    <HeaderNavLink activeClassName='selected' to='/requests' >
+                      Friend requests
+                      <ReceivedFriendRequestBadge user={ props.viewer.User } />
+                    </HeaderNavLink>
+
+                    <HeaderNavLink activeClassName='selected' to='/friends' > Friends </HeaderNavLink>
+                  </HeaderContainer>
                 }
               </div>
             )
