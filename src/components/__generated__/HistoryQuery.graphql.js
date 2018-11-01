@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash c36dff639b0a29631baa0cdb4156362f
+ * @relayHash 3f4f2209225ec97c6968afc0ce28bd7d
  */
 
 /* eslint-disable */
@@ -292,6 +292,7 @@ fragment EditableNote_note on Note {
     id
     name
     owner {
+      id
       email
       jars {
         edges {
@@ -301,7 +302,6 @@ fragment EditableNote_note on Note {
           }
         }
       }
-      id
     }
   }
 }
@@ -394,7 +394,7 @@ return {
   "operationKind": "query",
   "name": "HistoryQuery",
   "id": null,
-  "text": "query HistoryQuery(\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n      edges {\n        node {\n          ...EditableNote_note\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        hasPreviousPage\n        startCursor\n      }\n    }\n    id\n  }\n}\n\nfragment EditableNote_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    id\n    name\n    owner {\n      email\n      jars {\n        edges {\n          node {\n            id\n            name\n          }\n        }\n      }\n      id\n    }\n  }\n}\n",
+  "text": "query HistoryQuery(\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n      edges {\n        node {\n          ...EditableNote_note\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        hasPreviousPage\n        startCursor\n      }\n    }\n    id\n  }\n}\n\nfragment EditableNote_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    id\n    name\n    owner {\n      id\n      email\n      jars {\n        edges {\n          node {\n            id\n            name\n          }\n        }\n      }\n    }\n  }\n}\n",
   "metadata": {
     "connection": [
       {
@@ -545,6 +545,7 @@ return {
                             "concreteType": "User",
                             "plural": false,
                             "selections": [
+                              v5,
                               {
                                 "kind": "ScalarField",
                                 "alias": null,
@@ -586,8 +587,7 @@ return {
                                     ]
                                   }
                                 ]
-                              },
-                              v5
+                              }
                             ]
                           }
                         ]

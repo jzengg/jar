@@ -50,7 +50,7 @@ class EditableNote extends React.Component {
 
     const changed = this.state.text !== this.props.note.text || this.state.jarId !== this.props.note.jar.id
     if (changed) {
-      this._updateNote(this.props.note.id, this.state.text, this.state.jarId)
+      this._updateNote(this.props.note.id, this.state.text, this.state.jarId, this.props.note.jar.owner.id)
     }
   }
 
@@ -66,8 +66,8 @@ class EditableNote extends React.Component {
     })
   }
 
-  _updateNote = (id, text, jarId) => {
-    UpdateNoteMutation(id, text, jarId)
+  _updateNote = (id, text, jarId, userId) => {
+    UpdateNoteMutation({ id, text, jarId, userId})
   }
 
   _deleteNote = () => {
@@ -142,6 +142,7 @@ export default createFragmentContainer(EditableNote, graphql`
       id
       name
       owner {
+        id
         email
         jars {
           edges {

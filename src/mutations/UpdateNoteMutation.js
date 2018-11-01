@@ -29,7 +29,7 @@ const mutation = graphql`
   }
 `
 
-export default (id, text, jarId) => {
+export default ({ id, text, jarId, userId }) => {
   const variables = {
     input: {
       id,
@@ -50,6 +50,8 @@ export default (id, text, jarId) => {
         node.setValue(text, 'text')
         node.setValue(id, 'id')
         node.setLinkedRecord(jar, 'jar')
+        const user = proxyStore.get(userId)
+        jar.setLinkedRecord(user, 'owner')
       },
       onError: err => console.error(err),
     },

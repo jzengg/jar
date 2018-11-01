@@ -18,6 +18,7 @@ export type EditableNote_note = {|
     +id: string,
     +name: string,
     +owner: {|
+      +id: string,
       +email: string,
       +jars: ?{|
         +edges: ?$ReadOnlyArray<?{|
@@ -91,6 +92,7 @@ return {
           "concreteType": "User",
           "plural": false,
           "selections": [
+            v0,
             {
               "kind": "ScalarField",
               "alias": null,
@@ -141,5 +143,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'd1e08dae481b901ede63fde93333c9e8';
+(node/*: any*/).hash = '22258be7887964ff1ce0a68f66908a9c';
 module.exports = node;
