@@ -2,17 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import { GC_USER_ID, GC_AUTH_TOKEN } from '../constants'
 
-import styled from 'react-emotion'
-import BaseButton from '../css/BaseButton'
-
-const Button = styled.button`
-  ${BaseButton}
-  font-weight: 600;
-  color: black;
-  background-color: #eff3f6;
-  background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
-  border: 1px solid rgba(27,31,35,0.2);
-`
+import { SecondaryButton } from '../css/BaseButton'
 
 class LogoutButton extends Component {
   _logOut = () => {
@@ -23,7 +13,7 @@ class LogoutButton extends Component {
 
   render() {
     return(
-      <Button onClick={this._logOut}> Logout </Button>
+      <SecondaryButton onClick={this._logOut}> Logout </SecondaryButton>
     )
   }
 }

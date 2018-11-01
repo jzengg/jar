@@ -31,8 +31,8 @@ class Layout extends Component {
             <Header/>
             {this.props.children}
           </Column>
-      </Section>
-    </Main>
+        </Section>
+      </Main>
     )
   }
 

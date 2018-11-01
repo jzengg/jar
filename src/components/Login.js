@@ -4,6 +4,11 @@ import { GC_USER_ID, GC_AUTH_TOKEN } from '../constants'
 import SignupUserMutation from '../mutations/SignupUserMutation'
 import AuthenticateUserMutation from '../mutations/AuthenticateUserMutation'
 
+import SubHeading from '../css/SubHeading'
+import { FormContainer, WideInput, WideLabel } from '../css/BaseForm'
+import { Container } from '../css/BaseLayout'
+import { PrimaryButton, LinkButton } from '../css/BaseButton'
+
 class Login extends Component {
 
   state = {
@@ -16,41 +21,63 @@ class Login extends Component {
   render() {
 
     return (
-      <div>
-        <h4>{this.state.login ? 'Login' : 'Sign Up'}</h4>
-        <div>
-          <input
-            value={this.state.email}
-            onChange={(e) => this.setState({ email: e.target.value })}
-            type='text'
-            placeholder='Your email address'
-          />
-          <input
-            value={this.state.password}
-            onChange={(e) => this.setState({ password: e.target.value })}
-            type='password'
-            placeholder='Choose a safe password'
-          />
-        </div>
-        <div>
-          <button
-            onClick={() => this._confirm()}
+      <div css={`
+          display: flex;
+          justify-content: center;
+          `}>
+        <div css={`
+            flex: 1;
+            max-width: 400px;
+            `}>
+          <SubHeading css={`
+              text-align:center;
+              margin-bottom: 1.5rem;
+              `}
           >
-            {this.state.login ? 'login' : 'create Account' }
-          </button>
-          <button
-            onClick={() => this.setState({ login: !this.state.login })}
-          >
-            {this.state.login ? 'need to create an account?' : 'already have an account?'}
-          </button>
-        </div>
-        <div>
-          {this.state.errorMessage &&
-            <span css={`
-                color: red;
-                `}>
-              { this.state.errorMessage }
-            </span>}
+              {this.state.login ? 'Log in to Not a Jar' : 'Sign up for Not a Jar'}</SubHeading>
+          <FormContainer
+              onSubmit={ this._handleSubmit }>
+            <WideLabel htmlFor="email">Email</WideLabel>
+            <WideInput
+              css={`display: block;`}
+              value={this.state.email}
+              onChange={(e) => this.setState({ email: e.target.value })}
+              name='email'
+              type='text'
+              id="email"
+              placeholder='Your email address'
+            />
+
+            <WideLabel htmlFor="email">Password</WideLabel>
+            <WideInput
+              css={`display: block;`}
+              value={this.state.password}
+              onChange={(e) => this.setState({ password: e.target.value })}
+              name='password'
+              type='password'
+              id="password"
+              placeholder='Choose a safe password'
+            />
+
+            <PrimaryButton css={`width: 100%;`}>
+                {this.state.login ? 'Log in' : 'Sign up' }
+            </PrimaryButton>
+            <div>
+              {this.state.errorMessage &&
+                <span css={`
+                    color: red;
+                    `}>
+                    { this.state.errorMessage }
+                  </span>}
+            </div>
+          </FormContainer>
+
+          <Container>
+            { this.state.login ? <span> Don't have an account? </span> : <span> Already have an account? </span>}
+            <LinkButton onClick={() => this.setState({ login: !this.state.login })}>
+              {this.state.login ? 'Sign up' : 'Log in'}
+            </LinkButton>
+          </Container>
         </div>
       </div>
     )
@@ -68,7 +95,8 @@ class Login extends Component {
     })
   }
 
-  _confirm = () => {
+  _handleSubmit = (e) => {
+    e.preventDefault()
     const { email, password } = this.state
     if (email && password) {
       if (this.state.login) {
