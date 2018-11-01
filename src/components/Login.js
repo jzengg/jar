@@ -95,9 +95,6 @@ class Login extends Component {
   _login = (id, token) => {
     this._saveUserData(id, token)
     this.props.history.push(`/`)
-    this.setState({
-      loading: false
-    })
   }
 
   _handleApiError = (err) => {
