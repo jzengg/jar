@@ -48,7 +48,7 @@ export const SecondaryButton = styled.button `
 `
 
 export const LinkButton = styled.a `
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: 600;
   color: #0366d6;
   cursor: pointer;
