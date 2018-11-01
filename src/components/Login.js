@@ -35,21 +35,23 @@ class Login extends Component {
               `}
           >
               {this.state.login ? 'Log in to Not a Jar' : 'Sign up for Not a Jar'}</SubHeading>
-          <FormContainer
+            <FormContainer css={`padding: 1.75rem;`}
               onSubmit={ this._handleSubmit }>
             <WideLabel htmlFor="email">Email</WideLabel>
             <WideInput
+              required
               css={`display: block;`}
               value={this.state.email}
               onChange={(e) => this.setState({ email: e.target.value })}
               name='email'
-              type='text'
+              type='email'
               id="email"
               placeholder='Your email address'
             />
 
             <WideLabel htmlFor="email">Password</WideLabel>
             <WideInput
+              required
               css={`display: block;`}
               value={this.state.password}
               onChange={(e) => this.setState({ password: e.target.value })}
@@ -59,17 +61,18 @@ class Login extends Component {
               placeholder='Choose a safe password'
             />
 
-            <PrimaryButton css={`width: 100%;`}>
+            <PrimaryButton css={`
+                width: 100%;
+                margin-bottom: 1rem;
+                `}>
                 {this.state.login ? 'Log in' : 'Sign up' }
             </PrimaryButton>
-            <div>
               {this.state.errorMessage &&
                 <span css={`
                     color: red;
                     `}>
                     { this.state.errorMessage }
                   </span>}
-            </div>
           </FormContainer>
 
           <Container>
