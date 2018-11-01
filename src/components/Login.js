@@ -77,7 +77,6 @@ class Login extends Component {
             this._login(id, token)
           })
           .catch(err => {
-            console.log(err)
             this._handleApiError(err[0])
 
           })
@@ -87,7 +86,6 @@ class Login extends Component {
             this._login(id, token)
           })
           .catch(err => {
-            console.log(err)
             this._handleApiError(err[0])
           })
         }

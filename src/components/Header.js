@@ -12,9 +12,9 @@ import LogoutButton from './LogoutButton'
 
 import styled from 'react-emotion'
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.nav`
   display: flex;
-  // justify-content: space-evenly;
+  justify-content: center;
 `
 
 const HeaderQuery = graphql`
@@ -52,7 +52,6 @@ class Header extends Component {
             const loggedIn = !!props.viewer.User
             return (
               <div>
-                <h1>Jar</h1>
                 <HeaderContainer>
                   <HeaderNavLink to='/'>Home </HeaderNavLink>
                   {loggedIn || <HeaderNavLink activeClassName='selected' to='/login' > Login </HeaderNavLink>}

@@ -3,15 +3,6 @@ import { GC_USER_ID } from '../constants'
 
 import NewFriendNoteSubscription from '../subscriptions/NewFriendNoteSubscription'
 
-import styled from 'react-emotion'
-
-
-const Container = styled.div(props => ({
-  display: 'flex',
-  flexDirection: props.column && 'column',
-  width: '100%',
-}))
-
 class NoteList extends React.Component {
 
   _subscribeToFriendNotes(userId) {
@@ -29,9 +20,9 @@ class NoteList extends React.Component {
 
   render () {
     return (
-      <Container column>
+      <div>
         {this.props.children}
-      </Container>
+      </div>
     )
   }
 

@@ -44,16 +44,14 @@ const DisabledButton = styled.button `
 const TextInput = styled.input `
   border: 1px solid #d1d5da;
   border-radius: 5px;
-  padding: 6px 8px;
-  width: 100%
-  min-height: 50px;
+  padding: 8px 4px;
+  box-sizing: border-box;
+  width: 100%;
   font-size: 1rem;
   margin-bottom: 1rem;
 `
 
 const FormContainer = styled.form `
-  display: flex;
-  flex-direction: column;
   border: 1px solid rgba(27,31,35,0.35);
   border-radius: 5px;
   padding: 1rem;
@@ -66,7 +64,6 @@ class CreateNote extends Component {
 
     const jars = this.props.user.jars.edges
     const defaultJar = jars[0].node
-    
     this.state = {
       selectedJarId: defaultJar.id,
       placeholder: defaultJar.description,

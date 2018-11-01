@@ -15,22 +15,20 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <Layout>
+      <Layout>
 
-          <Switch>
+        <Switch>
 
-            <PrivateRoute exact path='/' component={Today} />
-            <PrivateRoute exact path='/history' component={History} />
-            <Route exact path='/login' component={Login} />
-            <PrivateRoute exact path='/add' component={AddFriend} />
-            <PrivateRoute exact path='/requests' component={FriendRequests} />
-            <PrivateRoute exact path='/friends' component={Friends} />
+          <PrivateRoute exact path='/' component={Today} />
+          <PrivateRoute exact path='/history' component={History} />
+          <Route exact path='/login' component={Login} />
+          <PrivateRoute exact path='/add' component={AddFriend} />
+          <PrivateRoute exact path='/requests' component={FriendRequests} />
+          <PrivateRoute exact path='/friends' component={Friends} />
 
-          </Switch>
-        </Layout>
+        </Switch>
+      </Layout>
 
-    </div>
     );
   }
 }
