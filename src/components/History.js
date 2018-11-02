@@ -7,6 +7,7 @@ import moment from 'moment'
 
 import NoteList from './NoteList'
 import EditableNote from './EditableNote'
+import HistoryNav from './HistoryNav'
 
 const HistoryQuery = graphql`
   query HistoryQuery($noteFilter: NoteFilter) {
@@ -25,19 +26,51 @@ const HistoryQuery = graphql`
 class History extends Component {
   constructor(props) {
     super(props)
+    const interval = 'week'
+
     this.state = {
-      dayStart: moment().startOf('week'),
-      dayEnd: moment().endOf('day')
+      startDate: moment().startOf(interval),
+      interval
     }
   }
+
+  _back = () => {
+    const { startDate, interval } = this.state
+    const newStartDate = startDate.clone().subtract(1, interval)
+
+    this._handleDateChange({ startDate: newStartDate })
+  }
+
+  _next = () => {
+    const { startDate, interval } = this.state
+    const today = moment().endOf('day')
+    const newStartDate = startDate.clone().add(1, interval)
+
+    if (newStartDate.isAfter(today)) return
+
+    this._handleDateChange({ startDate: newStartDate })
+  }
+
+  _getEndDate(startDate = this.state.startDate) {
+    return startDate.clone().add(1, this.state.interval).endOf('day')
+  }
+
+  _updateInterval(interval) {
+    this.setState({ interval })
+  }
+
+  _handleDateChange = ({ startDate }) => {
+    this.setState({ startDate })
+  }
+
   render() {
     const userId = localStorage.getItem(GC_USER_ID)
 
     const variables = {
       noteFilter: {
         jar: { owner: { id: userId } },
-        createdAt_gt: this.state.dayStart,
-        createdAt_lte: this.state.dayEnd
+        createdAt_gt: this.state.startDate,
+        createdAt_lte: this._getEndDate()
       }
     }
 
@@ -53,11 +86,17 @@ class History extends Component {
             return (
               <div>
                 <h2> Notes from this week </h2>
-                  <NoteList>
-                    {props.viewer.allNotes.edges.map(edge =>
-                      <EditableNote key={edge.node.__id} note={edge.node} />
-                    )}
-                  </NoteList>
+                <HistoryNav
+                  back={this._back}
+                  next={this._next}
+                  updateInterval={this._updateInterval}
+                  interval={this.state.interval}
+                />
+                <NoteList>
+                  {props.viewer.allNotes.edges.map(edge =>
+                    <EditableNote key={edge.node.__id} note={edge.node} />
+                  )}
+                </NoteList>
               </div>
             )
 
