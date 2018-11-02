@@ -9,6 +9,8 @@ import NoteList from './NoteList'
 import EditableNote from './EditableNote'
 import HistoryNav from './HistoryNav'
 
+import SubHeading from '../css/SubHeading'
+
 const HistoryQuery = graphql`
   query HistoryQuery($noteFilter: NoteFilter) {
     viewer {
@@ -29,49 +31,64 @@ class History extends Component {
     const interval = 'week'
 
     this.state = {
-      startDate: moment().startOf(interval),
+      endDate: moment().endOf('day'),
       interval
     }
   }
 
-  _back = () => {
-    const { startDate, interval } = this.state
-    const newStartDate = startDate.clone().subtract(1, interval)
+  _setPrevInterval = () => {
+    const { endDate, interval } = this.state
+    const newEndDate = endDate.clone().subtract(1, interval).endOf(interval)
 
-    this._handleDateChange({ startDate: newStartDate })
+    this.setState({ endDate: newEndDate })
   }
 
-  _next = () => {
-    const { startDate, interval } = this.state
+  _setNextInterval = () => {
+    const { endDate, interval } = this.state
     const today = moment().endOf('day')
-    const newStartDate = startDate.clone().add(1, interval)
 
-    if (newStartDate.isAfter(today)) return
+    if (today.isSame(endDate)) return
 
-    this._handleDateChange({ startDate: newStartDate })
+    let newEndDate = endDate.clone().add(1, interval)
+
+    if (newEndDate.isAfter(today)) {
+      newEndDate = today
+    }
+
+    this.setState({ endDate: newEndDate })
   }
 
-  _getEndDate(startDate = this.state.startDate) {
-    return startDate.clone().add(1, this.state.interval).endOf('day')
+  _getStartDate() {
+    return this.state.endDate.clone().startOf(this.state.interval)
   }
 
-  _updateInterval(interval) {
+  _updateInterval = (e) => {
+    const interval = e.target.value
     this.setState({ interval })
-  }
-
-  _handleDateChange = ({ startDate }) => {
-    this.setState({ startDate })
   }
 
   render() {
     const userId = localStorage.getItem(GC_USER_ID)
+    const startDate = this._getStartDate()
 
     const variables = {
       noteFilter: {
         jar: { owner: { id: userId } },
-        createdAt_gt: this.state.startDate,
-        createdAt_lte: this._getEndDate()
+        createdAt_gt: startDate,
+        createdAt_lte: this.state.endDate
       }
+    }
+
+    const intervalOptions = [
+      {value: 'week', name: 'Week'},
+      {value: 'month', name: 'Month'},
+      {value: 'year', name: 'Year'},
+    ]
+
+    const headers = {
+      week: `${startDate.format('dddd MM/DD/YYYY')} - ${this.state.endDate.format('dddd MM/DD/YYYY')}`,
+      month: startDate.format('MMMM YYYY'),
+      year: startDate.year()
     }
 
     return (
@@ -85,13 +102,18 @@ class History extends Component {
           } else if (props) {
             return (
               <div>
-                <h2> Notes from this week </h2>
-                <HistoryNav
-                  back={this._back}
-                  next={this._next}
-                  updateInterval={this._updateInterval}
-                  interval={this.state.interval}
-                />
+                <header css={`
+                    text-align: center;
+                    `}>
+                  <SubHeading> { headers[this.state.interval] } </SubHeading>
+                  <HistoryNav
+                    setPrevInterval={this._setPrevInterval}
+                    setNextInterval={this._setNextInterval}
+                    updateInterval={this._updateInterval}
+                    interval={this.state.interval}
+                    intervalOptions={intervalOptions}
+                  />
+                </header>
                 <NoteList>
                   {props.viewer.allNotes.edges.map(edge =>
                     <EditableNote key={edge.node.__id} note={edge.node} />

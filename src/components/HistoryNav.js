@@ -3,20 +3,27 @@ import React from 'react'
 class HistoryNav extends React.Component {
   render () {
     const interval = this.props.interval
+    const intervalOptions = this.props.intervalOptions
+
     return (
         <nav>
-          <a onClick={this.props.back}>
+          <button onClick={this.props.setPrevInterval}>
             back
-          </a>
+          </button>
 
-          <a> random {interval} </a>
-          <a> random {interval} </a>
+          <select value={ interval } onChange={ this.props.updateInterval }>
+            {intervalOptions.map(({ value, name }) => {
+              return (
+                <option key={ value } value={ value }>
+                  { name }
+                </option>
+              )
+            })}
 
-          <a onClick={this.props.next}>
+          </select>
+          <button onClick={this.props.setNextInterval}>
               next
-          </a>
-
-          <a> current {interval} </a>
+          </button>
         </nav>
     )
   }
