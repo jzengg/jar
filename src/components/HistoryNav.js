@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { SecondaryButton } from '../css/BaseButton'
+
 class HistoryNav extends React.Component {
   render () {
     const interval = this.props.interval
@@ -7,9 +9,9 @@ class HistoryNav extends React.Component {
 
     return (
         <nav>
-          <button onClick={this.props.setPrevInterval}>
+          <SecondaryButton onClick={this.props.setPrevInterval}>
             back
-          </button>
+          </SecondaryButton>
 
           <select value={ interval } onChange={ this.props.updateInterval }>
             {intervalOptions.map(({ value, name }) => {
@@ -21,9 +23,9 @@ class HistoryNav extends React.Component {
             })}
 
           </select>
-          <button onClick={this.props.setNextInterval}>
+          <SecondaryButton onClick={this.props.setNextInterval}>
               next
-          </button>
+          </SecondaryButton>
         </nav>
     )
   }
