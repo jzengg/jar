@@ -1,6 +1,7 @@
-import moment from 'moment'
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
+
+import Timestamp from './Timestamp'
 
 import styled, { css } from 'react-emotion'
 
@@ -33,9 +34,6 @@ export const JarTag = styled.div`
   padding: 0.25rem 0.5rem;
 `
 
-export const TimestampTag = styled.div`
-`
-
 export const AuthorTag = styled.div`
 `
 
@@ -46,20 +44,18 @@ export const NoteText = styled.div`
 
 class Note extends React.Component {
   render () {
-    const createdAt = moment(this.props.note.createdAt).calendar()
+    const note = this.props.note
 
     return (
       <NoteContainer>
         <NoteHeader>
-          <TimestampTag>
-            { createdAt }
-          </TimestampTag>
+          <Timestamp createdAt={note.createdAt}/>
         </NoteHeader>
-        <NoteText> { this.props.note.text } </NoteText>
+        <NoteText> { note.text } </NoteText>
         <NoteFooter>
-          <JarTag> { this.props.note.jar.name }</JarTag>
+          <JarTag> { note.jar.name }</JarTag>
           <AuthorTag>
-            { this.props.note.jar.owner.email }
+            { note.jar.owner.email }
           </AuthorTag>
         </NoteFooter>
       </NoteContainer>

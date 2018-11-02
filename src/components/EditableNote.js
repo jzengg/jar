@@ -1,14 +1,14 @@
 import moment from 'moment'
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
+import styled from 'react-emotion'
+import OutsideClickHandler from 'react-outside-click-handler'
 
 import DeleteNoteMutation from '../mutations/DeleteNoteMutation'
 import UpdateNoteMutation from '../mutations/UpdateNoteMutation'
 
-import styled from 'react-emotion'
-import OutsideClickHandler from 'react-outside-click-handler'
-
-import { NoteContainer, NoteHeader, NoteFooter, JarTag, TimestampTag, AuthorTag, NoteText } from './Note'
+import Timestamp from './Timestamp'
+import { NoteContainer, NoteHeader, NoteFooter, JarTag, AuthorTag, NoteText } from './Note'
 
 const EditableNoteContainer = styled(NoteContainer)(props => ({
   opacity: props.editable && '0.6',
@@ -115,9 +115,8 @@ class EditableNote extends React.Component {
       <OutsideClickHandler onOutsideClick={ this._handleOutsideClick } >
         <EditableNoteContainer onClick={ this._enableEdit } editable={ this.state.editable }>
           <NoteHeader>
-            <TimestampTag>
-              {createdAt}
-            </TimestampTag>
+            <Timestamp createdAt={this.props.note.createdAt}/>
+
             {this.state.editable && <button onClick={ this._deleteNote }> X </button>}
           </NoteHeader>
           { NoteBody }
