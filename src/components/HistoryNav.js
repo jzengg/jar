@@ -1,8 +1,8 @@
 import React from 'react'
+import Dropdown from 'react-dropdown'
+import 'react-dropdown/style.css'
 
 import { SecondaryButton } from '../css/BaseButton'
-
-
 
 class HistoryNav extends React.Component {
   render () {
@@ -12,23 +12,15 @@ class HistoryNav extends React.Component {
     return (
         <nav css={`
             padding: 1.5rem;
+            display: flex;
+            justify-content: center;
             `}>
           <SecondaryButton onClick={this.props.setPrevInterval}>
             back
           </SecondaryButton>
-
-          <select css={`
-              margin: 0 1rem;
-              `} value={ interval } onChange={ this.props.updateInterval }>
-            {intervalOptions.map(({ value, name }) => {
-              return (
-                <option key={ value } value={ value }>
-                  { name }
-                </option>
-              )
-            })}
-
-          </select>
+          <div css={`margin: 0 1rem;`} >
+            <Dropdown options={intervalOptions} onChange={this.props.updateInterval} value={interval} />
+          </div>
           <SecondaryButton onClick={this.props.setNextInterval}>
               next
           </SecondaryButton>

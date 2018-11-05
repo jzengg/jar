@@ -62,9 +62,8 @@ class History extends Component {
     return this.state.endDate.clone().startOf(this.state.interval)
   }
 
-  _updateInterval = (e) => {
-    const interval = e.target.value
-    this.setState({ interval })
+  _updateInterval = ({ value, label }) => {
+    this.setState({ interval: value })
   }
 
   render() {
@@ -80,9 +79,9 @@ class History extends Component {
     }
 
     const intervalOptions = [
-      {value: 'week', name: 'Week'},
-      {value: 'month', name: 'Month'},
-      {value: 'year', name: 'Year'},
+      {value: 'week', label: 'Week'},
+      {value: 'month', label: 'Month'},
+      {value: 'year', label: 'Year'},
     ]
 
     const headers = {
