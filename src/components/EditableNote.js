@@ -75,7 +75,6 @@ class EditableNote extends React.Component {
   }
 
   render () {
-    const createdAt = moment(this.props.note.createdAt).calendar()
     const text = this.state.text
     const jars = this.props.note.jar.owner.jars.edges.map(edge => edge.node)
 
