@@ -57,8 +57,12 @@ class Header extends Component {
                     <HeaderNavLink to='/'>Home </HeaderNavLink>
                     <HeaderNavLink to='/history' > History </HeaderNavLink>
                     <HeaderNavLink to='/requests' >
-                      Requests
-                      <ReceivedFriendRequestBadge user={ props.viewer.User } />
+                      <div>
+                        <span>
+                          Requests
+                        </span>
+                        <ReceivedFriendRequestBadge user={ props.viewer.User } />
+                    </div>
                     </HeaderNavLink>
                     <HeaderNavLink to='/friends' > Friends </HeaderNavLink>
                     <LogoutButton/>

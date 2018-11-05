@@ -7,8 +7,15 @@ class ReceivedFriendRequestBadge extends React.Component {
     const receivedFriendRequests = this.props.user.receivedFriendRequests.edges
     return (
         <span css={`
-          color: red;
-          `}>
+          color: white;
+          border-radius: 20px;
+          font-weight: 600;
+          font-size: 12px;
+          padding: 2px 5px;
+          margin-left: 3px;
+          margin-top: -5px;
+          background-color: hsla(0,0%,100%,.15);
+              `}>
           { receivedFriendRequests.length }
         </span>
     )
