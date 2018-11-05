@@ -42,8 +42,8 @@ class AddFriend extends Component {
             return (
               <div>
                 <div>
-                  <SentFriendRequestList user={props.viewer.User} subscribe />
                   <ReceivedFriendRequestList user={props.viewer.User} />
+                  <SentFriendRequestList user={props.viewer.User} subscribe />
                 </div>
                   <CreateFriendRequest viewer={props.viewer} />
               </div>

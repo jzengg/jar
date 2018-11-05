@@ -25,18 +25,21 @@ class ReceivedFriendRequestList extends React.Component {
           flex-direction: column;
           `}>
 
-        <SubHeading> Pending Invitations </SubHeading>
+        <SubHeading> Received Requests </SubHeading>
         <Divider/>
         {
           friendRequests.map(( {node} ) =>
           <FriendRequest key={node.id}>
             <div css={`
               display: flex;
+              justify-content: space-between;
               align-items: center;
               `}>
               {node.sender.email}
-              <SecondaryButton onClick={ this._ignoreFriendRequest.bind(this, node.id) }> Ignore </SecondaryButton>
-              <SmallPrimaryButton onClick={ this._acceptFriendRequest.bind(this, node.id) }> Accept </SmallPrimaryButton>
+              <div>
+                <SecondaryButton onClick={ this._ignoreFriendRequest.bind(this, node.id) }> Ignore </SecondaryButton>
+                <SmallPrimaryButton onClick={ this._acceptFriendRequest.bind(this, node.id) }> Accept </SmallPrimaryButton>
+              </div>
             </div>
           </FriendRequest>
 

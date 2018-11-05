@@ -37,7 +37,7 @@ class SentFriendRequestList extends React.Component {
           flex-direction: column;
           `}>
 
-        <SubHeading> Pending Requests </SubHeading>
+        <SubHeading> Sent Requests </SubHeading>
         <Divider/>
         {
           friendRequests.map(( {node} ) =>
