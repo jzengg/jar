@@ -13,7 +13,17 @@ class LogoutButton extends Component {
 
   render() {
     return(
-      <SecondaryButton onClick={this._logOut}> Logout </SecondaryButton>
+      <a css={`
+        cursor: pointer;
+        padding: 0.75rem;
+        text-decoration: none;
+        color: hsla(0,0%,100%,.75);
+        font-size: 1.1rem;
+        &:hover {
+          font-weight: 500;
+          color: white;
+        }
+        `} onClick={this._logOut}> Logout </a>
     )
   }
 }

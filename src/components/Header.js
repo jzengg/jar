@@ -7,6 +7,7 @@ import { GC_USER_ID } from '../constants'
 import ReceivedFriendRequestBadge from './ReceivedFriendRequestBadge'
 
 import HeaderNavLink from './HeaderNavLink'
+import LogoutButton from './LogoutButton'
 
 import styled from 'react-emotion'
 
@@ -54,13 +55,13 @@ class Header extends Component {
                 { loggedIn &&
                   <HeaderContainer>
                     <HeaderNavLink to='/'>Home </HeaderNavLink>
-                    <HeaderNavLink activeClassName='selected' to='/history' > History </HeaderNavLink>
-                    <HeaderNavLink activeClassName='selected' to='/requests' >
+                    <HeaderNavLink to='/history' > History </HeaderNavLink>
+                    <HeaderNavLink to='/add' >
                       Requests
                       <ReceivedFriendRequestBadge user={ props.viewer.User } />
                     </HeaderNavLink>
-
-                    <HeaderNavLink activeClassName='selected' to='/friends' > Friends </HeaderNavLink>
+                    <HeaderNavLink to='/friends' > Friends </HeaderNavLink>
+                    <LogoutButton/>
                   </HeaderContainer>
                 }
               </div>

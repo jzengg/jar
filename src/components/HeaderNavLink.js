@@ -14,7 +14,7 @@ const HeaderNavLink = ({ component: Component, ...rest }) => (
       padding: 0.75rem;
       text-decoration: none;
       color: hsla(0,0%,100%,.75);
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       &:hover {
         font-weight: 500;
         color: white;
