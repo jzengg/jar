@@ -3,6 +3,10 @@ import { GC_USER_ID } from '../constants'
 
 import CreateFriendRequestMutation from '../mutations/CreateFriendRequestMutation'
 
+import { PrimaryButton, DisabledPrimaryButton } from '../css/BaseButton'
+import { FormContainer, WideInput, WideLabel } from '../css/BaseForm'
+import SubHeading from '../css/SubHeading'
+
 class CreateFriendRequest extends Component {
   constructor(props) {
     super(props)
@@ -12,7 +16,8 @@ class CreateFriendRequest extends Component {
     }
   }
 
-  _createFriendRequest = () => {
+  _createFriendRequest = (e) => {
+    e.preventDefault()
     const { email } = this.state
     const senderId = localStorage.getItem(GC_USER_ID)
 
@@ -26,22 +31,20 @@ class CreateFriendRequest extends Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <input
+        <FormContainer onSubmit={this._createFriendRequest}>
+          <SubHeading css={`
+              margin-bottom: 1rem;
+              `}> Add a friend </SubHeading>
+
+          <WideLabel htmlFor='friend_email'> Email </WideLabel>
+          <WideInput
+            id='friend_email'
             value={this.state.email}
             onChange={(e) => this.setState({ email: e.target.value })}
-            type='text'
-            placeholder='email'
+            type='email'
           />
-        </div>
-        <div
-          className='button'
-          onClick={() => this._createFriendRequest()}
-        >
-          Send request
-        </div>
-      </div>
+        <PrimaryButton> Send request </PrimaryButton>
+      </FormContainer>
     )
 
   }
