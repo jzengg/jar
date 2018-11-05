@@ -15,6 +15,10 @@ const HeaderNavLink = ({ component: Component, ...rest }) => (
       text-decoration: none;
       color: hsla(0,0%,100%,.75);
       font-size: 1.25rem;
+      &:hover {
+        font-weight: 500;
+        color: white;
+      }
       `}
     {...rest}
   />
