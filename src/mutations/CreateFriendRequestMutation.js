@@ -14,27 +14,26 @@ const mutation = graphql`
   }
 `
 
-export default (senderId, email, callback) => {
-  const variables = {
-    senderId,
-    email,
-    clientMutationId: ""
-  }
+export default (senderId, email, callback) =>
+  new Promise((resolve, reject) => {
+    const variables = {
+      senderId,
+      email,
+      clientMutationId: ""
+    }
 
-  commitMutation(
-    environment,
-    {
-      mutation,
-      variables,
-      // updater: proxyStore => {
-      //   const payload = proxyStore.getRootField('createNote')
-      //   const viewer = payload.getLinkedRecord('viewer')
-      //   const note = payload.getLinkedRecord('note')
-      //   const notes = ConnectionHandler.getConnection(viewer, 'NoteList_allNotes')
-      //   const edge = ConnectionHandler.createEdge(proxyStore, notes, note, 'NotesEdge')
-      //   ConnectionHandler.insertEdgeBefore(notes, edge)
-      // },
-      onError: err => console.error(err),
-    },
-  )
-}
+    commitMutation(
+      environment,
+      {
+        mutation,
+        variables,
+        onCompleted: (resp, err) => {
+          if (err) return reject(err)
+          return resolve(resp.addFriendByEmail)
+        },
+        onError: (err) => {
+          return reject(err)
+        }
+      }
+    )
+  })

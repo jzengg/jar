@@ -26,28 +26,39 @@ export default async (event: FunctionEvent<EventData>) => {
     // check if user exists
     const recipient: User = await getUser(api, email).then(r => r.User)
     if (!recipient) {
-      return { error: 'Email is not registered' }
-    } else if (recipient.id == senderId) {
-      return { error: "Can't add yourself as friend"}
-    }
+      return { error: {
+        message: 'User with that email does not exist',
+        debugMessage: 'Email not in db'
+      } }    } else if (recipient.id == senderId) {
+        return { error: {
+          message: "You cannot add yourself as a friend",
+          debugMessage: 'Cannot add self as friend'
+        } }    }
 
     const alreadyFriends: boolean = recipient.friends.map(friend => friend.id).includes(senderId)
 
     const friendRequests: FriendRequest[] = await getExistingFriendRequests(api, senderId, recipient.id).then(r => r.allFriendRequests)
 
     if (alreadyFriends) {
-       return { error: 'Already friends' }
+       return { error: {
+         message: 'You are already friends',
+         debugMessage: 'Already friends'
+       } }
     } else if (friendRequests.length !== 0) {
-      return { error: 'Friend request exists' }
-    }
+      return { error: {
+        message: 'A request has already been sent',
+        debugMessage: 'Friend request already exists'
+      } }    }
 
     const friendRequest = await createFriendRequest(api, senderId, recipient.id).then(r => r.createFriendRequest)
 
     return { data: { id: friendRequest.id } }
   } catch (e) {
     console.log(e)
-    return { error: 'An unexpected error occured while creating friend request.' }
-  }
+    return { error: {
+      message: 'An unexpected error occured while sending friend request.',
+      debugMessage: 'Server error check add friend by email function'
+    } }  }
 }
 
 async function createFriendRequest(api: GraphQLClient, senderId: string, recipientId: string): Promise<{ FriendRequest }> {
