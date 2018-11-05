@@ -15,7 +15,6 @@ import { Container } from '../css/BaseLayout'
 
 const ListContainer = Container.withComponent('ul')
 
-
 class ReceivedFriendRequestList extends React.Component {
   render () {
     let friendRequests = this.props.user.receivedFriendRequests.edges
@@ -36,9 +35,10 @@ class ReceivedFriendRequestList extends React.Component {
               align-items: center;
               `}>
               {node.sender.email}
-              <div>
+              <div css={`
+                `}>
                 <SecondaryButton onClick={ this._ignoreFriendRequest.bind(this, node.id) }> Ignore </SecondaryButton>
-                <SmallPrimaryButton onClick={ this._acceptFriendRequest.bind(this, node.id) }> Accept </SmallPrimaryButton>
+                <SmallPrimaryButton css={`margin-left: 0.5rem;`} onClick={ this._acceptFriendRequest.bind(this, node.id) }> Accept </SmallPrimaryButton>
               </div>
             </div>
           </FriendRequest>
