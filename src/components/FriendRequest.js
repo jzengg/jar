@@ -4,7 +4,9 @@ class FriendRequest extends React.Component {
 
   render () {
     return (
-        <li>
+        <li css={`
+            padding: 0.5rem 0.25rem;
+            `}>
           {this.props.children}
         </li>
     )

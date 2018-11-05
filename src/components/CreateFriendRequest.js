@@ -6,6 +6,7 @@ import CreateFriendRequestMutation from '../mutations/CreateFriendRequestMutatio
 import { PrimaryButton, DisabledPrimaryButton } from '../css/BaseButton'
 import { FormContainer, WideInput, WideLabel } from '../css/BaseForm'
 import SubHeading from '../css/SubHeading'
+import Divider from '../css/Divider'
 
 class CreateFriendRequest extends Component {
   constructor(props) {
@@ -37,7 +38,11 @@ class CreateFriendRequest extends Component {
   _createFriendRequest = (senderId, email) => {
     CreateFriendRequestMutation(senderId, email)
       .then( ({ id }) => {
-        this.setState({email: ''})
+        this.setState({
+          email: '',
+          loading: false,
+          errorMessage: ''
+        })
       })
       .catch(err => {
         const { functionError: { message } } = err[0]
@@ -51,10 +56,8 @@ class CreateFriendRequest extends Component {
   render() {
     return (
         <FormContainer onSubmit={this._handleSubmit}>
-          <SubHeading css={`
-              margin-bottom: 1rem;
-              `}> Add a friend </SubHeading>
-
+          <SubHeading> Add a friend </SubHeading>
+          <Divider css={`margin-bottom: 1rem;`}/>
           <WideLabel htmlFor='friend_email'> Email </WideLabel>
           <WideInput
             id='friend_email'

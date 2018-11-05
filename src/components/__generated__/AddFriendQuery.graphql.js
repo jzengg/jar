@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 6ae3fbf912552283d3ed035839da7db9
+ * @relayHash a19ee8e184e184bc042e7c1494c0c64d
  */
 
 /* eslint-disable */
@@ -279,7 +279,6 @@ fragment SentFriendRequestList_user_2yZ5GC on User {
     edges {
       node {
         id
-        status
         createdAt
         recipient {
           email
@@ -359,7 +358,7 @@ return {
   "operationKind": "query",
   "name": "AddFriendQuery",
   "id": null,
-  "text": "query AddFriendQuery(\n  $userId: ID\n  $friendRequestFilter: FriendRequestFilter\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...SentFriendRequestList_user_2yZ5GC\n      id\n    }\n    id\n  }\n}\n\nfragment SentFriendRequestList_user_2yZ5GC on User {\n  sentFriendRequests(last: 100, orderBy: createdAt_DESC, filter: $friendRequestFilter) {\n    edges {\n      node {\n        id\n        status\n        createdAt\n        recipient {\n          email\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n",
+  "text": "query AddFriendQuery(\n  $userId: ID\n  $friendRequestFilter: FriendRequestFilter\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...SentFriendRequestList_user_2yZ5GC\n      id\n    }\n    id\n  }\n}\n\nfragment SentFriendRequestList_user_2yZ5GC on User {\n  sentFriendRequests(last: 100, orderBy: createdAt_DESC, filter: $friendRequestFilter) {\n    edges {\n      node {\n        id\n        createdAt\n        recipient {\n          email\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -457,13 +456,6 @@ return {
                         "plural": false,
                         "selections": [
                           v4,
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "name": "status",
-                            "args": null,
-                            "storageKey": null
-                          },
                           {
                             "kind": "ScalarField",
                             "alias": null,

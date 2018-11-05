@@ -5,6 +5,14 @@ import { GC_USER_ID } from '../constants'
 import FriendRequestSentSubscription from '../subscriptions/FriendRequestSentSubscription'
 
 import FriendRequest from './FriendRequest'
+import Timestamp from './Timestamp'
+
+import SubHeading from '../css/SubHeading'
+import Divider from '../css/Divider'
+
+import { Container } from '../css/BaseLayout'
+
+const ListContainer = Container.withComponent('ul')
 
 class SentFriendRequestList extends React.Component {
 
@@ -24,20 +32,29 @@ class SentFriendRequestList extends React.Component {
   render () {
     let friendRequests = this.props.user.sentFriendRequests.edges
     return (
-      <ul>
+      <ListContainer css={`
+          display: flex;
+          flex-direction: column;
+          `}>
+
+        <SubHeading> Pending Requests </SubHeading>
+        <Divider/>
         {
           friendRequests.map(( {node} ) =>
           <FriendRequest
             key={node.id}
             friendRequest={node}
           >
-            To: {node.recipient.email}
-            status: {node.status}
+            <div>
+              {node.recipient.email}
+            </div>
+            <Timestamp createdAt={node.createdAt}/>
+
           </FriendRequest>
 
         )
       }
-    </ul>
+    </ListContainer>
     )
   }
 }
@@ -51,7 +68,6 @@ export default createFragmentContainer(SentFriendRequestList, graphql`
       edges {
         node {
           id
-          status
           createdAt
           recipient {
             email

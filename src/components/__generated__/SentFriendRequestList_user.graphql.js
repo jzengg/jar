@@ -8,7 +8,6 @@
 
 /*::
 import type { ConcreteFragment } from 'relay-runtime';
-export type FriendRequestStatus = "ACCEPTED" | "IGNORED" | "PENDING" | "%future added value";
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type SentFriendRequestList_user$ref: FragmentReference;
 export type SentFriendRequestList_user = {|
@@ -16,7 +15,6 @@ export type SentFriendRequestList_user = {|
     +edges: ?$ReadOnlyArray<?{|
       +node: {|
         +id: string,
-        +status: FriendRequestStatus,
         +createdAt: any,
         +recipient: {|
           +email: string
@@ -85,13 +83,6 @@ const node/*: ConcreteFragment*/ = {
                   "kind": "ScalarField",
                   "alias": null,
                   "name": "id",
-                  "args": null,
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "status",
                   "args": null,
                   "storageKey": null
                 },
@@ -168,5 +159,5 @@ const node/*: ConcreteFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '20f97e8f88a2a6107cbcddb5e8c76763';
+(node/*: any*/).hash = 'ab7eaa6557c0ebd9303398bb42b19b23';
 module.exports = node;
