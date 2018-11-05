@@ -4,13 +4,10 @@ import Header from './Header'
 
 import styled from 'react-emotion'
 
-const Main = styled.main `
+const Section = styled.section`
+  padding: 1.2rem;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1.2rem;
-`
-
-const Section = styled.section`
   display: flex;
   justify-content: center;
 `
@@ -25,14 +22,14 @@ class Layout extends Component {
 
   render() {
     return (
-      <Main>
+      <main>
+        <Header/>
         <Section>
           <Column>
-            <Header/>
             {this.props.children}
           </Column>
         </Section>
-      </Main>
+      </main>
     )
   }
 

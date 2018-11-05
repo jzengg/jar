@@ -5,16 +5,15 @@ import environment from '../Environment'
 import { GC_USER_ID } from '../constants'
 
 import ReceivedFriendRequestBadge from './ReceivedFriendRequestBadge'
-import SentFriendRequestBadge from './SentFriendRequestBadge'
 
 import HeaderNavLink from './HeaderNavLink'
-import LogoutButton from './LogoutButton'
 
 import styled from 'react-emotion'
 
 const HeaderContainer = styled.nav`
   display: flex;
   justify-content: center;
+  background-color: #24292e;
 `
 
 const HeaderQuery = graphql`
@@ -56,13 +55,8 @@ class Header extends Component {
                   <HeaderContainer>
                     <HeaderNavLink to='/'>Home </HeaderNavLink>
                     <HeaderNavLink activeClassName='selected' to='/history' > History </HeaderNavLink>
-                    <HeaderNavLink activeClassName='selected' to='/add' >
-                      Add Friends
-                      <SentFriendRequestBadge user={ props.viewer.User } />
-                    </HeaderNavLink>
-
                     <HeaderNavLink activeClassName='selected' to='/requests' >
-                      Friend requests
+                      Requests
                       <ReceivedFriendRequestBadge user={ props.viewer.User } />
                     </HeaderNavLink>
 
