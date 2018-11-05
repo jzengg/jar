@@ -7,6 +7,9 @@ import { GC_USER_ID } from '../constants'
 import CreateFriendRequest from './CreateFriendRequest'
 import SentFriendRequestList from './SentFriendRequestList'
 
+import SubHeading from '../css/SubHeading'
+import { Container } from '../css/BaseLayout'
+
 const AddFriendQuery = graphql`
   query AddFriendQuery($userId: ID, $friendRequestFilter: FriendRequestFilter) {
     viewer {
@@ -40,13 +43,13 @@ class AddFriend extends Component {
             return (
               <div>
                 <div>
-                  <h2> Pending Requests </h2>
+                  <SubHeading> Pending Requests </SubHeading>
                   <SentFriendRequestList user={props.viewer.User} subscribe />
                 </div>
-                <div>
-                  <h2> Add a friend </h2>
+                <Container>
+                  <SubHeading> Add a friend </SubHeading>
                   <CreateFriendRequest viewer={props.viewer} />
-              </div>
+                </Container>
               </div>
             )
 
