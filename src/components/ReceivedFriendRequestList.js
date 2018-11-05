@@ -6,6 +6,7 @@ import AcceptFriendRequestMutation from '../mutations/AcceptFriendRequestMutatio
 import IgnoreFriendRequestMutation from '../mutations/IgnoreFriendRequestMutation'
 
 import FriendRequest from './FriendRequest'
+import Timestamp from './Timestamp'
 
 import { SecondaryButton, SmallPrimaryButton } from '../css/BaseButton'
 import SubHeading from '../css/SubHeading'
@@ -34,7 +35,10 @@ class ReceivedFriendRequestList extends React.Component {
               justify-content: space-between;
               align-items: center;
               `}>
+              <div> 
               {node.sender.email}
+              <Timestamp createdAt={node.createdAt}/>
+              </div>
               <div css={`
                 `}>
                 <SecondaryButton onClick={ this._ignoreFriendRequest.bind(this, node.id) }> Ignore </SecondaryButton>
