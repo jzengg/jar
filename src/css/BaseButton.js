@@ -19,14 +19,24 @@ const PrimaryBase = css `
   font-size: 14px;
   align-self: flex-start;
 `
-
-export const PrimaryButton = styled.button `
-  ${PrimaryBase}
+const PrimaryHover = css `
   &:hover {
     background-color: #269f42;
     background-image: linear-gradient(-180deg,#2fcb53,#269f42 90%);
     border: 1px solid rgba(27,31,35,0.5);
   }
+`
+
+export const PrimaryButton = styled.button `
+  ${PrimaryBase}
+  ${PrimaryHover}
+`
+
+export const SmallPrimaryButton = styled.button `
+  ${PrimaryBase}
+  ${PrimaryHover}
+  padding: 3px 10px;
+  font-size: 0.85rem;
 `
 
 export const DisabledPrimaryButton = styled.button `

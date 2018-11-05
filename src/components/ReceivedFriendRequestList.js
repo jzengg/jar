@@ -3,26 +3,52 @@ import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
 
 import AcceptFriendRequestMutation from '../mutations/AcceptFriendRequestMutation'
+import IgnoreFriendRequestMutation from '../mutations/IgnoreFriendRequestMutation'
 
 import FriendRequest from './FriendRequest'
+
+import { SecondaryButton, SmallPrimaryButton } from '../css/BaseButton'
+import SubHeading from '../css/SubHeading'
+import Divider from '../css/Divider'
+
+import { Container } from '../css/BaseLayout'
+
+const ListContainer = Container.withComponent('ul')
+
 
 class ReceivedFriendRequestList extends React.Component {
   render () {
     let friendRequests = this.props.user.receivedFriendRequests.edges
     return (
-      <ul>
+      <ListContainer css={`
+          display: flex;
+          flex-direction: column;
+          `}>
+
+        <SubHeading> Pending Invitations </SubHeading>
+        <Divider/>
         {
           friendRequests.map(( {node} ) =>
           <FriendRequest key={node.id}>
-            <div onClick={ this._acceptFriendRequest.bind(this, node.id) }>
-              From: {node.sender.email}
-              status: {node.status}
+            <div css={`
+              display: flex;
+              align-items: center;
+              `}>
+              {node.sender.email}
+              <SecondaryButton onClick={ this._ignoreFriendRequest.bind(this, node.id) }> Ignore </SecondaryButton>
+              <SmallPrimaryButton onClick={ this._acceptFriendRequest.bind(this, node.id) }> Accept </SmallPrimaryButton>
             </div>
           </FriendRequest>
+
         )
       }
-    </ul>
+    </ListContainer>
+
     )
+  }
+
+  _ignoreFriendRequest = (id) => {
+    IgnoreFriendRequestMutation(id)
   }
 
   _acceptFriendRequest = (id) => {

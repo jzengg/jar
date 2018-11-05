@@ -6,6 +6,7 @@ import { GC_USER_ID } from '../constants'
 
 import CreateFriendRequest from './CreateFriendRequest'
 import SentFriendRequestList from './SentFriendRequestList'
+import ReceivedFriendRequestList from './ReceivedFriendRequestList'
 
 const AddFriendQuery = graphql`
   query AddFriendQuery($userId: ID, $friendRequestFilter: FriendRequestFilter) {
@@ -13,6 +14,7 @@ const AddFriendQuery = graphql`
       User(id: $userId) {
         email
         ...SentFriendRequestList_user @arguments(friendRequestFilter: $friendRequestFilter)
+        ...ReceivedFriendRequestList_user @arguments(friendRequestFilter: $friendRequestFilter)
       }
     }
   }
@@ -41,6 +43,7 @@ class AddFriend extends Component {
               <div>
                 <div>
                   <SentFriendRequestList user={props.viewer.User} subscribe />
+                  <ReceivedFriendRequestList user={props.viewer.User} />
                 </div>
                   <CreateFriendRequest viewer={props.viewer} />
               </div>
