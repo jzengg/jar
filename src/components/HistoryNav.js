@@ -11,7 +11,6 @@ class HistoryNav extends React.Component {
 
     return (
         <nav css={`
-            padding: 1.5rem;
             display: flex;
             justify-content: center;
             `}>

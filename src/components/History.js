@@ -10,6 +10,8 @@ import EditableNote from './EditableNote'
 import HistoryNav from './HistoryNav'
 
 import SubHeading from '../css/SubHeading'
+import Divider from '../css/Divider'
+import { Container } from '../css/BaseLayout'
 
 const HistoryQuery = graphql`
   query HistoryQuery($noteFilter: NoteFilter) {
@@ -101,10 +103,10 @@ class History extends Component {
           } else if (props) {
             return (
               <div>
-                <header css={`
+                <Container css={`
                     text-align: center;
                     `}>
-                  <SubHeading> { headers[this.state.interval] } </SubHeading>
+                  <SubHeading css={`margin-bottom: 1rem;`}> { headers[this.state.interval] } </SubHeading>
                   <HistoryNav
                     setPrevInterval={this._setPrevInterval}
                     setNextInterval={this._setNextInterval}
@@ -112,7 +114,7 @@ class History extends Component {
                     interval={this.state.interval}
                     intervalOptions={intervalOptions}
                   />
-                </header>
+                </Container>
                 <NoteList>
                   {props.viewer.allNotes.edges.map(edge =>
                     <EditableNote key={edge.node.__id} note={edge.node} />
