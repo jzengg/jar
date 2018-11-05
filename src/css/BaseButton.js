@@ -69,3 +69,18 @@ export const LinkButton = styled.a `
   color: #0366d6;
   cursor: pointer;
 `
+
+export const HeaderLink = css `
+  cursor: pointer;
+  padding: 0.75rem;
+  text-decoration: none;
+  color: hsla(0,0%,100%,.75);
+  font-size: 1.1rem;
+  &:hover {
+    font-weight: 500;
+    color: white;
+  }
+  @media (max-width: 414px) {
+      font-size: 0.9rem;
+    }
+`
