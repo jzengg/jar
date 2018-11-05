@@ -43,7 +43,10 @@ class CreateFriendRequest extends Component {
             onChange={(e) => this.setState({ email: e.target.value })}
             type='email'
           />
-        <PrimaryButton> Send request </PrimaryButton>
+        {this.state.email === '' ?
+          <DisabledPrimaryButton> Send Request </DisabledPrimaryButton> :
+          <PrimaryButton> Send Request </PrimaryButton>
+        }
       </FormContainer>
     )
 
