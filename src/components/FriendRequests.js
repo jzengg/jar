@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-
 import { QueryRenderer, graphql } from 'react-relay'
 import environment from '../Environment'
 
 import { GC_USER_ID } from '../constants'
 
+import CreateFriendRequest from './CreateFriendRequest'
+import SentFriendRequestList from './SentFriendRequestList'
 import ReceivedFriendRequestList from './ReceivedFriendRequestList'
 
 const FriendRequestsQuery = graphql`
@@ -12,6 +13,7 @@ const FriendRequestsQuery = graphql`
     viewer {
       User(id: $userId) {
         email
+        ...SentFriendRequestList_user @arguments(friendRequestFilter: $friendRequestFilter)
         ...ReceivedFriendRequestList_user @arguments(friendRequestFilter: $friendRequestFilter)
       }
     }
@@ -24,7 +26,7 @@ class FriendRequests extends Component {
     const userId = localStorage.getItem(GC_USER_ID)
 
     const variables = {
-      userId,
+      userId: userId,
       friendRequestFilter: { status: "PENDING" }
     }
 
@@ -39,8 +41,11 @@ class FriendRequests extends Component {
           } else if (props) {
             return (
               <div>
-                <h2> FriendRequests </h2>
-                <ReceivedFriendRequestList user={props.viewer.User} />
+                <div>
+                  <ReceivedFriendRequestList user={props.viewer.User} />
+                  <SentFriendRequestList user={props.viewer.User} subscribe />
+                </div>
+                  <CreateFriendRequest viewer={props.viewer} />
               </div>
             )
 

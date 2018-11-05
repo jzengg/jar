@@ -56,7 +56,7 @@ class Header extends Component {
                   <HeaderContainer>
                     <HeaderNavLink to='/'>Home </HeaderNavLink>
                     <HeaderNavLink to='/history' > History </HeaderNavLink>
-                    <HeaderNavLink to='/add' >
+                    <HeaderNavLink to='/requests' >
                       Requests
                       <ReceivedFriendRequestBadge user={ props.viewer.User } />
                     </HeaderNavLink>

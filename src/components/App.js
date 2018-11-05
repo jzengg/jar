@@ -5,7 +5,6 @@ import Layout from './Layout'
 import Login from './Login'
 import History from './History'
 import Today from './Today'
-import AddFriend from './AddFriend'
 import FriendRequests from './FriendRequests'
 import Friends from './Friends'
 
@@ -22,7 +21,6 @@ class App extends Component {
           <PrivateRoute exact path='/' component={Today} />
           <PrivateRoute exact path='/history' component={History} />
           <Route exact path='/login' component={Login} />
-          <PrivateRoute exact path='/add' component={AddFriend} />
           <PrivateRoute exact path='/requests' component={FriendRequests} />
           <PrivateRoute exact path='/friends' component={Friends} />
 

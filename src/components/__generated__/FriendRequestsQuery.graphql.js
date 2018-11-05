@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash fcd420d82d83f2adcb603f9cd6e5c100
+ * @relayHash 37be7b1290cbd73c06b62fe52233839f
  */
 
 /* eslint-disable */
@@ -10,6 +10,7 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type ReceivedFriendRequestList_user$ref = any;
+type SentFriendRequestList_user$ref = any;
 export type FriendRequestStatus = "ACCEPTED" | "IGNORED" | "PENDING" | "%future added value";
 export type FriendRequestFilter = {
   AND?: ?$ReadOnlyArray<FriendRequestFilter>,
@@ -248,7 +249,7 @@ export type FriendRequestsQueryResponse = {|
   +viewer: {|
     +User: ?{|
       +email: string,
-      +$fragmentRefs: ReceivedFriendRequestList_user$ref,
+      +$fragmentRefs: SentFriendRequestList_user$ref & ReceivedFriendRequestList_user$ref,
     |}
   |}
 |};
@@ -267,10 +268,32 @@ query FriendRequestsQuery(
   viewer {
     User(id: $userId) {
       email
+      ...SentFriendRequestList_user_2yZ5GC
       ...ReceivedFriendRequestList_user_2yZ5GC
       id
     }
     id
+  }
+}
+
+fragment SentFriendRequestList_user_2yZ5GC on User {
+  sentFriendRequests(last: 100, orderBy: createdAt_DESC, filter: $friendRequestFilter) {
+    edges {
+      node {
+        id
+        createdAt
+        recipient {
+          email
+          id
+        }
+        __typename
+      }
+      cursor
+    }
+    pageInfo {
+      hasPreviousPage
+      startCursor
+    }
   }
 }
 
@@ -330,6 +353,14 @@ v2 = {
 v3 = [
   {
     "kind": "Variable",
+    "name": "friendRequestFilter",
+    "variableName": "friendRequestFilter",
+    "type": null
+  }
+],
+v4 = [
+  {
+    "kind": "Variable",
     "name": "filter",
     "variableName": "friendRequestFilter",
     "type": "FriendRequestFilter"
@@ -347,19 +378,69 @@ v3 = [
     "type": "FriendRequestOrderBy"
   }
 ],
-v4 = {
+v5 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
   "args": null,
   "storageKey": null
+},
+v6 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "createdAt",
+  "args": null,
+  "storageKey": null
+},
+v7 = [
+  v2,
+  v5
+],
+v8 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "__typename",
+  "args": null,
+  "storageKey": null
+},
+v9 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "cursor",
+  "args": null,
+  "storageKey": null
+},
+v10 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "pageInfo",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "PageInfo",
+  "plural": false,
+  "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "hasPreviousPage",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "startCursor",
+      "args": null,
+      "storageKey": null
+    }
+  ]
 };
 return {
   "kind": "Request",
   "operationKind": "query",
   "name": "FriendRequestsQuery",
   "id": null,
-  "text": "query FriendRequestsQuery(\n  $userId: ID\n  $friendRequestFilter: FriendRequestFilter\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...ReceivedFriendRequestList_user_2yZ5GC\n      id\n    }\n    id\n  }\n}\n\nfragment ReceivedFriendRequestList_user_2yZ5GC on User {\n  receivedFriendRequests(last: 100, orderBy: createdAt_DESC, filter: $friendRequestFilter) {\n    edges {\n      node {\n        id\n        status\n        createdAt\n        sender {\n          email\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n",
+  "text": "query FriendRequestsQuery(\n  $userId: ID\n  $friendRequestFilter: FriendRequestFilter\n) {\n  viewer {\n    User(id: $userId) {\n      email\n      ...SentFriendRequestList_user_2yZ5GC\n      ...ReceivedFriendRequestList_user_2yZ5GC\n      id\n    }\n    id\n  }\n}\n\nfragment SentFriendRequestList_user_2yZ5GC on User {\n  sentFriendRequests(last: 100, orderBy: createdAt_DESC, filter: $friendRequestFilter) {\n    edges {\n      node {\n        id\n        createdAt\n        recipient {\n          email\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ReceivedFriendRequestList_user_2yZ5GC on User {\n  receivedFriendRequests(last: 100, orderBy: createdAt_DESC, filter: $friendRequestFilter) {\n    edges {\n      node {\n        id\n        status\n        createdAt\n        sender {\n          email\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -389,15 +470,13 @@ return {
               v2,
               {
                 "kind": "FragmentSpread",
+                "name": "SentFriendRequestList_user",
+                "args": v3
+              },
+              {
+                "kind": "FragmentSpread",
                 "name": "ReceivedFriendRequestList_user",
-                "args": [
-                  {
-                    "kind": "Variable",
-                    "name": "friendRequestFilter",
-                    "variableName": "friendRequestFilter",
-                    "type": null
-                  }
-                ]
+                "args": v3
               }
             ]
           }
@@ -432,9 +511,9 @@ return {
               {
                 "kind": "LinkedField",
                 "alias": null,
-                "name": "receivedFriendRequests",
+                "name": "sentFriendRequests",
                 "storageKey": null,
-                "args": v3,
+                "args": v4,
                 "concreteType": "FriendRequestConnection",
                 "plural": false,
                 "selections": [
@@ -456,7 +535,64 @@ return {
                         "concreteType": "FriendRequest",
                         "plural": false,
                         "selections": [
-                          v4,
+                          v5,
+                          v6,
+                          {
+                            "kind": "LinkedField",
+                            "alias": null,
+                            "name": "recipient",
+                            "storageKey": null,
+                            "args": null,
+                            "concreteType": "User",
+                            "plural": false,
+                            "selections": v7
+                          },
+                          v8
+                        ]
+                      },
+                      v9
+                    ]
+                  },
+                  v10
+                ]
+              },
+              {
+                "kind": "LinkedHandle",
+                "alias": null,
+                "name": "sentFriendRequests",
+                "args": v4,
+                "handle": "connection",
+                "key": "FriendRequestList_sentFriendRequests",
+                "filters": []
+              },
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "receivedFriendRequests",
+                "storageKey": null,
+                "args": v4,
+                "concreteType": "FriendRequestConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "edges",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "FriendRequestEdge",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "kind": "LinkedField",
+                        "alias": null,
+                        "name": "node",
+                        "storageKey": null,
+                        "args": null,
+                        "concreteType": "FriendRequest",
+                        "plural": false,
+                        "selections": [
+                          v5,
                           {
                             "kind": "ScalarField",
                             "alias": null,
@@ -464,13 +600,7 @@ return {
                             "args": null,
                             "storageKey": null
                           },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "name": "createdAt",
-                            "args": null,
-                            "storageKey": null
-                          },
+                          v6,
                           {
                             "kind": "LinkedField",
                             "alias": null,
@@ -479,69 +609,30 @@ return {
                             "args": null,
                             "concreteType": "User",
                             "plural": false,
-                            "selections": [
-                              v2,
-                              v4
-                            ]
+                            "selections": v7
                           },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "name": "__typename",
-                            "args": null,
-                            "storageKey": null
-                          }
+                          v8
                         ]
                       },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "cursor",
-                        "args": null,
-                        "storageKey": null
-                      }
+                      v9
                     ]
                   },
-                  {
-                    "kind": "LinkedField",
-                    "alias": null,
-                    "name": "pageInfo",
-                    "storageKey": null,
-                    "args": null,
-                    "concreteType": "PageInfo",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "hasPreviousPage",
-                        "args": null,
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "startCursor",
-                        "args": null,
-                        "storageKey": null
-                      }
-                    ]
-                  }
+                  v10
                 ]
               },
               {
                 "kind": "LinkedHandle",
                 "alias": null,
                 "name": "receivedFriendRequests",
-                "args": v3,
+                "args": v4,
                 "handle": "connection",
                 "key": "FriendRequestList_receivedFriendRequests",
                 "filters": []
               },
-              v4
+              v5
             ]
           },
-          v4
+          v5
         ]
       }
     ]
@@ -549,5 +640,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '7dbfe2463e27a1a9159d5e790b207600';
+(node/*: any*/).hash = '2003fd74ef94b44dea67cb5b63c2842f';
 module.exports = node;
