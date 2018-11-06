@@ -19,7 +19,7 @@ const WideButton = css `
 class Login extends Component {
 
   state = {
-    login: true, // switch between Login and SignUp
+    login: false, // switch between Login and SignUp
     email: '',
     password: '',
     errorMessage: '',
