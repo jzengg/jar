@@ -54,7 +54,7 @@ class Friends extends Component {
     } else {
         updatedFriendIds = [...activeFriendIds, id]
     }
-    
+
     this.setState({
       activeFriendIds: updatedFriendIds
     })
@@ -91,7 +91,11 @@ class Friends extends Component {
             return (
               <div>
                 <h2> Friends </h2>
-                <FriendList user={props.viewer.User} updateActiveFriend={this._updateActiveFriend}/>
+                <FriendList
+                  user={props.viewer.User}
+                  updateActiveFriend={this._updateActiveFriend}
+                  activeFriendIds={this.state.activeFriendIds}
+                />
                 <h2> Their notes </h2>
                   <NoteList>
                     {props.viewer.allNotes.edges.map(edge =>

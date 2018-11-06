@@ -7,12 +7,17 @@ import Friend from './Friend'
 class FriendList extends React.Component {
 
   render () {
-    let friends = this.props.user.friends.edges
+    const friends = this.props.user.friends.edges
+    const activeFriendIds = this.props.activeFriendIds
+
     return (
-      <ul>
+      <ul css={`
+          display: flex;
+          `}>
         {
           friends.map(( {node} ) =>
           <Friend
+            active={activeFriendIds.includes(node.id)}
             key={node.id}
             friend={node}
             handleClick={this.props.updateActiveFriend}

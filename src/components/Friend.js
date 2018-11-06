@@ -1,16 +1,20 @@
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
 
+import { RadioContainer } from '../css/BaseForm'
+
+
 class Friend extends React.Component {
 
   render () {
     const friend = this.props.friend
     return (
-        <li>
-          <div onClick={this.props.handleClick.bind(this, friend.id)}>
-            email: {friend.email}
-          </div>
-        </li>
+      <RadioContainer
+        onClick={this.props.handleClick.bind(this, friend.id)}
+        active={this.props.active}
+        >
+        {friend.email}
+      </RadioContainer>
     )
   }
 }
