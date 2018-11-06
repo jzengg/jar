@@ -4,5 +4,5 @@ import { VerticallyCentered } from '../css/BaseLayout'
 
 
 export default (props) => {
-  return <VerticallyCentered> <ClipLoader loading={props.loading || true} /> </VerticallyCentered>
+  return <VerticallyCentered> <ClipLoader /> </VerticallyCentered>
 }
