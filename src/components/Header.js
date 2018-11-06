@@ -54,7 +54,7 @@ class Header extends Component {
               <div>
                 { loggedIn &&
                   <HeaderContainer>
-                    <HeaderNavLink to='/'>Home </HeaderNavLink>
+                    <HeaderNavLink to='/'> Today </HeaderNavLink>
                     <HeaderNavLink to='/history' > History </HeaderNavLink>
                     <HeaderNavLink to='/requests' >
                       <div>

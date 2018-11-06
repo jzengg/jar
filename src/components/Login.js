@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { GC_USER_ID, GC_AUTH_TOKEN } from '../constants'
+import { css } from 'react-emotion'
 
 import SignupUserMutation from '../mutations/SignupUserMutation'
 import AuthenticateUserMutation from '../mutations/AuthenticateUserMutation'
@@ -9,7 +10,8 @@ import { FormContainer, WideInput, WideLabel } from '../css/BaseForm'
 import { Container, VerticallyCentered } from '../css/BaseLayout'
 import { PrimaryButton, LinkButton, DisabledPrimaryButton } from '../css/BaseButton'
 
-import { css } from 'react-emotion'
+import logo from '../images/logo.svg'
+
 
 const WideButton = css `
   width: 100%;
@@ -33,15 +35,23 @@ class Login extends Component {
         <div css={`
             flex: 1;
             max-width: 400px;
-            `}>
-          <SubHeading css={`
-              text-align:center;
-              margin-bottom: 1.5rem;
-              `}
-          >
-              {this.state.login ? 'Log in to Not a Jar' : 'Sign up for Not a Jar'}</SubHeading>
-            <FormContainer css={`padding: 1.75rem;`}
-              onSubmit={ this._handleSubmit }>
+            `}
+        >
+          <div css={`
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              margin-bottom: 1.25rem;
+              `}>
+            <img css={`
+              width: auto;
+              height: 100px;
+              margin-bottom: 0.5rem;
+              `} src={logo} alt='Not a Jar logo'
+            />
+          <SubHeading css={`text-align: center`}> A virtual jar to record happy happenings </SubHeading>
+          </div>
+          <FormContainer css={`padding: 1.75rem;`} onSubmit={ this._handleSubmit }>
             <WideLabel htmlFor="email">Email</WideLabel>
             <WideInput
               required
