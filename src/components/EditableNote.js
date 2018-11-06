@@ -53,6 +53,12 @@ class EditableNote extends React.Component {
     }
   }
 
+  _handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this._handleOutsideClick()
+    }
+  }
+
   _handleTextChange = (e) => {
     this.setState({
       text: e.target.value
@@ -84,6 +90,7 @@ class EditableNote extends React.Component {
           <input
             type="text"
             onChange={ this._handleTextChange }
+            onKeyPress={ this._handleKeyPress }
             value={text}
             />
         </NoteText>
