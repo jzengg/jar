@@ -4,6 +4,7 @@ import environment from '../Environment'
 
 import { GC_USER_ID } from '../constants'
 
+import Spinner from './Spinner'
 import CreateFriendRequest from './CreateFriendRequest'
 import SentFriendRequestList from './SentFriendRequestList'
 import ReceivedFriendRequestList from './ReceivedFriendRequestList'
@@ -50,7 +51,7 @@ class FriendRequests extends Component {
             )
 
           }
-          return <div>Loading</div>
+          return <Spinner />
         }}
       />
     )

@@ -8,10 +8,12 @@ import moment from 'moment'
 import NoteList from './NoteList'
 import EditableNote from './EditableNote'
 import HistoryNav from './HistoryNav'
+import Spinner from './Spinner'
 
 import SubHeading from '../css/SubHeading'
 import Divider from '../css/Divider'
 import { Container } from '../css/BaseLayout'
+
 
 const HistoryQuery = graphql`
   query HistoryQuery($noteFilter: NoteFilter) {
@@ -125,7 +127,7 @@ class History extends Component {
             )
 
           }
-          return <div>Loading</div>
+          return <Spinner />
         }}
       />
     )

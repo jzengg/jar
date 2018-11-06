@@ -7,6 +7,13 @@ const BaseContainer = css `
   margin-bottom: 1rem;
 `
 
+export const VerticallyCentered = styled.div `
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
 export const Container = styled.div `
   ${BaseContainer}
 `

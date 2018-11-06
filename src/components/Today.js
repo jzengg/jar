@@ -9,6 +9,7 @@ import CreateNote from './CreateNote'
 import NoteList from './NoteList'
 import EditableNote from './EditableNote'
 import Note from './Note'
+import Spinner from './Spinner'
 
 import Divider  from '../css/Divider'
 import SubHeading  from '../css/SubHeading'
@@ -90,7 +91,7 @@ class Today extends Component {
             )
 
           }
-          return <div>Loading</div>
+          return <Spinner />
         }}
       />
     )

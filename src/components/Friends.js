@@ -8,6 +8,7 @@ import { GC_USER_ID } from '../constants'
 import FriendList from './FriendList'
 import NoteList from './NoteList'
 import Note from './Note'
+import Spinner from './Spinner'
 
 const FriendsQuery = graphql`
   query FriendsQuery($userId: ID, $noteFilter: NoteFilter) {
@@ -97,7 +98,7 @@ class Friends extends Component {
             )
 
           }
-          return <div>Loading</div>
+          return <Spinner />
         }}
       />
     )

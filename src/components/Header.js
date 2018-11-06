@@ -8,6 +8,7 @@ import ReceivedFriendRequestBadge from './ReceivedFriendRequestBadge'
 
 import HeaderNavLink from './HeaderNavLink'
 import LogoutButton from './LogoutButton'
+import Spinner from './Spinner'
 
 import styled from 'react-emotion'
 
@@ -71,7 +72,7 @@ class Header extends Component {
             )
 
           }
-          return <div>Loading</div>
+          return <Spinner />
         }}
       />
     )
