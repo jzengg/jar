@@ -24,7 +24,6 @@ const HeaderQuery = graphql`
       User(id: $id) {
         email
         ...ReceivedFriendRequestBadge_user @arguments(friendRequestFilter: $friendRequestFilter)
-        ...SentFriendRequestBadge_user @arguments(friendRequestFilter: $friendRequestFilter)
       }
     }
   }
