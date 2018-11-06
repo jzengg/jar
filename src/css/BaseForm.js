@@ -6,7 +6,6 @@ export const WideInput = styled.input`
   border: 1px solid #d1d5da;
   border-radius: 5px;
   padding: 8px;
-  box-sizing: border-box;
   width: 100%;
   font-size: 1rem;
   margin-bottom: 1rem;

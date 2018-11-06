@@ -14,7 +14,6 @@ const Section = styled.section`
 
 const Column = styled.article`
   flex: 1;
-  box-sizing: border-box;
   width: 100%;
 `
 

@@ -6,7 +6,7 @@ import AuthenticateUserMutation from '../mutations/AuthenticateUserMutation'
 
 import SubHeading from '../css/SubHeading'
 import { FormContainer, WideInput, WideLabel } from '../css/BaseForm'
-import { Container } from '../css/BaseLayout'
+import { Container, VerticallyCentered } from '../css/BaseLayout'
 import { PrimaryButton, LinkButton, DisabledPrimaryButton } from '../css/BaseButton'
 
 import { css } from 'react-emotion'
@@ -29,10 +29,7 @@ class Login extends Component {
   render() {
 
     return (
-      <div css={`
-          display: flex;
-          justify-content: center;
-          `}>
+      <VerticallyCentered>
         <div css={`
             flex: 1;
             max-width: 400px;
@@ -88,7 +85,7 @@ class Login extends Component {
             </LinkButton>
           </Container>
         </div>
-      </div>
+      </VerticallyCentered>
     )
   }
 
