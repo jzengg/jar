@@ -2,30 +2,38 @@
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
 
+import SubHeading from '../css/SubHeading'
+import Divider from '../css/Divider'
+import { Container } from '../css/BaseLayout'
+
 import Friend from './Friend'
 
 class FriendList extends React.Component {
 
   render () {
     const friends = this.props.user.friends.edges
-    const activeFriendIds = this.props.activeFriendIds
+    const activeFriendId = this.props.activeFriendId
 
     return (
-      <ul css={`
-          display: flex;
-          `}>
-        {
-          friends.map(( {node} ) =>
-          <Friend
-            active={activeFriendIds.includes(node.id)}
-            key={node.id}
-            friend={node}
-            handleClick={this.props.updateActiveFriend}
-          />
+      <Container>
+        <SubHeading> Your friends </SubHeading>
+        <Divider/>
+        <ul css={`
+            display: flex;
+            `}>
+          {
+            friends.map(( {node} ) =>
+            <Friend
+              active={activeFriendId === node.id}
+              key={node.id}
+              friend={node}
+              handleClick={this.props.updateActiveFriend}
+            />
 
-        )
-      }
-    </ul>
+          )
+        }
+        </ul>
+      </Container>
     )
   }
 }

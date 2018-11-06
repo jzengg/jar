@@ -41,23 +41,12 @@ class Friends extends Component {
     super(props)
 
     this.state = {
-      activeFriendIds: []
+      activeFriendId: null
     }
   }
 
-  _updateActiveFriend = (id) => {
-    const { activeFriendIds } = this.state
-    let updatedFriendIds
-
-    if (activeFriendIds.includes(id)) {
-        updatedFriendIds = activeFriendIds.filter(friendId => friendId !== id)
-    } else {
-        updatedFriendIds = [...activeFriendIds, id]
-    }
-
-    this.setState({
-      activeFriendIds: updatedFriendIds
-    })
+  _updateActiveFriend = (activeFriendId) => {
+    this.setState({ activeFriendId })
   }
 
   render() {
@@ -74,8 +63,8 @@ class Friends extends Component {
       userId: userId
     }
 
-    if (this.state.activeFriendIds.length) {
-      variables.noteFilter.jar.owner.id_in = this.state.activeFriendIds
+    if (this.state.activeFriendId) {
+      variables.noteFilter.jar.owner.id = this.state.activeFriendId
     }
 
     return (
@@ -90,18 +79,16 @@ class Friends extends Component {
 
             return (
               <div>
-                <h2> Friends </h2>
                 <FriendList
                   user={props.viewer.User}
                   updateActiveFriend={this._updateActiveFriend}
-                  activeFriendIds={this.state.activeFriendIds}
+                  activeFriendId={this.state.activeFriendId}
                 />
-                <h2> Their notes </h2>
-                  <NoteList>
-                    {props.viewer.allNotes.edges.map(edge =>
-                      <Note key={edge.node.__id} note={edge.node} />
-                    )}
-                  </NoteList>
+                <NoteList>
+                  {props.viewer.allNotes.edges.map(edge =>
+                    <Note key={edge.node.__id} note={edge.node} />
+                  )}
+                </NoteList>
               </div>
             )
 
