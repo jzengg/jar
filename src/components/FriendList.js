@@ -20,6 +20,10 @@ class FriendList extends React.Component {
         <Divider/>
         <ul css={`
             display: flex;
+            @media (max-width: 414px) {
+                flex-direction: column;
+                text-align: center
+              }
             `}>
           {
             friends.map(( {node} ) =>
