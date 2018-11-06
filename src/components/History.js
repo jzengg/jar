@@ -115,6 +115,7 @@ class History extends Component {
                     intervalOptions={intervalOptions}
                   />
                 </Container>
+                <Divider/>
                 <NoteList>
                   {props.viewer.allNotes.edges.map(edge =>
                     <EditableNote key={edge.node.__id} note={edge.node} />

@@ -19,6 +19,7 @@ const ListContainer = Container.withComponent('ul')
 class ReceivedFriendRequestList extends React.Component {
   render () {
     let friendRequests = this.props.user.receivedFriendRequests.edges
+    if (!friendRequests.length) return <div/>
     return (
       <ListContainer css={`
           display: flex;
@@ -35,7 +36,7 @@ class ReceivedFriendRequestList extends React.Component {
               justify-content: space-between;
               align-items: center;
               `}>
-              <div> 
+              <div>
               {node.sender.email}
               <Timestamp createdAt={node.createdAt}/>
               </div>

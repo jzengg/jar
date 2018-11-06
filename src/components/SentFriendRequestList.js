@@ -31,6 +31,8 @@ class SentFriendRequestList extends React.Component {
 
   render () {
     let friendRequests = this.props.user.sentFriendRequests.edges
+    if (!friendRequests.length) return <div/>
+
     return (
       <ListContainer css={`
           display: flex;
