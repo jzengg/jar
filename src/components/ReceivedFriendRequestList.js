@@ -42,7 +42,7 @@ class ReceivedFriendRequestList extends React.Component {
               </div>
               <div css={`
                 `}>
-                <SecondaryButton onClick={ this._ignoreFriendRequest.bind(this, node.id) }> Ignore </SecondaryButton>
+                <SecondaryButton css={`font-weight: 600; font-size: 0.85rem;`} onClick={ this._ignoreFriendRequest.bind(this, node.id) }> Ignore </SecondaryButton>
                 <SmallPrimaryButton css={`margin-left: 0.5rem;`} onClick={ this._acceptFriendRequest.bind(this, node.id) }> Accept </SmallPrimaryButton>
               </div>
             </div>
