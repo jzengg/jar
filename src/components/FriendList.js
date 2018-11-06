@@ -13,8 +13,9 @@ class FriendList extends React.Component {
         {
           friends.map(( {node} ) =>
           <Friend
-            key={node.__id}
+            key={node.id}
             friend={node}
+            handleClick={this.props.updateActiveFriend}
           />
 
         )
@@ -30,6 +31,7 @@ export default createFragmentContainer(FriendList, graphql`
       @connection(key: "FriendList_friends", filters: []) {
       edges {
         node {
+          id
           ...Friend_friend
         }
       }

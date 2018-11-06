@@ -7,7 +7,7 @@ class Friend extends React.Component {
     const friend = this.props.friend
     return (
         <li>
-          <div>
+          <div onClick={this.props.handleClick.bind(this, friend.id)}>
             email: {friend.email}
           </div>
         </li>
@@ -19,5 +19,13 @@ export default createFragmentContainer(Friend, graphql`
   fragment Friend_friend on User {
     id
     email
+    jars {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
   }
 `)

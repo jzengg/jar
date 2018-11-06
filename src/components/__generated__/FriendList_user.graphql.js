@@ -15,7 +15,8 @@ export type FriendList_user = {|
   +friends: ?{|
     +edges: ?$ReadOnlyArray<?{|
       +node: {|
-        +$fragmentRefs: Friend_friend$ref
+        +id: string,
+        +$fragmentRefs: Friend_friend$ref,
       |}
     |}>
   |},
@@ -70,6 +71,13 @@ const node/*: ConcreteFragment*/ = {
               "plural": false,
               "selections": [
                 {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "id",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
                   "kind": "FragmentSpread",
                   "name": "Friend_friend",
                   "args": null
@@ -122,5 +130,5 @@ const node/*: ConcreteFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '31ebcfbf87ed3f199466c89d0df97203';
+(node/*: any*/).hash = 'a9bc9013f53b8e3887d379d275589023';
 module.exports = node;
