@@ -42,8 +42,8 @@ class Today extends Component {
 
   render() {
     const userId = localStorage.getItem(GC_USER_ID)
-    const dayStart = moment().startOf('day')
-    const dayEnd = moment().endOf('day')
+    const startDate = moment().startOf('day')
+    const endDate = moment().endOf('day')
 
     const variables = {
       noteFilter: {
@@ -53,8 +53,8 @@ class Today extends Component {
             { owner: { friends_some: { id: userId } } }
           ],
         },
-        createdAt_gt: dayStart,
-        createdAt_lte: dayEnd
+        createdAt_gt: startDate,
+        createdAt_lte: endDate
       },
       userId: userId
     }
