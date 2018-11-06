@@ -46,6 +46,10 @@ class Friends extends Component {
   }
 
   _updateActiveFriend = (activeFriendId) => {
+    if (activeFriendId === this.state.activeFriendId) {
+      activeFriendId = null
+    }
+
     this.setState({ activeFriendId })
   }
 
