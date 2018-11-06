@@ -3,11 +3,15 @@ import { createFragmentContainer, graphql } from 'react-relay'
 import styled from 'react-emotion'
 import OutsideClickHandler from 'react-outside-click-handler'
 
+
 import DeleteNoteMutation from '../mutations/DeleteNoteMutation'
 import UpdateNoteMutation from '../mutations/UpdateNoteMutation'
 
 import Timestamp from './Timestamp'
 import { NoteContainer, NoteHeader, NoteFooter, JarTag, AuthorTag, NoteText } from './Note'
+
+import { WideInput } from '../css/BaseForm'
+import { MdDelete } from "react-icons/md"
 
 const EditableNoteContainer = styled(NoteContainer)(props => ({
   opacity: props.editable && '0.6',
@@ -87,7 +91,7 @@ class EditableNote extends React.Component {
     if (this.state.editable) {
       NoteBody = (
         <NoteText>
-          <input
+          <WideInput
             type="text"
             onChange={ this._handleTextChange }
             onKeyPress={ this._handleKeyPress }
@@ -122,7 +126,7 @@ class EditableNote extends React.Component {
           <NoteHeader>
             <Timestamp createdAt={this.props.note.createdAt}/>
 
-            {this.state.editable && <button onClick={ this._deleteNote }> X </button>}
+            {this.state.editable && <MdDelete css={`font-size: 1.25rem;`} onClick={ this._deleteNote } />}
           </NoteHeader>
           { NoteBody }
           <NoteFooter>
