@@ -111,7 +111,7 @@ class EditableNote extends React.Component {
     } else {
       NoteBody = <NoteText> {text} </NoteText>
       JarContent = (
-        <JarTag> { this.props.note.jar.name }</JarTag>
+        <JarTag editable> { this.props.note.jar.name }</JarTag>
       )
     }
 

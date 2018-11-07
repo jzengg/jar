@@ -20,12 +20,12 @@ export const NoteSecondary = styled.div`
   align-items: center;
 `
 
-export const JarTag = styled.div`
-  background: #d9534f;
-  border-radius: 3px;
-  color: white;
-  padding: 0.25rem 0.5rem;
-`
+export const JarTag = styled.div(props => ({
+  background: props.editable ? '#d9534f' : '#95a5a6',
+  borderRadius: '3px',
+  color: 'white',
+  padding: '0.25rem 0.5rem',
+}))
 
 export const AuthorTag = styled.div`
 `
