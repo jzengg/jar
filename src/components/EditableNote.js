@@ -139,8 +139,10 @@ class EditableNote extends React.Component {
                 css={`
                   ${actionIcon}
                   margin-left: 1rem;
-                  &:hover {
-                    color: red;
+                  @media (min-width: 414px) {
+                    &:hover {
+                      color: red;
+                    }
                   }
                   `}
               />
