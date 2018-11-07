@@ -3,12 +3,13 @@ import { MdErrorOutline } from 'react-icons/md'
 
 export default (props) => {
   return (
-    <span css={`
+    <div css={`
+        margin-top: 1rem;
         color: red;
         display: flex;
         align-items: center;
         `}>
       <MdErrorOutline css={`margin-right: 0.1rem;`}/> { props.message }
-    </span>
+    </div>
   )
 }

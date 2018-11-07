@@ -16,7 +16,6 @@ const PrimaryBase = css `
   border: 1px solid #0366d6;
   padding: 6px 12px;
   font-size: 14px;
-  margin-bottom: 1rem;
   align-self: flex-start;
 `
 const PrimaryHover = css `
