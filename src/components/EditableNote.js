@@ -14,13 +14,8 @@ import { WideInput } from '../css/BaseForm'
 import { MdDelete } from "react-icons/md"
 
 const EditableNoteContainer = styled(NoteContainer)(props => ({
-  // opacity: props.editable && '0.6',
-  // backgroundColor: '#eff3f6',
-  // backgroundImage: 'linear-gradient(-180deg,#fafbfc,#eff3f6 90%)',
   cursor: !props.editable && 'pointer',
-  // '&:hover': {
-  //   border: '1px solid black'
-  // },
+  opacity: props.editable && '0.6'
 }))
 
 class EditableNote extends React.Component {
