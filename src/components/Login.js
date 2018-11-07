@@ -5,13 +5,14 @@ import { css } from 'react-emotion'
 import SignupUserMutation from '../mutations/SignupUserMutation'
 import AuthenticateUserMutation from '../mutations/AuthenticateUserMutation'
 
+import Error from './Error'
+
 import SubHeading from '../css/SubHeading'
 import { FormContainer, WideInput, WideLabel } from '../css/BaseForm'
 import { Container, AbsCenteredDesktop } from '../css/BaseLayout'
 import { PrimaryButton, LinkButton, DisabledPrimaryButton } from '../css/BaseButton'
 
 import logo from '../images/logo.svg'
-
 
 const WideButton = css `
   width: 100%;
@@ -80,12 +81,8 @@ class Login extends Component {
 
             <PrimaryButton css={`${WideButton}`}> {this.state.login ? 'Log in' : 'Sign up' } </PrimaryButton>
           }
-              {this.state.errorMessage &&
-                <span css={`
-                    color: red;
-                    `}>
-                    { this.state.errorMessage }
-                  </span>}
+              { this.state.errorMessage && <Error message={this.state.errorMessage} /> }
+
           </FormContainer>
 
           <Container>
