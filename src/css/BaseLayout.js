@@ -8,8 +8,8 @@ const BaseContainer = css `
   margin-bottom: 1.25rem;
 `
 const HCentered = css `
-display: flex;
-justify-content: center;
+  display: flex;
+  justify-content: center;
 `
 
 export const AbsCenteredDesktop = styled.div `
