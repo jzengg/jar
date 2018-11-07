@@ -138,7 +138,7 @@ class EditableNote extends React.Component {
                 onClick={this._deleteNote}
                 css={`
                   ${actionIcon}
-                  margin-left: 0.5rem;
+                  margin-left: 1rem;
                   &:hover {
                     color: red;
                   }
