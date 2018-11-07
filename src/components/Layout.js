@@ -21,7 +21,10 @@ class Layout extends Component {
 
   render() {
     return (
-      <main css={`background: #e5e1db`}>
+      <main css={`
+          background: #e5e1db;
+          min-height: 100vh;
+          `}>
         <Header/>
         <Section>
           <Column>
