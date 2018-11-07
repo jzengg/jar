@@ -3,6 +3,8 @@ import { GC_USER_ID } from '../constants'
 
 import CreateFriendRequestMutation from '../mutations/CreateFriendRequestMutation'
 
+import Error from './Error'
+
 import { PrimaryButton, DisabledPrimaryButton } from '../css/BaseButton'
 import { FormContainer, WideInput, WideLabel } from '../css/BaseForm'
 import SubHeading from '../css/SubHeading'
@@ -70,13 +72,7 @@ class CreateFriendRequest extends Component {
           <PrimaryButton> Send Request </PrimaryButton>
         }
 
-        {this.state.errorMessage &&
-          <div css={`
-              color: red;
-              padding: 1rem 0;
-              `}>
-              { this.state.errorMessage }
-            </div>}
+        { this.state.errorMessage && <Error css={'padding: 1rem 0;'} message={this.state.errorMessage}/> }
       </FormContainer>
     )
 

@@ -16,7 +16,6 @@ import logo from '../images/logo.svg'
 
 const WideButton = css `
   width: 100%;
-  margin-bottom: 1rem;
 `
 
 class Login extends Component {
@@ -81,7 +80,7 @@ class Login extends Component {
 
             <PrimaryButton css={`${WideButton}`}> {this.state.login ? 'Log in' : 'Sign up' } </PrimaryButton>
           }
-              { this.state.errorMessage && <Error message={this.state.errorMessage} /> }
+            { this.state.errorMessage && <Error message={this.state.errorMessage} /> }
 
           </FormContainer>
 
