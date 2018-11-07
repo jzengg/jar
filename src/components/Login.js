@@ -7,7 +7,7 @@ import AuthenticateUserMutation from '../mutations/AuthenticateUserMutation'
 
 import SubHeading from '../css/SubHeading'
 import { FormContainer, WideInput, WideLabel } from '../css/BaseForm'
-import { Container, VerticallyCentered } from '../css/BaseLayout'
+import { Container, AbsCenteredDesktop } from '../css/BaseLayout'
 import { PrimaryButton, LinkButton, DisabledPrimaryButton } from '../css/BaseButton'
 
 import logo from '../images/logo.svg'
@@ -31,7 +31,7 @@ class Login extends Component {
   render() {
 
     return (
-      <VerticallyCentered>
+      <AbsCenteredDesktop>
         <div css={`
             flex: 1;
             max-width: 400px;
@@ -49,7 +49,7 @@ class Login extends Component {
               margin-bottom: 0.5rem;
               `} src={logo} alt='Not a Jar logo'
             />
-          <SubHeading css={`text-align: center`}> A virtual jar to record happy happenings </SubHeading>
+            <SubHeading css={`text-align: center`}> A virtual jar to record happy happenings </SubHeading>
           </div>
           <FormContainer css={`padding: 1.75rem;`} onSubmit={ this._handleSubmit }>
             <WideLabel htmlFor="email">Email</WideLabel>
@@ -95,7 +95,7 @@ class Login extends Component {
             </LinkButton>
           </Container>
         </div>
-      </VerticallyCentered>
+      </AbsCenteredDesktop>
     )
   }
 

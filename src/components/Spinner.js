@@ -1,8 +1,8 @@
 import React from 'react'
 import { ClipLoader } from 'react-spinners'
-import { VerticallyCentered } from '../css/BaseLayout'
+import { AbsCentered } from '../css/BaseLayout'
 
 
 export default (props) => {
-  return <VerticallyCentered> <ClipLoader /> </VerticallyCentered>
+  return <AbsCentered> <ClipLoader /> </AbsCentered>
 }

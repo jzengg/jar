@@ -6,12 +6,23 @@ const BaseContainer = css `
   padding: 1rem;
   margin-bottom: 1rem;
 `
+const HCentered = css `
+display: flex;
+justify-content: center;
+`
 
-export const VerticallyCentered = styled.div `
+export const AbsCenteredDesktop = styled.div `
+  ${HCentered}
+  @media (min-width: 414px) {
     height: 100vh;
-    display: flex;
-    justify-content: center;
     align-items: center;
+  }
+`
+
+export const AbsCentered = styled.div `
+  ${HCentered}
+  height: 100vh;
+  align-items: center;
 `
 
 export const Container = styled.div `
