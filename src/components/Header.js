@@ -57,7 +57,10 @@ class Header extends Component {
                     <HeaderNavLink to='/'> Today </HeaderNavLink>
                     <HeaderNavLink to='/history' > History </HeaderNavLink>
                     <HeaderNavLink to='/requests' >
-                      <div>
+                      <div css={`
+                          display: flex;
+                          align-items: center;
+                          `}>
                         <span>
                           Requests
                         </span>

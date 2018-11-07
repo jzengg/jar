@@ -1,6 +1,6 @@
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
-import styled, { css } from 'react-emotion'
+import styled from 'react-emotion'
 
 import Timestamp from './Timestamp'
 
@@ -21,7 +21,7 @@ export const NoteSecondary = styled.div`
 `
 
 export const JarTag = styled.div`
-  background: #95a5a6;
+  background: #d9534f;
   border-radius: 3px;
   color: white;
   padding: 0.25rem 0.5rem;
