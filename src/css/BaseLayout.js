@@ -23,6 +23,9 @@ export const AbsCentered = styled.div `
   ${HCentered}
   height: 100vh;
   align-items: center;
+  @media (max-width: 414px) {
+    height: calc(100vh - 150px)
+  }
 `
 
 export const Container = styled.div `
