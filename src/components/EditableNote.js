@@ -1,7 +1,6 @@
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
-import styled from 'react-emotion'
-import OutsideClickHandler from 'react-outside-click-handler'
+import styled, { css } from 'react-emotion'
 
 import DeleteNoteMutation from '../mutations/DeleteNoteMutation'
 import UpdateNoteMutation from '../mutations/UpdateNoteMutation'
@@ -11,7 +10,12 @@ import { NoteContainer, NoteSecondary, JarTag, AuthorTag, NoteText } from './Not
 import Dropdown from 'react-dropdown'
 
 import { WideInput } from '../css/BaseForm'
-import { MdDelete } from "react-icons/md"
+import { MdDelete, MdDone } from "react-icons/md"
+
+const actionIcon = css `
+  font-size: 1.25rem;
+  cursor: pointer;
+`
 
 const EditableNoteContainer = styled(NoteContainer)(props => ({
   cursor: !props.editable && 'pointer',
@@ -41,7 +45,8 @@ class EditableNote extends React.Component {
     })
   }
 
-  _handleOutsideClick = () => {
+  _saveNote = (e) => {
+    e.stopPropagation()
     if (this.state.editable) {
       this._disableEdit()
     }
@@ -54,7 +59,7 @@ class EditableNote extends React.Component {
 
   _handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      this._handleOutsideClick()
+      this._saveNote()
     }
   }
 
@@ -75,7 +80,9 @@ class EditableNote extends React.Component {
   }
 
   _deleteNote = () => {
-    DeleteNoteMutation(this.props.note.id)
+    if (window.confirm('Are you sure you want to delete this note?')) {
+      DeleteNoteMutation(this.props.note.id)
+    }
   }
 
   render () {
@@ -111,30 +118,44 @@ class EditableNote extends React.Component {
     }
 
     return (
-      <OutsideClickHandler onOutsideClick={ this._handleOutsideClick } >
-        <EditableNoteContainer onClick={ this._enableEdit } editable={ this.state.editable }>
-          <NoteSecondary>
-            { JarContent }
-            {this.state.editable &&
-              <MdDelete
+      <EditableNoteContainer onClick={ this._enableEdit } editable={ this.state.editable }>
+        <NoteSecondary>
+          { JarContent }
+          {this.state.editable && (
+            <div>
+              <MdDone
                 css={`
-                  font-size: 1.25rem;
-                  cursor: pointer;
+                  ${actionIcon}
+                  color: green;
+                  &:hover {
+                    color: lightgreen;
+                  }
+                  `}
+                onClick={this._saveNote}
+                />
+
+              <MdDelete
+                onClick={this._deleteNote}
+                css={`
+                  ${actionIcon}
+                  margin-left: 0.5rem;
                   &:hover {
                     color: red;
-                  }}
+                  }
                   `}
-                onClick={ this._deleteNote } />}
-          </NoteSecondary>
-          { NoteBody }
-          <NoteSecondary>
-            <Timestamp icon createdAt={this.props.note.createdAt}/>
-            <AuthorTag>
-              {this.props.note.jar.owner.email}
-            </AuthorTag>
+              />
+            </div>
+          )
+        }
         </NoteSecondary>
-      </EditableNoteContainer>
-    </OutsideClickHandler>
+        { NoteBody }
+        <NoteSecondary>
+          <Timestamp icon createdAt={this.props.note.createdAt}/>
+          <AuthorTag>
+            {this.props.note.jar.owner.email}
+          </AuthorTag>
+      </NoteSecondary>
+    </EditableNoteContainer>
     )
   }
 }
