@@ -1,36 +1,29 @@
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
+import styled, { css } from 'react-emotion'
 
 import Timestamp from './Timestamp'
 
-import styled, { css } from 'react-emotion'
-
-const secondary = css`
-  font-size: 0.85rem
-`
-
 export const NoteContainer = styled.div`
-  border: 1px solid #d1d5da;
+  background-color: white;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+  border: 1px solid #d4d4d4;
   padding: 1rem;
   margin: 1rem 0 1rem;
   border-radius: 3px;
 `
 
-export const NoteHeader = styled.div`
-  ${secondary};
+export const NoteSecondary = styled.div`
+  font-size: 0.85rem;
   display: flex;
   justify-content: space-between;
-  height: 1.5rem;
-`
-
-export const NoteFooter = styled.div`
-  ${secondary};
-  display: flex;
-  justify-content: space-between
+  align-items: center;
 `
 
 export const JarTag = styled.div`
-  background: lightyellow;
+  background: #95a5a6;
+  border-radius: 3px;
+  color: white;
   padding: 0.25rem 0.5rem;
 `
 
@@ -48,16 +41,16 @@ class Note extends React.Component {
 
     return (
       <NoteContainer>
-        <NoteHeader>
-          <Timestamp createdAt={note.createdAt}/>
-        </NoteHeader>
-        <NoteText> { note.text } </NoteText>
-        <NoteFooter>
+        <NoteSecondary>
           <JarTag> { note.jar.name }</JarTag>
+        </NoteSecondary>
+        <NoteText> { note.text } </NoteText>
+        <NoteSecondary>
+          <Timestamp createdAt={note.createdAt}/>
           <AuthorTag>
             { note.jar.owner.email }
           </AuthorTag>
-        </NoteFooter>
+        </NoteSecondary>
       </NoteContainer>
     )
   }

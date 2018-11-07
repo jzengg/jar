@@ -10,6 +10,7 @@ const Section = styled.section`
   margin: 0 auto;
   display: flex;
   justify-content: center;
+  background-color: #e5e1db;
 `
 
 const Column = styled.article`

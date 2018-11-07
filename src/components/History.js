@@ -10,10 +10,8 @@ import EditableNote from './EditableNote'
 import HistoryNav from './HistoryNav'
 import Spinner from './Spinner'
 
-import SubHeading from '../css/SubHeading'
 import Divider from '../css/Divider'
-import { Container } from '../css/BaseLayout'
-
+import SubHeading from '../css/SubHeading'
 
 const HistoryQuery = graphql`
   query HistoryQuery($noteFilter: NoteFilter) {
@@ -89,7 +87,7 @@ class History extends Component {
     ]
 
     const headers = {
-      week: `${startDate.format('dddd MM/DD/YYYY')} - ${this.state.endDate.format('dddd MM/DD/YYYY')}`,
+      week: `${startDate.format('ddd MM/DD')} - ${this.state.endDate.format('ddd MM/DD')}`,
       month: startDate.format('MMMM YYYY'),
       year: startDate.year()
     }
@@ -105,10 +103,10 @@ class History extends Component {
           } else if (props) {
             return (
               <div>
-                <Container css={`
-                    text-align: center;
-                    `}>
-                  <SubHeading css={`margin-bottom: 1rem;`}> { headers[this.state.interval] } </SubHeading>
+                <div css={`text-align: center;`}>
+                  <SubHeading css={`
+                      margin-bottom: 1rem;
+                      `}> { headers[this.state.interval] } </SubHeading>
                   <HistoryNav
                     setPrevInterval={this._setPrevInterval}
                     setNextInterval={this._setNextInterval}
@@ -116,7 +114,7 @@ class History extends Component {
                     interval={this.state.interval}
                     intervalOptions={intervalOptions}
                   />
-                </Container>
+              </div>
                 <Divider/>
                 <NoteList>
                   {props.viewer.allNotes.edges.map(edge =>

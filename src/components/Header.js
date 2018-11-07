@@ -15,7 +15,7 @@ import styled from 'react-emotion'
 const HeaderContainer = styled.nav`
   display: flex;
   justify-content: center;
-  background-color: #24292e;
+  background-color: #18bc9c;
 `
 
 const HeaderQuery = graphql`

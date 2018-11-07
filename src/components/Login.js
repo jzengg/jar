@@ -31,7 +31,7 @@ class Login extends Component {
   render() {
 
     return (
-      <AbsCenteredDesktop>
+      <AbsCenteredDesktop css={`padding: 1rem;`}>
         <div css={`
             flex: 1;
             max-width: 400px;

@@ -3,24 +3,24 @@ import { createFragmentContainer, graphql } from 'react-relay'
 import styled from 'react-emotion'
 import OutsideClickHandler from 'react-outside-click-handler'
 
-
 import DeleteNoteMutation from '../mutations/DeleteNoteMutation'
 import UpdateNoteMutation from '../mutations/UpdateNoteMutation'
 
 import Timestamp from './Timestamp'
-import { NoteContainer, NoteHeader, NoteFooter, JarTag, AuthorTag, NoteText } from './Note'
+import { NoteContainer, NoteSecondary, JarTag, AuthorTag, NoteText } from './Note'
+import Dropdown from 'react-dropdown'
 
 import { WideInput } from '../css/BaseForm'
 import { MdDelete } from "react-icons/md"
 
 const EditableNoteContainer = styled(NoteContainer)(props => ({
-  opacity: props.editable && '0.6',
-  backgroundColor: '#eff3f6',
-  backgroundImage: 'linear-gradient(-180deg,#fafbfc,#eff3f6 90%)',
-  cursor: 'pointer',
-  '&:hover': {
-    border: '1px solid black'
-  },
+  // opacity: props.editable && '0.6',
+  // backgroundColor: '#eff3f6',
+  // backgroundImage: 'linear-gradient(-180deg,#fafbfc,#eff3f6 90%)',
+  cursor: !props.editable && 'pointer',
+  // '&:hover': {
+  //   border: '1px solid black'
+  // },
 }))
 
 class EditableNote extends React.Component {
@@ -69,9 +69,9 @@ class EditableNote extends React.Component {
     })
   }
 
-  _handleJarChange = (e) => {
+  _handleJarChange = ({ label, value }) => {
     this.setState({
-      jarId: e.target.value,
+      jarId: value,
     })
   }
 
@@ -87,7 +87,7 @@ class EditableNote extends React.Component {
     const text = this.state.text
     const jars = this.props.note.jar.owner.jars.edges.map(edge => edge.node)
 
-    let NoteBody, Jar
+    let NoteBody, JarContent
     if (this.state.editable) {
       NoteBody = (
         <NoteText>
@@ -100,22 +100,17 @@ class EditableNote extends React.Component {
         </NoteText>
       )
 
-      Jar = (
-        <select value={ this.state.jarId } onChange={ this._handleJarChange }>
-          {jars.map((jar) => {
-            return (
-              <option key={ jar.id } value={ jar.id }>
-                {jar.name}
-              </option>
-            )
-          })}
-
-        </select>
+      JarContent = (
+        <Dropdown
+          value={this.state.jarId}
+          options={jars.map(jar => ({ label: jar.name, value: jar.id }))}
+          onChange={ this._handleJarChange }
+        />
       )
 
     } else {
       NoteBody = <NoteText> {text} </NoteText>
-      Jar = (
+      JarContent = (
         <JarTag> { this.props.note.jar.name }</JarTag>
       )
     }
@@ -123,18 +118,26 @@ class EditableNote extends React.Component {
     return (
       <OutsideClickHandler onOutsideClick={ this._handleOutsideClick } >
         <EditableNoteContainer onClick={ this._enableEdit } editable={ this.state.editable }>
-          <NoteHeader>
-            <Timestamp createdAt={this.props.note.createdAt}/>
-
-            {this.state.editable && <MdDelete css={`font-size: 1.25rem;`} onClick={ this._deleteNote } />}
-          </NoteHeader>
+          <NoteSecondary>
+            { JarContent }
+            {this.state.editable &&
+              <MdDelete
+                css={`
+                  font-size: 1.25rem;
+                  cursor: pointer;
+                  &:hover {
+                    color: red;
+                  }}
+                  `}
+                onClick={ this._deleteNote } />}
+          </NoteSecondary>
           { NoteBody }
-          <NoteFooter>
-            { Jar }
+          <NoteSecondary>
+            <Timestamp createdAt={this.props.note.createdAt}/>
             <AuthorTag>
               {this.props.note.jar.owner.email}
             </AuthorTag>
-        </NoteFooter>
+        </NoteSecondary>
       </EditableNoteContainer>
     </OutsideClickHandler>
     )

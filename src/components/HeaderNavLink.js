@@ -9,7 +9,7 @@ const HeaderNavLink = ({ component: Component, ...rest }) => (
   <NavLink
     activeStyle={{
       fontWeight: '600',
-      color: 'white'
+      color: 'black'
     }}
     exact
     className={css`${HeaderLink}`}

@@ -14,18 +14,18 @@ class App extends Component {
 
   render() {
     return (
-      <Layout>
 
         <Switch>
 
-          <PrivateRoute exact path='/' component={Today} />
-          <PrivateRoute exact path='/history' component={History} />
           <Route exact path='/login' component={Login} />
-          <PrivateRoute exact path='/requests' component={FriendRequests} />
-          <PrivateRoute exact path='/friends' component={Friends} />
+          <Layout>
+            <PrivateRoute exact path='/' component={Today} />
+            <PrivateRoute exact path='/history' component={History} />
+            <PrivateRoute exact path='/requests' component={FriendRequests} />
+            <PrivateRoute exact path='/friends' component={Friends} />
+          </Layout>
 
         </Switch>
-      </Layout>
 
     );
   }

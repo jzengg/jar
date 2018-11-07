@@ -12,18 +12,15 @@ export const BaseButton = css `
 const PrimaryBase = css `
   ${BaseButton}
   font-weight: 600;
-  background-color: #28a745;
-  background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
-  border: 1px solid rgba(27,31,35,0.2);
+  background-color: #0366d6;
+  border: 1px solid #0366d6;
   padding: 6px 12px;
   font-size: 14px;
   align-self: flex-start;
 `
 const PrimaryHover = css `
   &:hover {
-    background-color: #269f42;
-    background-image: linear-gradient(-180deg,#2fcb53,#269f42 90%);
-    border: 1px solid rgba(27,31,35,0.5);
+    // border: 1px solid #0366d6;
   }
 `
 
@@ -42,11 +39,7 @@ export const SmallPrimaryButton = styled.button `
 export const DisabledPrimaryButton = styled.button `
   ${PrimaryBase}
   cursor: auto;
-  color: hsla(0,0%,100%,0.75);
-  background-color: #94d3a2;
-  background-image: none;
-  border-color: rgba(27,31,35,0.2);
-  box-shadow: none;
+  opacity: 0.6;
 `
 
 export const SecondaryButton = styled.button `
@@ -74,12 +67,8 @@ export const HeaderLink = css `
   cursor: pointer;
   padding: 0.75rem;
   text-decoration: none;
-  color: hsla(0,0%,100%,.75);
+  color: white;
   font-size: 1.1rem;
-  &:hover {
-    font-weight: 500;
-    color: white;
-  }
   @media (max-width: 414px) {
       font-size: 0.9rem;
     }

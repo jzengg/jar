@@ -37,8 +37,8 @@ class ReceivedFriendRequestList extends React.Component {
               align-items: center;
               `}>
               <div>
-              {node.sender.email}
-              <Timestamp createdAt={node.createdAt}/>
+                {node.sender.email}
+                <Timestamp createdAt={node.createdAt}/>
               </div>
               <div css={`
                 `}>
