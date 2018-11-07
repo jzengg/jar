@@ -10,7 +10,6 @@ const Section = styled.section`
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  background-color: #e5e1db;
 `
 
 const Column = styled.article`
@@ -22,7 +21,7 @@ class Layout extends Component {
 
   render() {
     return (
-      <main>
+      <main css={`background: #e5e1db`}>
         <Header/>
         <Section>
           <Column>
