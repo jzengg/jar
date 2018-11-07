@@ -46,7 +46,7 @@ class Note extends React.Component {
         </NoteSecondary>
         <NoteText> { note.text } </NoteText>
         <NoteSecondary>
-          <Timestamp createdAt={note.createdAt}/>
+          <Timestamp icon createdAt={note.createdAt}/>
           <AuthorTag>
             { note.jar.owner.email }
           </AuthorTag>

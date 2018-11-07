@@ -15,7 +15,7 @@ const Timestamp = (props) => {
   })
   return (
     <TimestampContainer>
-      <MdAccessTime css={`margin-right: 0.2rem;`} />
+      {props.icon && <MdAccessTime css={`margin-right: 0.2rem;`} /> }
       <div> { createdAt } </div>
     </TimestampContainer>
   )

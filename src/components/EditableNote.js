@@ -133,7 +133,7 @@ class EditableNote extends React.Component {
           </NoteSecondary>
           { NoteBody }
           <NoteSecondary>
-            <Timestamp createdAt={this.props.note.createdAt}/>
+            <Timestamp icon createdAt={this.props.note.createdAt}/>
             <AuthorTag>
               {this.props.note.jar.owner.email}
             </AuthorTag>
