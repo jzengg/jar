@@ -59,7 +59,7 @@ class EditableNote extends React.Component {
 
   _handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      this._saveNote()
+      this._saveNote(e)
     }
   }
 
