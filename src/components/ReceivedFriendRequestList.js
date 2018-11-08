@@ -41,9 +41,21 @@ class ReceivedFriendRequestList extends React.Component {
                 <Timestamp createdAt={node.createdAt}/>
               </div>
               <div css={`
+                display: flex;
+                @media (min-width: 414px) {
+                  button:not(:first-child) {
+                    margin-left: 0.5rem;
+                  }
+                }
+                @media (max-width: 414px) {
+                  button:not(:first-child) {
+                    margin-bottom: 0.5rem;
+                  }
+                  flex-direction: column-reverse;
+                }
                 `}>
                 <SecondaryButton css={`font-weight: 600; font-size: 0.85rem;`} onClick={ this._ignoreFriendRequest.bind(this, node.id) }> Ignore </SecondaryButton>
-                <SmallPrimaryButton css={`margin-left: 0.5rem;`} onClick={ this._acceptFriendRequest.bind(this, node.id) }> Accept </SmallPrimaryButton>
+                <SmallPrimaryButton onClick={ this._acceptFriendRequest.bind(this, node.id) }> Accept </SmallPrimaryButton>
               </div>
             </div>
           </FriendRequest>
