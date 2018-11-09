@@ -123,22 +123,10 @@ class EditableNote extends React.Component {
           { JarContent }
           {this.state.editable && (
             <div>
-              <MdDone
-                css={`
-                  ${actionIcon}
-                  color: green;
-                  &:hover {
-                    color: lightgreen;
-                  }
-                  `}
-                onClick={this._saveNote}
-                />
-
               <MdDelete
                 onClick={this._deleteNote}
                 css={`
                   ${actionIcon}
-                  margin-left: 1rem;
                   @media (min-width: 414px) {
                     &:hover {
                       color: red;
@@ -146,6 +134,19 @@ class EditableNote extends React.Component {
                   }
                   `}
               />
+
+              <MdDone
+                css={`
+                  ${actionIcon}
+                  margin-left: 1rem;
+                  color: green;
+                  &:hover {
+                    color: lightgreen;
+                  }
+                `}
+                onClick={this._saveNote}
+              /
+              >
             </div>
           )
         }
