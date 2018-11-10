@@ -51,7 +51,7 @@ class Header extends Component {
           } else if (props) {
             const loggedIn = !!props.viewer.User
             return (
-              <React.Fragment>
+              <div css={``}>
                 { loggedIn &&
                   <HeaderContainer>
                     <HeaderNavLink to='/'> Today </HeaderNavLink>
@@ -68,7 +68,7 @@ class Header extends Component {
                     <LogoutButton/>
                   </HeaderContainer>
                 }
-              </React.Fragment>
+              </div>
             )
 
           }

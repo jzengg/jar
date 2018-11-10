@@ -1,35 +1,35 @@
 import React, { Component } from 'react'
 
 import Header from './Header'
+import Footer from './Footer'
 
 import styled from 'react-emotion'
 
 const Section = styled.section`
-  padding: 1.2rem;
-  max-width: 1200px;
-  margin: 0 auto;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #e5e1db;
 `
 
-const Column = styled.article`
-  flex: 1;
+const Article = styled.article`
+  margin: 0 auto;
+  max-width: 1200px;
   width: 100%;
+  padding: 1.2rem;
 `
 
 class Layout extends Component {
 
   render() {
     return (
-      <main css={`
-          background: #e5e1db;
-          min-height: 100vh;
-          `}>
-        <Header/>
+      <main>
         <Section>
-          <Column>
+          <Header/>
+          <Article>
             {this.props.children}
-          </Column>
+          </Article>
+          <Footer />
         </Section>
       </main>
     )
