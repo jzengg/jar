@@ -14,8 +14,11 @@ import Divider from '../css/Divider'
 import SubHeading from '../css/SubHeading'
 
 const HistoryQuery = graphql`
-  query HistoryQuery($noteFilter: NoteFilter) {
+  query HistoryQuery($userId: ID, $noteFilter: NoteFilter) {
     viewer {
+      User(id: $userId) {
+        ...HistoryNav_user
+      }
       allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) @connection(key: "NoteList_allNotes", filters: []) {
         edges {
           node {
@@ -34,7 +37,8 @@ class History extends Component {
 
     this.state = {
       endDate: moment().endOf('day'),
-      interval
+      interval,
+      jarId: null
     }
   }
 
@@ -68,16 +72,26 @@ class History extends Component {
     this.setState({ interval: value })
   }
 
+  _updateJar = ({ label, value }) => {
+    this.setState({ jarId: value })
+  }
+
   render() {
     const userId = localStorage.getItem(GC_USER_ID)
     const startDate = this._getStartDate()
+    const { jarId } = this.state
 
     const variables = {
       noteFilter: {
         jar: { owner: { id: userId } },
         createdAt_gt: startDate,
         createdAt_lte: this.state.endDate
-      }
+      },
+      userId
+    }
+
+    if (jarId) {
+      variables.noteFilter.jar.id = jarId
     }
 
     const intervalOptions = [
@@ -108,6 +122,9 @@ class History extends Component {
                       margin-bottom: 1rem;
                       `}> { headers[this.state.interval] } </SubHeading>
                   <HistoryNav
+                    user={props.viewer.User}
+                    jarId={jarId}
+                    updateJar={this._updateJar}
                     setPrevInterval={this._setPrevInterval}
                     setNextInterval={this._setNextInterval}
                     updateInterval={this._updateInterval}
