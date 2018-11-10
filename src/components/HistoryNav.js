@@ -52,7 +52,6 @@ export default createFragmentContainer(HistoryNav, graphql`
         node {
           id
           name
-          description
         }
       }
     }

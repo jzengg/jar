@@ -16,7 +16,6 @@ export type HistoryNav_user = {|
       +node: {|
         +id: string,
         +name: string,
-        +description: ?string,
       |}
     |}>
   |},
@@ -87,13 +86,6 @@ const node/*: ConcreteFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "description",
-                  "args": null,
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
                   "name": "__typename",
                   "args": null,
                   "storageKey": null
@@ -139,5 +131,5 @@ const node/*: ConcreteFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '39509879318d12d4e2ad2f1c36e0d97b';
+(node/*: any*/).hash = 'f585ae2a9e2ef01b55bbab1dfe4a10b7';
 module.exports = node;
