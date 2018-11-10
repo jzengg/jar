@@ -30,6 +30,8 @@ const HistoryQuery = graphql`
   }
 `
 
+export const allJarsCode = 'ALL'
+
 class History extends Component {
   constructor(props) {
     super(props)
@@ -38,7 +40,7 @@ class History extends Component {
     this.state = {
       endDate: moment().endOf('day'),
       interval,
-      jarId: null
+      jarId: allJarsCode
     }
   }
 
@@ -90,7 +92,7 @@ class History extends Component {
       userId
     }
 
-    if (jarId) {
+    if (jarId !== allJarsCode) {
       variables.noteFilter.jar.id = jarId
     }
 
