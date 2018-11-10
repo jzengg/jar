@@ -20,7 +20,7 @@ const PrimaryBase = css `
 `
 const PrimaryHover = css `
   &:hover {
-    // border: 1px solid #0366d6;
+    background-color: #0078ff;
   }
 `
 
