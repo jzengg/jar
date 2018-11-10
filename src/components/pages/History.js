@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import { QueryRenderer, graphql } from 'react-relay'
-import environment from '../Environment'
-import { GC_USER_ID } from '../constants'
-
 import moment from 'moment'
 
-import NoteList from './NoteList'
-import EditableNote from './EditableNote'
-import HistoryNav from './HistoryNav'
-import Spinner from './Spinner'
+import environment from '../../Environment'
+import { GC_USER_ID } from '../../constants'
 
-import Divider from '../css/Divider'
-import SubHeading from '../css/SubHeading'
+
+import NoteList from '../NoteList'
+import EditableNote from '../EditableNote'
+import HistoryNav from '../HistoryNav'
+import Spinner from '../Spinner'
+
+import Divider from '../../css/Divider'
+import SubHeading from '../../css/SubHeading'
 
 const HistoryQuery = graphql`
   query HistoryQuery($userId: ID, $noteFilter: NoteFilter) {

@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
-import { GC_USER_ID, GC_AUTH_TOKEN } from '../constants'
 import { css } from 'react-emotion'
+import { GC_USER_ID, GC_AUTH_TOKEN } from '../../constants'
 
-import SignupUserMutation from '../mutations/SignupUserMutation'
-import AuthenticateUserMutation from '../mutations/AuthenticateUserMutation'
+import SignupUserMutation from '../../mutations/SignupUserMutation'
+import AuthenticateUserMutation from '../../mutations/AuthenticateUserMutation'
 
-import Error from './Error'
+import Error from '../Error'
 
-import SubHeading from '../css/SubHeading'
-import { FormContainer, WideInput, WideLabel } from '../css/BaseForm'
-import { Container, AbsCenteredDesktop } from '../css/BaseLayout'
-import { PrimaryButton, LinkButton, DisabledPrimaryButton } from '../css/BaseButton'
+import SubHeading from '../../css/SubHeading'
+import { FormContainer, WideInput, WideLabel } from '../../css/BaseForm'
+import { Container, AbsCenteredDesktop } from '../../css/BaseLayout'
+import { PrimaryButton, LinkButton, DisabledPrimaryButton } from '../../css/BaseButton'
 
-import logo from '../images/logo.svg'
+import logo from '../../images/logo.svg'
 
 const WideButton = css `
   width: 100%;

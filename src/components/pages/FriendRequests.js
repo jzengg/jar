@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { QueryRenderer, graphql } from 'react-relay'
-import environment from '../Environment'
+import environment from '../../Environment'
 
-import { GC_USER_ID } from '../constants'
+import { GC_USER_ID } from '../../constants'
 
-import Spinner from './Spinner'
-import CreateFriendRequest from './CreateFriendRequest'
-import SentFriendRequestList from './SentFriendRequestList'
-import ReceivedFriendRequestList from './ReceivedFriendRequestList'
+import Spinner from '../Spinner'
+import CreateFriendRequest from '../CreateFriendRequest'
+import SentFriendRequestList from '../SentFriendRequestList'
+import ReceivedFriendRequestList from '../ReceivedFriendRequestList'
 
 const FriendRequestsQuery = graphql`
   query FriendRequestsQuery($userId: ID, $friendRequestFilter: FriendRequestFilter) {

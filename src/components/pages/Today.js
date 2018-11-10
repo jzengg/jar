@@ -2,16 +2,16 @@ import React, { Component } from 'react'
 import moment from 'moment'
 import { QueryRenderer, graphql } from 'react-relay'
 
-import environment from '../Environment'
-import { GC_USER_ID } from '../constants'
+import environment from '../../Environment'
+import { GC_USER_ID } from '../../constants'
 
-import CreateNote from './CreateNote'
-import NoteList from './NoteList'
-import EditableNote from './EditableNote'
-import Note from './Note'
-import Spinner from './Spinner'
+import CreateNote from '../CreateNote'
+import NoteList from '../NoteList'
+import EditableNote from '../EditableNote'
+import Note from '../Note'
+import Spinner from '../Spinner'
 
-import SubHeading from '../css/SubHeading'
+import SubHeading from '../../css/SubHeading'
 
 const TodayQuery = graphql`
   query TodayQuery($userId: ID, $noteFilter: NoteFilter) {

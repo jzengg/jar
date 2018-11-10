@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
 
 import Layout from './Layout'
-import Login from './Login'
-import History from './History'
-import Today from './Today'
-import FriendRequests from './FriendRequests'
-import Friends from './Friends'
+import Login from './pages/Login'
+import History from './pages/History'
+import Today from './pages/Today'
+import FriendRequests from './pages/FriendRequests'
+import Friends from './pages/Friends'
 
 import PrivateRoute from './PrivateRoute'
 

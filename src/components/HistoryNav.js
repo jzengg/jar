@@ -7,7 +7,7 @@ import { css } from 'react-emotion'
 import { MdArrowBack, MdArrowForward } from "react-icons/md"
 import { SecondaryButton } from '../css/BaseButton'
 
-import { allJarsCode } from './History'
+import { allJarsCode } from './pages/History'
 
 const iconSize = css `
   font-size: 1rem;

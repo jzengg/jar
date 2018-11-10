@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import { QueryRenderer, graphql } from 'react-relay'
-import environment from '../Environment'
+import environment from '../../Environment'
 
-import { GC_USER_ID } from '../constants'
+import { GC_USER_ID } from '../../constants'
 
-import FriendList from './FriendList'
-import NoteList from './NoteList'
-import Note from './Note'
-import Spinner from './Spinner'
+import FriendList from '../FriendList'
+import NoteList from '../NoteList'
+import Note from '../Note'
+import Spinner from '../Spinner'
 
 const FriendsQuery = graphql`
   query FriendsQuery($userId: ID, $noteFilter: NoteFilter) {
