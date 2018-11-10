@@ -41,13 +41,13 @@ class FriendRequests extends Component {
             return <div>{error.message}</div>
           } else if (props) {
             return (
-              <div>
-                <div>
+              <React.Fragment>
+                <React.Fragment>
                   <ReceivedFriendRequestList user={props.viewer.User} />
                   <SentFriendRequestList user={props.viewer.User} subscribe />
-                </div>
+                </React.Fragment>
                   <CreateFriendRequest viewer={props.viewer} />
-              </div>
+              </React.Fragment>
             )
 
           }

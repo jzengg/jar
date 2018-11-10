@@ -69,7 +69,7 @@ class Today extends Component {
             return <div>{error.message}</div>
           } else if (props) {
             return (
-              <div>
+              <React.Fragment>
                 <CreateNote user={props.viewer.User} />
 
                 <NoteList subscribe>
@@ -85,7 +85,7 @@ class Today extends Component {
                   }
                   )}
                 </NoteList>
-              </div>
+              </React.Fragment>
             )
 
           }

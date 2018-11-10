@@ -118,8 +118,13 @@ class History extends Component {
             return <div>{error.message}</div>
           } else if (props) {
             return (
-              <div>
-                <div css={`text-align: center;`}>
+              <React.Fragment>
+                <div css={`
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    `}>
                   <SubHeading css={`
                       margin-bottom: 1rem;
                       `}> { headers[this.state.interval] } </SubHeading>
@@ -140,7 +145,7 @@ class History extends Component {
                     <EditableNote key={edge.node.__id} note={edge.node} />
                   )}
                 </NoteList>
-              </div>
+              </React.Fragment>
             )
 
           }

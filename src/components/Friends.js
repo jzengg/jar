@@ -83,7 +83,7 @@ class Friends extends Component {
           } else if (props) {
 
             return (
-              <div>
+              <React.Fragment>
                 <FriendList
                   user={props.viewer.User}
                   updateActiveFriend={this._updateActiveFriend}
@@ -94,7 +94,7 @@ class Friends extends Component {
                     <Note key={edge.node.__id} note={edge.node} />
                   )}
                 </NoteList>
-              </div>
+              </React.Fragment>
             )
 
           }

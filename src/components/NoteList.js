@@ -20,9 +20,9 @@ class NoteList extends React.Component {
 
   render () {
     return (
-      <div>
+      <React.Fragment>
         {this.props.children}
-      </div>
+      </React.Fragment>
     )
   }
 

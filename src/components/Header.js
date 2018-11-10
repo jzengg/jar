@@ -51,24 +51,24 @@ class Header extends Component {
           } else if (props) {
             const loggedIn = !!props.viewer.User
             return (
-              <div>
+              <React.Fragment>
                 { loggedIn &&
                   <HeaderContainer>
                     <HeaderNavLink to='/'> Today </HeaderNavLink>
                     <HeaderNavLink to='/history' > History </HeaderNavLink>
                     <HeaderNavLink to='/requests' >
-                      <div>
+                      <React.Fragment>
                         <span>
                           Requests
                         </span>
                         <ReceivedFriendRequestBadge user={ props.viewer.User } />
-                    </div>
+                      </React.Fragment>
                     </HeaderNavLink>
                     <HeaderNavLink to='/friends' > Friends </HeaderNavLink>
                     <LogoutButton/>
                   </HeaderContainer>
                 }
-              </div>
+              </React.Fragment>
             )
 
           }

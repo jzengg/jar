@@ -20,25 +20,20 @@ class HistoryNav extends React.Component {
     const jarOptions = [{ label: 'All Jars', value: allJarsCode }, ...jars]
 
     return (
-        <nav css={`
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            `}>
-          <div css={`display: flex;`}>
+        <nav>
+          <div css={`display: flex; margin-bottom: 1rem;`}>
             <SecondaryButton onClick={this.props.setPrevInterval}>
               <MdArrowBack css={iconSize}/>
             </SecondaryButton>
-            <div css={`margin: 0 1rem;`} >
-              <Dropdown controlClassName={css`padding: 0.5rem 1rem; min-width: 150px;`} options={intervalOptions} onChange={this.props.updateInterval} value={interval} />
-            </div>
+
+            <Dropdown controlClassName={css` margin: 0 1rem; padding: 0.5rem 1rem; min-width: 150px;`} options={intervalOptions} onChange={this.props.updateInterval} value={interval} />
+
             <SecondaryButton onClick={this.props.setNextInterval}>
               <MdArrowForward css={iconSize} />
             </SecondaryButton>
           </div>
-          <div css={`margin-top: 1rem; width: 100%; max-width: 300px;`}>
-            <Dropdown controlClassName={css`padding: 0.5rem 1rem;`} options={jarOptions} onChange={this.props.updateJar} value={jarId} />
-          </div>
+
+          <Dropdown controlClassName={css`padding: 0.5rem 1rem;`} options={jarOptions} onChange={this.props.updateJar} value={jarId} />
         </nav>
     )
   }
