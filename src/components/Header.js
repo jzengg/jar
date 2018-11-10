@@ -12,7 +12,7 @@ import Spinner from './Spinner'
 
 import styled from 'react-emotion'
 
-const HeaderContainer = styled.nav`
+export const HeaderContainer = styled.nav`
   display: flex;
   justify-content: center;
   background-color: #18bc9c;
