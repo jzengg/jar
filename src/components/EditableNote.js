@@ -18,8 +18,11 @@ const actionIcon = css `
 `
 
 const EditableNoteContainer = styled(NoteContainer)(props => ({
-  cursor: !props.editable && 'pointer',
-  opacity: props.editable && '0.6'
+  cursor: !props.editing && 'pointer',
+  opacity: props.editing && '0.6',
+  '&:hover': !props.editing && {
+    boxShadow: '0 1px 6px rgba(0, 0, 0, 0.575)'
+  }
 }))
 
 class EditableNote extends React.Component {
@@ -27,7 +30,7 @@ class EditableNote extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      editable: false,
+      editing: false,
       text: this.props.note.text,
       jarId : this.props.note.jar.id,
     }
@@ -35,19 +38,19 @@ class EditableNote extends React.Component {
 
   _enableEdit = (e) => {
     this.setState({
-      editable: true
+      editing: true
     })
   }
 
   _disableEdit = (e) => {
     this.setState({
-      editable: false
+      editing: false
     })
   }
 
   _saveNote = (e) => {
     e.stopPropagation()
-    if (this.state.editable) {
+    if (this.state.editing) {
       this._disableEdit()
     }
 
@@ -90,7 +93,7 @@ class EditableNote extends React.Component {
     const jars = this.props.note.jar.owner.jars.edges.map(edge => edge.node)
 
     let NoteBody, JarContent
-    if (this.state.editable) {
+    if (this.state.editing) {
       NoteBody = (
         <NoteText>
           <WideInput
@@ -113,15 +116,15 @@ class EditableNote extends React.Component {
     } else {
       NoteBody = <NoteText> {text} </NoteText>
       JarContent = (
-        <JarTag editable> { this.props.note.jar.name }</JarTag>
+        <JarTag editing> { this.props.note.jar.name }</JarTag>
       )
     }
 
     return (
-      <EditableNoteContainer onClick={ this._enableEdit } editable={ this.state.editable }>
+      <EditableNoteContainer onClick={ this._enableEdit } editing={ this.state.editing }>
         <NoteSecondary>
           { JarContent }
-          {this.state.editable && (
+          {this.state.editing && (
             <div>
               <MdDelete
                 onClick={this._deleteNote}
