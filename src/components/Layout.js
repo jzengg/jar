@@ -17,6 +17,7 @@ const Article = styled.article`
   max-width: 1200px;
   width: 100%;
   padding: 1.2rem;
+  flex-grow: 1;
 `
 
 class Layout extends Component {
