@@ -11,7 +11,7 @@ const TimestampContainer = styled.div `
 
 const Timestamp = (props) => {
   const createdAt = moment(props.createdAt).calendar(null, {
-    sameElse: 'dddd, MM/DD/YYYY [at] h:mm A'
+    sameElse: 'ddd MM/DD/YY [at] h:mm A'
   })
   return (
     <TimestampContainer>
