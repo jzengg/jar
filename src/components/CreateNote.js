@@ -9,8 +9,6 @@ import SubHeading from '../css/SubHeading'
 import { PrimaryButton, DisabledPrimaryButton } from '../css/BaseButton'
 import { FormContainer, WideInput, WideLabel } from '../css/BaseForm'
 
-
-
 class CreateNote extends Component {
   constructor(props) {
     super(props)
@@ -19,15 +17,13 @@ class CreateNote extends Component {
     const defaultJar = jars[0].node
     this.state = {
       selectedJarId: defaultJar.id,
-      placeholder: defaultJar.description,
       text: ''
     }
   }
 
-  _updateSelectedJar = ({ id, description }) => {
+  _updateSelectedJar = ({ id }) => {
     this.setState({
-      selectedJarId: id,
-      placeholder: description
+      selectedJarId: id
     })
   }
 
@@ -62,7 +58,6 @@ class CreateNote extends Component {
           type='text'
           value={this.state.text}
           onChange={(e) => this.setState({ text: e.target.value })}
-          placeholder={this.state.placeholder}
           id='note_text'
         />
       { this.state.text === '' ?
