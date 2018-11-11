@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
 
-import JarList from './JarList'
+import JarSelect from './JarSelect'
 import CreateNoteMutation from '../mutations/CreateNoteMutation'
 
 import Divider from '../css/Divider'
@@ -9,32 +9,35 @@ import SubHeading from '../css/SubHeading'
 import { PrimaryButton, DisabledPrimaryButton } from '../css/BaseButton'
 import { FormContainer, WideInput, WideLabel } from '../css/BaseForm'
 
-
-
 class CreateNote extends Component {
   constructor(props) {
     super(props)
 
     const jars = this.props.user.jars.edges
-    const defaultJar = jars[0].node
+    const options = jars.map(({ node }) => ({ label: node.name, value: node.id }))
+
     this.state = {
-      selectedJarId: defaultJar.id,
-      placeholder: defaultJar.description,
+      options,
+      selectedJarOption: options[0],
       text: ''
     }
   }
 
-  _updateSelectedJar = ({ id, description }) => {
+  _updateSelectedJar = (selectedJarOption) => {
+    this.setState({ selectedJarOption })
+  }
+
+  _addOption = (newOption) => {
     this.setState({
-      selectedJarId: id,
-      placeholder: description
+      options: [...this.state.options, newOption],
+      selectedJarOption: newOption
     })
   }
 
   _createNote = () => {
-    const { text, selectedJarId } = this.state
-    if (text && selectedJarId) {
-      CreateNoteMutation(text, selectedJarId, this.props.user.id)
+    const { text, selectedJarOption } = this.state
+    if (text && selectedJarOption) {
+      CreateNoteMutation(text, selectedJarOption.value, this.props.user.id)
 
       this.setState({
         text: ''
@@ -49,9 +52,11 @@ class CreateNote extends Component {
           Add a New Note
         </SubHeading>
         <Divider/>
-        <JarList
-          handleClick={this._updateSelectedJar}
-          selectedJarId={this.state.selectedJarId}
+        <JarSelect
+          options={this.state.options}
+          addOption={this._addOption}
+          handleChange={this._updateSelectedJar}
+          selectedJarOption={this.state.selectedJarOption}
           user={this.props.user}
         />
 
@@ -62,7 +67,6 @@ class CreateNote extends Component {
           type='text'
           value={this.state.text}
           onChange={(e) => this.setState({ text: e.target.value })}
-          placeholder={this.state.placeholder}
           id='note_text'
         />
       { this.state.text === '' ?
@@ -77,15 +81,14 @@ class CreateNote extends Component {
 
 export default createFragmentContainer(CreateNote, graphql`
   fragment CreateNote_user on User {
-    ...JarList_user
     id
-    jars(last: 100, orderBy: createdAt_DESC)
+    jars(last: 100, orderBy: createdAt_ASC)
       @connection(key: "CreateNote_jars", filters: []) {
       edges {
         node {
           ...Jar_jar
           id
-          description
+          name
         }
       }
     }

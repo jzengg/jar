@@ -9,6 +9,10 @@ export const WideInput = styled.input`
   width: 100%;
   font-size: 1rem;
   margin-bottom: 1rem;
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 2px #0078ff;
+  }
 `
 
 export const WideLabel = styled.label`

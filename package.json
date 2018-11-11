@@ -49,6 +49,7 @@
     "react-relay": "^1.6.2",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "react-select": "^2.1.1",
     "react-spinners": "^0.4.7",
     "reset-css": "^4.0.1",
     "resolve": "1.6.0",
