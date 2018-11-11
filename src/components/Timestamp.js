@@ -2,7 +2,8 @@ import moment from 'moment'
 import React from 'react'
 
 import styled from 'react-emotion'
-import { MdAccessTime } from 'react-icons/md'
+import MdAccessTime from 'react-icons/lib/md/access-time'
+
 
 const TimestampContainer = styled.div `
   display: flex;

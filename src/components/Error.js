@@ -1,5 +1,6 @@
 import React from 'react'
-import { MdErrorOutline } from 'react-icons/md'
+import MdErrorOutline from 'react-icons/lib/md/error-outline'
+
 
 export default (props) => {
   return (

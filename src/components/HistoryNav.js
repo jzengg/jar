@@ -4,7 +4,9 @@ import { createFragmentContainer, graphql } from 'react-relay'
 import 'react-dropdown/style.css'
 import { css } from 'react-emotion'
 
-import { MdArrowBack, MdArrowForward } from "react-icons/md"
+import MdArrowBack from 'react-icons/lib/md/arrow-back'
+import MdArrowForward from 'react-icons/lib/md/arrow-forward'
+
 import { SecondaryButton } from '../css/BaseButton'
 
 import { allJarsCode } from './pages/History'

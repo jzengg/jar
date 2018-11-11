@@ -10,7 +10,9 @@ import { NoteContainer, NoteSecondary, JarTag, AuthorTag, NoteText } from './Not
 import Dropdown from 'react-dropdown'
 
 import { WideInput } from '../css/BaseForm'
-import { MdDelete, MdDone } from "react-icons/md"
+import MdDelete from 'react-icons/lib/md/delete'
+import MdDone from 'react-icons/lib/md/done'
+
 
 const actionIcon = css `
   font-size: 1.25rem;

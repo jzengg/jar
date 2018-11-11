@@ -1,11 +1,10 @@
 import React from 'react'
 import styled from 'react-emotion'
 
-import { FaMedium, FaGithub } from 'react-icons/fa'
-
+import FaGithub from 'react-icons/lib/fa/github'
 
 const FooterLink = styled.a `
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: #484848;
   &:hover {
     color: black;
@@ -24,12 +23,9 @@ export default () => {
       justify-content: center;
       `}
     >
-      <FooterLink href="https://medium.com/@jzengg/trials-and-tribulations-with-trendy-technology-2d0a0363f36a">
-        <FaMedium />
-      </FooterLink>
 
       <FooterLink css={`margin-left: 0.75rem;`} href="https://github.com/jzengg/jar">
-        <FaGithub />
+        <FaGithub/>
       </FooterLink>
     </div>
   )
