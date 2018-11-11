@@ -11,6 +11,7 @@ import type { ConcreteFragment } from 'relay-runtime';
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type JarSelect_user$ref: FragmentReference;
 export type JarSelect_user = {|
+  +id: string,
   +jars: ?{|
     +edges: ?$ReadOnlyArray<?{|
       +node: {|
@@ -24,7 +25,15 @@ export type JarSelect_user = {|
 */
 
 
-const node/*: ConcreteFragment*/ = {
+const node/*: ConcreteFragment*/ = (function(){
+var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+};
+return {
   "kind": "Fragment",
   "name": "JarSelect_user",
   "type": "User",
@@ -42,6 +51,7 @@ const node/*: ConcreteFragment*/ = {
   },
   "argumentDefinitions": [],
   "selections": [
+    v0,
     {
       "kind": "LinkedField",
       "alias": "jars",
@@ -69,13 +79,7 @@ const node/*: ConcreteFragment*/ = {
               "concreteType": "Jar",
               "plural": false,
               "selections": [
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "id",
-                  "args": null,
-                  "storageKey": null
-                },
+                v0,
                 {
                   "kind": "ScalarField",
                   "alias": null,
@@ -130,6 +134,7 @@ const node/*: ConcreteFragment*/ = {
     }
   ]
 };
+})();
 // prettier-ignore
-(node/*: any*/).hash = 'f46fa98d29e09d0a1342950438b2e66f';
+(node/*: any*/).hash = '1e85c9b8415ecb5508c3f86d739d62b6';
 module.exports = node;
