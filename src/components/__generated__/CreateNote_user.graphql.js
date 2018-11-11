@@ -8,7 +8,7 @@
 
 /*::
 import type { ConcreteFragment } from 'relay-runtime';
-type JarList_user$ref = any;
+type JarSelect_user$ref = any;
 type Jar_jar$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type CreateNote_user$ref: FragmentReference;
@@ -18,12 +18,12 @@ export type CreateNote_user = {|
     +edges: ?$ReadOnlyArray<?{|
       +node: {|
         +id: string,
-        +description: ?string,
+        +name: string,
         +$fragmentRefs: Jar_jar$ref,
       |}
     |}>
   |},
-  +$fragmentRefs: JarList_user$ref,
+  +$fragmentRefs: JarSelect_user$ref,
   +$refType: CreateNote_user$ref,
 |};
 */
@@ -57,7 +57,7 @@ return {
   "selections": [
     {
       "kind": "FragmentSpread",
-      "name": "JarList_user",
+      "name": "JarSelect_user",
       "args": null
     },
     v0,
@@ -97,7 +97,7 @@ return {
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "description",
+                  "name": "name",
                   "args": null,
                   "storageKey": null
                 },
@@ -150,5 +150,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'e6b337c9974e7a311bfe76d2c91eaa95';
+(node/*: any*/).hash = 'c0952f93c96383bb69057702566e18a1';
 module.exports = node;

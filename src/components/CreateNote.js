@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
 
-import JarList from './JarList'
+import JarSelect from './JarSelect'
 import CreateNoteMutation from '../mutations/CreateNoteMutation'
 
 import Divider from '../css/Divider'
@@ -15,22 +15,23 @@ class CreateNote extends Component {
 
     const jars = this.props.user.jars.edges
     const defaultJar = jars[0].node
+
     this.state = {
-      selectedJarId: defaultJar.id,
+      selectedJar: { value: defaultJar.id, label: defaultJar.name },
       text: ''
     }
   }
 
-  _updateSelectedJar = ({ id }) => {
+  _updateSelectedJar = ({ label, value }) => {
     this.setState({
-      selectedJarId: id
+      selectedJar: { label, value }
     })
   }
 
   _createNote = () => {
-    const { text, selectedJarId } = this.state
-    if (text && selectedJarId) {
-      CreateNoteMutation(text, selectedJarId, this.props.user.id)
+    const { text, selectedJar } = this.state
+    if (text && selectedJar) {
+      CreateNoteMutation(text, selectedJar.id, this.props.user.id)
 
       this.setState({
         text: ''
@@ -45,9 +46,9 @@ class CreateNote extends Component {
           Add a New Note
         </SubHeading>
         <Divider/>
-        <JarList
-          handleClick={this._updateSelectedJar}
-          selectedJarId={this.state.selectedJarId}
+        <JarSelect
+          handleChange={this._updateSelectedJar}
+          selectedJar={this.state.selectedJar}
           user={this.props.user}
         />
 
@@ -72,7 +73,7 @@ class CreateNote extends Component {
 
 export default createFragmentContainer(CreateNote, graphql`
   fragment CreateNote_user on User {
-    ...JarList_user
+    ...JarSelect_user
     id
     jars(last: 100, orderBy: createdAt_DESC)
       @connection(key: "CreateNote_jars", filters: []) {
@@ -80,7 +81,7 @@ export default createFragmentContainer(CreateNote, graphql`
         node {
           ...Jar_jar
           id
-          description
+          name
         }
       }
     }

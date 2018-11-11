@@ -12,39 +12,39 @@ class JarSelect extends React.Component {
   constructor(props) {
     super(props)
 
+    const jars = props.user.jars.edges
+    const options = jars.map(({ node }) => ({ label: node.name, value: node.id }))
+
     this.state = {
       isLoading: false,
-      options: props.jars,
-      value: props.jars[0],
-    };
+      options
+    }
+
   }
-
-  handleChange = (newValue) => {
-    this.setState({ value: newValue })
-  }
-
-  handleCreate = (inputValue) => {
-    this.setState({ isLoading: true });
-
-      const { options } = this.state;
-      const newOption = createOption(inputValue);
-      this.setState({
-        isLoading: false,
-        options: [...options, newOption],
-        value: newOption,
-      })
-  };
+  //
+  // handleCreate = (inputValue) => {
+  //   this.setState({ isLoading: true })
+  //
+  //   const { options } = this.state;
+  //   const newOption = createOption(inputValue)
+  //   this.setState({
+  //     isLoading: false,
+  //     options: [...options, newOption],
+  //     value: newOption,
+  //   })
+  // };
 
   render() {
-    const { isLoading, options, value } = this.state;
+    const { isLoading, options } = this.state;
     return (
       <CreatableSelect
+        name='test'
         isDisabled={isLoading}
         isLoading={isLoading}
-        onChange={this.handleChange}
-        onCreateOption={this.handleCreate}
+        onChange={this.props.handleChange}
+        // onCreateOption={this.handleCreate}
         options={options}
-        value={value}
+        value={this.props.selectedJar}
       />
     );
   }
