@@ -16,6 +16,7 @@ export const AbsCenteredDesktop = styled.div `
   ${HCentered}
   @media (min-width: 414px) {
     height: 100vh;
+    height: calc(100vh - var(--vh-offset, 0px));
     align-items: center;
   }
 `
@@ -25,6 +26,7 @@ export const AbsCentered = styled.div `
   height: 100vh;
   align-items: center;
   @media (max-width: 414px) {
+    height: 100vh;
     height: calc(100vh - var(--vh-offset, 0px));
   }
 `
