@@ -1,12 +1,11 @@
 import React from 'react'
-import { createFragmentContainer, graphql } from 'react-relay'
 import CreatableSelect from 'react-select/lib/Creatable'
 
 import CreateJarMutation from '../mutations/CreateJarMutation'
 
 
 class JarSelect extends React.Component {
-  
+
   constructor(props) {
     super(props)
     this.state = { isLoading: false }
@@ -20,15 +19,13 @@ class JarSelect extends React.Component {
       this.setState({ isLoading: false })
 
       const newOption = { label: name, value: id}
-      this.props.handleChange(newOption)
+      this.props.addOption(newOption)
     })
-  };
+  }
 
   render() {
     const { isLoading } = this.state;
-    const jars = this.props.user.jars.edges
-    const options = jars.map(({ node }) => ({ label: node.name, value: node.id }))
-    const value = this.props.selectedJarOption
+    const { selectedJarOption, options } = this.props
 
     return (
       <CreatableSelect
@@ -38,23 +35,10 @@ class JarSelect extends React.Component {
         onChange={this.props.handleChange}
         onCreateOption={this.handleCreate}
         options={options}
-        value={value}
+        value={selectedJarOption}
       />
     );
   }
 }
 
-export default createFragmentContainer(JarSelect, graphql`
-  fragment JarSelect_user on User {
-    id
-    jars(last: 100, orderBy: createdAt_DESC)
-      @connection(key: "JarSelect_jars", filters: []) {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-    }
-  }
-`)
+export default JarSelect

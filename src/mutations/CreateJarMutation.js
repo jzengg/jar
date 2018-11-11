@@ -4,8 +4,6 @@ import {
 } from 'react-relay'
 import {ConnectionHandler} from 'relay-runtime';
 
-import cuid from 'cuid'
-
 import environment from '../Environment'
 
 const mutation = graphql`
@@ -24,13 +22,6 @@ const mutation = graphql`
     }
   }
 `
-
-const sharedUpdater = (proxyStore, node) => {
-  const viewer = proxyStore.getRoot().getLinkedRecord('viewer')
-  const conn = ConnectionHandler.getConnection(viewer, 'JarSelect_jars')
-  const edge = ConnectionHandler.createEdge(proxyStore, conn, node, 'JarsEdge')
-  ConnectionHandler.insertEdgeBefore(conn, edge)
-}
 
 export default (name, ownerId, callback) =>
   new Promise((resolve, reject) => {
@@ -58,9 +49,9 @@ export default (name, ownerId, callback) =>
           const payload = proxyStore.getRootField('createJar')
           const jar = payload.getLinkedRecord('jar')
           const owner = jar.getLinkedRecord('owner')
-          const conn = ConnectionHandler.getConnection(owner, 'JarSelect_jars')
+          const conn = ConnectionHandler.getConnection(owner, 'CreateNote_jars')
           const edge = ConnectionHandler.createEdge(proxyStore, conn, jar, 'JarsEdge')
-          ConnectionHandler.insertEdgeBefore(conn, edge)
+          ConnectionHandler.insertEdgeAfter(conn, edge)
         },
       }
     )

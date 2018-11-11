@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 8ab4d4b505d8998d994001a8116d19b5
+ * @relayHash 4832f8325bc871002982bc9a5efc7565
  */
 
 /* eslint-disable */
@@ -311,9 +311,8 @@ query TodayQuery(
 }
 
 fragment CreateNote_user on User {
-  ...JarSelect_user
   id
-  jars(last: 100, orderBy: createdAt_DESC) {
+  jars(last: 100, orderBy: createdAt_ASC) {
     edges {
       node {
         ...Jar_jar
@@ -362,24 +361,6 @@ fragment Note_note on Note {
     owner {
       email
       id
-    }
-  }
-}
-
-fragment JarSelect_user on User {
-  id
-  jars(last: 100, orderBy: createdAt_DESC) {
-    edges {
-      node {
-        id
-        name
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      hasPreviousPage
-      startCursor
     }
   }
 }
@@ -478,7 +459,7 @@ v8 = [
   {
     "kind": "Literal",
     "name": "orderBy",
-    "value": "createdAt_DESC",
+    "value": "createdAt_ASC",
     "type": "JarOrderBy"
   }
 ],
@@ -509,7 +490,7 @@ return {
   "operationKind": "query",
   "name": "TodayQuery",
   "id": null,
-  "text": "query TodayQuery(\n  $userId: ID\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    id\n    User(id: $userId) {\n      email\n      ...CreateNote_user\n      id\n    }\n    allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n      edges {\n        node {\n          ...EditableNote_note\n          ...Note_note\n          jar {\n            owner {\n              id\n            }\n            id\n          }\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        hasPreviousPage\n        startCursor\n      }\n    }\n  }\n}\n\nfragment CreateNote_user on User {\n  ...JarSelect_user\n  id\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        ...Jar_jar\n        id\n        name\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment EditableNote_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    id\n    name\n    owner {\n      id\n      email\n      jars {\n        edges {\n          node {\n            id\n            name\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    id\n    name\n    owner {\n      email\n      id\n    }\n  }\n}\n\nfragment JarSelect_user on User {\n  id\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        id\n        name\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Jar_jar on Jar {\n  id\n  name\n  description\n}\n",
+  "text": "query TodayQuery(\n  $userId: ID\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    id\n    User(id: $userId) {\n      email\n      ...CreateNote_user\n      id\n    }\n    allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n      edges {\n        node {\n          ...EditableNote_note\n          ...Note_note\n          jar {\n            owner {\n              id\n            }\n            id\n          }\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        hasPreviousPage\n        startCursor\n      }\n    }\n  }\n}\n\nfragment CreateNote_user on User {\n  id\n  jars(last: 100, orderBy: createdAt_ASC) {\n    edges {\n      node {\n        ...Jar_jar\n        id\n        name\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment EditableNote_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    id\n    name\n    owner {\n      id\n      email\n      jars {\n        edges {\n          node {\n            id\n            name\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment Note_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    id\n    name\n    owner {\n      email\n      id\n    }\n  }\n}\n\nfragment Jar_jar on Jar {\n  id\n  name\n  description\n}\n",
   "metadata": {
     "connection": [
       {
@@ -660,7 +641,7 @@ return {
                 "kind": "LinkedField",
                 "alias": null,
                 "name": "jars",
-                "storageKey": "jars(last:100,orderBy:\"createdAt_DESC\")",
+                "storageKey": "jars(last:100,orderBy:\"createdAt_ASC\")",
                 "args": v8,
                 "concreteType": "JarConnection",
                 "plural": false,
@@ -685,14 +666,14 @@ return {
                         "selections": [
                           v1,
                           v9,
-                          v4,
                           {
                             "kind": "ScalarField",
                             "alias": null,
                             "name": "description",
                             "args": null,
                             "storageKey": null
-                          }
+                          },
+                          v4
                         ]
                       },
                       v5
@@ -700,15 +681,6 @@ return {
                   },
                   v6
                 ]
-              },
-              {
-                "kind": "LinkedHandle",
-                "alias": null,
-                "name": "jars",
-                "args": v8,
-                "handle": "connection",
-                "key": "JarSelect_jars",
-                "filters": []
               },
               {
                 "kind": "LinkedHandle",

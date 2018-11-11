@@ -14,17 +14,23 @@ class CreateNote extends Component {
     super(props)
 
     const jars = this.props.user.jars.edges
-    const defaultJar = jars[0].node
+    const options = jars.map(({ node }) => ({ label: node.name, value: node.id }))
 
     this.state = {
-      selectedJarOption: { value: defaultJar.id, label: defaultJar.name },
+      options,
+      selectedJarOption: options[0],
       text: ''
     }
   }
 
-  _updateSelectedJar = ({ label, value }) => {
+  _updateSelectedJar = (selectedJarOption) => {
+    this.setState({ selectedJarOption })
+  }
+
+  _addOption = (newOption) => {
     this.setState({
-      selectedJarOption: { label, value }
+      options: [...this.state.options, newOption],
+      selectedJarOption: newOption
     })
   }
 
@@ -47,6 +53,8 @@ class CreateNote extends Component {
         </SubHeading>
         <Divider/>
         <JarSelect
+          options={this.state.options}
+          addOption={this._addOption}
           handleChange={this._updateSelectedJar}
           selectedJarOption={this.state.selectedJarOption}
           user={this.props.user}
@@ -73,9 +81,8 @@ class CreateNote extends Component {
 
 export default createFragmentContainer(CreateNote, graphql`
   fragment CreateNote_user on User {
-    ...JarSelect_user
     id
-    jars(last: 100, orderBy: createdAt_DESC)
+    jars(last: 100, orderBy: createdAt_ASC)
       @connection(key: "CreateNote_jars", filters: []) {
       edges {
         node {
