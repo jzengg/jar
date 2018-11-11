@@ -31,7 +31,7 @@ class CreateNote extends Component {
   _createNote = () => {
     const { text, selectedJar } = this.state
     if (text && selectedJar) {
-      CreateNoteMutation(text, selectedJar.id, this.props.user.id)
+      CreateNoteMutation(text, selectedJar.value, this.props.user.id)
 
       this.setState({
         text: ''
