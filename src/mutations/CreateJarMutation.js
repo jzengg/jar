@@ -25,6 +25,13 @@ const mutation = graphql`
   }
 `
 
+const sharedUpdater = (proxyStore, node) => {
+  const viewer = proxyStore.getRoot().getLinkedRecord('viewer')
+  const conn = ConnectionHandler.getConnection(viewer, 'JarSelect_jars')
+  const edge = ConnectionHandler.createEdge(proxyStore, conn, node, 'JarsEdge')
+  ConnectionHandler.insertEdgeBefore(conn, edge)
+}
+
 export default (name, ownerId, callback) =>
   new Promise((resolve, reject) => {
     const variables = {
@@ -46,6 +53,14 @@ export default (name, ownerId, callback) =>
         },
         onError: (err) => {
           return reject(err)
+        },
+        updater: proxyStore => {
+          const payload = proxyStore.getRootField('createJar')
+          const jar = payload.getLinkedRecord('jar')
+          const owner = jar.getLinkedRecord('owner')
+          const conn = ConnectionHandler.getConnection(owner, 'JarSelect_jars')
+          const edge = ConnectionHandler.createEdge(proxyStore, conn, jar, 'JarsEdge')
+          ConnectionHandler.insertEdgeBefore(conn, edge)
         },
       }
     )
