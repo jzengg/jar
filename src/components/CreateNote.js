@@ -17,21 +17,21 @@ class CreateNote extends Component {
     const defaultJar = jars[0].node
 
     this.state = {
-      selectedJar: { value: defaultJar.id, label: defaultJar.name },
+      selectedJarOption: { value: defaultJar.id, label: defaultJar.name },
       text: ''
     }
   }
 
   _updateSelectedJar = ({ label, value }) => {
     this.setState({
-      selectedJar: { label, value }
+      selectedJarOption: { label, value }
     })
   }
 
   _createNote = () => {
-    const { text, selectedJar } = this.state
-    if (text && selectedJar) {
-      CreateNoteMutation(text, selectedJar.value, this.props.user.id)
+    const { text, selectedJarOption } = this.state
+    if (text && selectedJarOption) {
+      CreateNoteMutation(text, selectedJarOption.value, this.props.user.id)
 
       this.setState({
         text: ''
@@ -48,7 +48,7 @@ class CreateNote extends Component {
         <Divider/>
         <JarSelect
           handleChange={this._updateSelectedJar}
-          selectedJar={this.state.selectedJar}
+          selectedJarOption={this.state.selectedJarOption}
           user={this.props.user}
         />
 

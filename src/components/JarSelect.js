@@ -44,7 +44,7 @@ class JarSelect extends React.Component {
         onChange={this.props.handleChange}
         // onCreateOption={this.handleCreate}
         options={options}
-        value={this.props.selectedJar}
+        value={this.props.selectedJarOption}
       />
     );
   }
