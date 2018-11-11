@@ -12,15 +12,17 @@ class JarSelect extends React.Component {
   }
 
   handleCreate = (name) => {
-    this.setState({ isLoading: true })
-    const userId = this.props.user.id
+    if (window.confirm(`Create a jar with the name: ${name}?`)) {
+      this.setState({ isLoading: true })
+      const userId = this.props.user.id
 
-    CreateJarMutation(name, userId).then(({ jar: { id, name } }) => {
-      this.setState({ isLoading: false })
+      CreateJarMutation(name, userId).then(({ jar: { id, name } }) => {
+        this.setState({ isLoading: false })
 
-      const newOption = { label: name, value: id}
-      this.props.addOption(newOption)
-    })
+        const newOption = { label: name, value: id}
+        this.props.addOption(newOption)
+      })
+    }
   }
 
   render() {
