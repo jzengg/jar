@@ -1,5 +1,6 @@
 import React from 'react'
 import CreatableSelect from 'react-select/lib/Creatable'
+import { css } from 'react-emotion'
 
 import CreateJarMutation from '../mutations/CreateJarMutation'
 
@@ -31,6 +32,7 @@ class JarSelect extends React.Component {
 
     return (
       <CreatableSelect
+        className={css `max-width: 300px; margin-bottom: 1rem;`}
         name='jar'
         isDisabled={isLoading}
         isLoading={isLoading}
