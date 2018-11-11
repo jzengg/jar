@@ -32,7 +32,13 @@ class JarSelect extends React.Component {
 
     return (
       <CreatableSelect
-        className={css `max-width: 300px; margin-bottom: 1rem;`}
+        className={css`
+          div {
+            overflow: visible;
+          }
+          max-width: 275px;
+          margin-bottom: 1rem;
+          `}
         name='jar'
         isDisabled={isLoading}
         isLoading={isLoading}
