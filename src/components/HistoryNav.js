@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from 'react-relay'
 import 'react-dropdown/style.css'
 import { css } from 'react-emotion'
 
+import FaRandom from 'react-icons/lib/fa/random'
 import MdArrowBack from 'react-icons/lib/md/arrow-back'
 import MdArrowForward from 'react-icons/lib/md/arrow-forward'
 
@@ -34,12 +35,16 @@ class HistoryNav extends React.Component {
               <MdArrowForward css={iconSize} />
             </SecondaryButton>
 
-            <SecondaryButton onClick={this.props.goToRandomDay}>
-              <MdArrowForward css={iconSize} />
-            </SecondaryButton>
+
           </div>
 
+          <SecondaryButton css={`margin-bottom: 1rem;`} onClick={this.props.goToRandomDay}>
+            <FaRandom css={iconSize} />
+          </SecondaryButton>
+
           <Dropdown controlClassName={css`padding: 0.5rem 1rem;`} options={jarOptions} onChange={this.props.updateJar} value={jarId} />
+
+
         </nav>
     )
   }
