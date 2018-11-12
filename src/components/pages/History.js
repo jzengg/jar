@@ -98,12 +98,14 @@ class History extends Component {
     }
 
     const intervalOptions = [
+      {value: 'day', label: 'Day'},
       {value: 'week', label: 'Week'},
       {value: 'month', label: 'Month'},
       {value: 'year', label: 'Year'},
     ]
 
     const headers = {
+      day: moment().isSame(startDate, 'day') ? 'Today' : `${startDate.format('dddd, MMMM Do')}`,
       week: `${startDate.format('ddd MM/DD')} - ${this.state.endDate.format('ddd MM/DD')}`,
       month: startDate.format('MMMM YYYY'),
       year: startDate.year()
