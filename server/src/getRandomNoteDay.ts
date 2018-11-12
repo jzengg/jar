@@ -1,5 +1,6 @@
 import { fromEvent, FunctionEvent } from 'graphcool-lib'
 import { GraphQLClient } from 'graphql-request'
+import * as moment from 'moment'
 
 interface Note {
   createdAt: string
@@ -20,10 +21,10 @@ export default async (event: FunctionEvent<{}>) => {
 
 
     const notes = await getNotes(api, userId).then(r => r.allNotes)
-    console.log(notes)
-    const noteDays = notes.map(note => note.createdAt )
-    const day = noteDays[Math.floor(Math.random() * noteDays.length)];
-
+    const noteDays = notes.map(note => moment(note.createdAt).dayOfYear())
+    const uniqueDays = Array.from(new Set(noteDays))
+    const dayOfYear = uniqueDays[Math.floor(Math.random() * uniqueDays.length)]
+    const day = moment().dayOfYear(dayOfYear)
 
     return { data: { day } }
   } catch (e) {

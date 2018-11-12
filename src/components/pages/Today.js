@@ -41,6 +41,7 @@ const TodayQuery = graphql`
 class Today extends Component {
 
   render() {
+    console.log(moment())
     const userId = localStorage.getItem(GC_USER_ID)
     const startDate = moment().startOf('day')
     const endDate = moment().endOf('day')
