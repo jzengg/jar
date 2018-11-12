@@ -1,0 +1,8 @@
+type getRandomNoteDayPayload {
+  day: DateTime!
+}
+
+extend type Query {
+  # return random day with a note if request contains valid authentication token
+  getRandomNoteDay: getRandomNoteDayPayload
+}

@@ -52,6 +52,12 @@ functions:
     handler:
       code: src/acceptFriendRequest.ts
 
+  getRandomNoteDay:
+    type: resolver
+    schema: src/getRandomNoteDay.graphql
+    handler:
+      code: src/getRandomNoteDay.ts
+
 # Model/Relation permissions are used to limit the API access
 # To take the burden of thinking about those while development, we
 # preconfigured the wildcard ("*") permission that allows everything
