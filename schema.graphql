@@ -1398,6 +1398,10 @@ input UsersentFriendRequestsFriendRequest {
   recipient: FriendRequestrecipientUser
 }
 
+type getRandomNoteDayPayload {
+  day: DateTime!
+}
+
 # This is the famous Relay viewer object
 type Viewer {
   allFriendRequests(filter: FriendRequestFilter, orderBy: FriendRequestOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): FriendRequestConnection!
@@ -1409,6 +1413,8 @@ type Viewer {
   Jar(id: ID): Jar
   Note(id: ID): Note
   User(email: String, id: ID): User
+
+  getRandomNoteDay: getRandomNoteDayPayload
 
   # loggedInUser
   loggedInUser: LoggedInUserPayload

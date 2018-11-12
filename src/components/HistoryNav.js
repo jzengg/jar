@@ -33,6 +33,10 @@ class HistoryNav extends React.Component {
             <SecondaryButton onClick={this.props.setNextInterval}>
               <MdArrowForward css={iconSize} />
             </SecondaryButton>
+
+            <SecondaryButton onClick={this.props.goToRandomDay}>
+              <MdArrowForward css={iconSize} />
+            </SecondaryButton>
           </div>
 
           <Dropdown controlClassName={css`padding: 0.5rem 1rem;`} options={jarOptions} onChange={this.props.updateJar} value={jarId} />

@@ -21,12 +21,9 @@ export default async (event: FunctionEvent<{}>) => {
 
 
     const notes = await getNotes(api, userId).then(r => r.allNotes)
-    const noteDays = notes.map(note => moment(note.createdAt).dayOfYear())
-    const uniqueDays = Array.from(new Set(noteDays))
-    const dayOfYear = uniqueDays[Math.floor(Math.random() * uniqueDays.length)]
-    const day = moment().dayOfYear(dayOfYear)
+    const note = notes[Math.floor(Math.random() * notes.length)]
 
-    return { data: { day } }
+    return { data: { day: note.createdAt } }
   } catch (e) {
     console.log(e)
     return { error: 'An unexpected error occured while getting random note.' }
@@ -42,7 +39,10 @@ async function getNotes(api: GraphQLClient, id: string): Promise<{ Note }> {
     }
   `
 
-  const filter = { jar: { owner: { id: id } } }
+  const filter = {
+    jar: { owner: { id: id } },
+    createdAt_lte: moment.utc().startOf('day')
+ }
 
   const variables = {
     filter
