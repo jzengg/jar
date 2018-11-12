@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
 
 import JarSelect from './JarSelect'
+import CreateJar from './CreateJar'
+
 import CreateNoteMutation from '../mutations/CreateNoteMutation'
 
 import Divider from '../css/Divider'
@@ -18,6 +20,7 @@ class CreateNote extends Component {
 
     this.state = {
       options,
+      showCreateJar: false,
       selectedJarOption: options[0],
       text: ''
     }
@@ -45,6 +48,10 @@ class CreateNote extends Component {
     }
   }
 
+  _toggleCreateJar = () => {
+    this.setState({ showCreateJar: !this.state.showCreateJar})
+  }
+
   render() {
     return (
       <FormContainer>
@@ -52,13 +59,19 @@ class CreateNote extends Component {
           Add a New Note
         </SubHeading>
         <Divider/>
-        <JarSelect
-          options={this.state.options}
-          addOption={this._addOption}
-          handleChange={this._updateSelectedJar}
-          selectedJarOption={this.state.selectedJarOption}
-          user={this.props.user}
-        />
+        <div>
+          <JarSelect
+            options={this.state.options}
+            addOption={this._addOption}
+            handleChange={this._updateSelectedJar}
+            selectedJarOption={this.state.selectedJarOption}
+            user={this.props.user}
+          />
+          <span onClick={this._toggleCreateJar}>
+          +
+          </span>
+        </div>
+      {this.state.showCreateJar && <CreateJar/>}
 
         <WideLabel htmlFor='note_text'>
           Text
