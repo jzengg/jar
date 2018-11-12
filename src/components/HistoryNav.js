@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from 'react-relay'
 import 'react-dropdown/style.css'
 import { css } from 'react-emotion'
 
+import FaRandom from 'react-icons/lib/fa/random'
 import MdArrowBack from 'react-icons/lib/md/arrow-back'
 import MdArrowForward from 'react-icons/lib/md/arrow-forward'
 
@@ -28,14 +29,35 @@ class HistoryNav extends React.Component {
               <MdArrowBack css={iconSize}/>
             </SecondaryButton>
 
-            <Dropdown controlClassName={css` margin: 0 1rem; padding: 0.5rem 1rem; min-width: 150px;`} options={intervalOptions} onChange={this.props.updateInterval} value={interval} />
+            <Dropdown
+                controlClassName={css`
+                  margin: 0 1rem;
+                  padding: 0.5rem 1rem;
+                  min-width: 150px;
+                  `}
+                options={intervalOptions}
+                onChange={this.props.updateInterval}
+                value={interval}
+            />
 
             <SecondaryButton onClick={this.props.setNextInterval}>
               <MdArrowForward css={iconSize} />
             </SecondaryButton>
           </div>
 
-          <Dropdown controlClassName={css`padding: 0.5rem 1rem;`} options={jarOptions} onChange={this.props.updateJar} value={jarId} />
+          <div css={`
+              display: flex;
+              justify-content: space-around;
+              align-items: center;
+              `}>
+            <Dropdown controlClassName={css`min-width: 150px; padding: 0.5rem 1rem;`} options={jarOptions} onChange={this.props.updateJar} value={jarId} />
+
+            <SecondaryButton onClick={this.props.goToRandomDay}>
+              <FaRandom css={`font-size: 1.25rem;`} />
+            </SecondaryButton>
+          </div>
+
+
         </nav>
     )
   }

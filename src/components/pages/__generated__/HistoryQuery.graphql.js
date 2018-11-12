@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash ee2595941d04fd95e3804a81970f1161
+ * @relayHash 0ddd311e78597b30357b82b6511938df
  */
 
 /* eslint-disable */
@@ -250,10 +250,14 @@ export type HistoryQueryResponse = {|
     +User: ?{|
       +$fragmentRefs: HistoryNav_user$ref
     |},
+    +getRandomNoteDay: ?{|
+      +day: any
+    |},
     +allNotes: {|
       +edges: ?$ReadOnlyArray<?{|
         +node: {|
-          +$fragmentRefs: EditableNote_note$ref
+          +createdAt: any,
+          +$fragmentRefs: EditableNote_note$ref,
         |}
       |}>
     |},
@@ -276,9 +280,13 @@ query HistoryQuery(
       ...HistoryNav_user
       id
     }
+    getRandomNoteDay {
+      day
+    }
     allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {
       edges {
         node {
+          createdAt
           ...EditableNote_note
           id
           __typename
@@ -358,20 +366,45 @@ v1 = [
   }
 ],
 v2 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "getRandomNoteDay",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "getRandomNoteDayPayload",
+  "plural": false,
+  "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "day",
+      "args": null,
+      "storageKey": null
+    }
+  ]
+},
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "createdAt",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "__typename",
   "args": null,
   "storageKey": null
 },
-v3 = {
+v5 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "cursor",
   "args": null,
   "storageKey": null
 },
-v4 = {
+v6 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "pageInfo",
@@ -396,14 +429,14 @@ v4 = {
     }
   ]
 },
-v5 = {
+v7 = {
   "kind": "Literal",
   "name": "last",
   "value": 100,
   "type": "Int"
 },
-v6 = [
-  v5,
+v8 = [
+  v7,
   {
     "kind": "Literal",
     "name": "orderBy",
@@ -411,28 +444,28 @@ v6 = [
     "type": "JarOrderBy"
   }
 ],
-v7 = {
+v9 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
   "args": null,
   "storageKey": null
 },
-v8 = {
+v10 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "name",
   "args": null,
   "storageKey": null
 },
-v9 = [
+v11 = [
   {
     "kind": "Variable",
     "name": "filter",
     "variableName": "noteFilter",
     "type": "NoteFilter"
   },
-  v5,
+  v7,
   {
     "kind": "Literal",
     "name": "orderBy",
@@ -445,7 +478,7 @@ return {
   "operationKind": "query",
   "name": "HistoryQuery",
   "id": null,
-  "text": "query HistoryQuery(\n  $userId: ID\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    User(id: $userId) {\n      ...HistoryNav_user\n      id\n    }\n    allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n      edges {\n        node {\n          ...EditableNote_note\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        hasPreviousPage\n        startCursor\n      }\n    }\n    id\n  }\n}\n\nfragment HistoryNav_user on User {\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        id\n        name\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment EditableNote_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    id\n    name\n    owner {\n      id\n      email\n      jars {\n        edges {\n          node {\n            id\n            name\n          }\n        }\n      }\n    }\n  }\n}\n",
+  "text": "query HistoryQuery(\n  $userId: ID\n  $noteFilter: NoteFilter\n) {\n  viewer {\n    User(id: $userId) {\n      ...HistoryNav_user\n      id\n    }\n    getRandomNoteDay {\n      day\n    }\n    allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) {\n      edges {\n        node {\n          createdAt\n          ...EditableNote_note\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        hasPreviousPage\n        startCursor\n      }\n    }\n    id\n  }\n}\n\nfragment HistoryNav_user on User {\n  jars(last: 100, orderBy: createdAt_DESC) {\n    edges {\n      node {\n        id\n        name\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment EditableNote_note on Note {\n  id\n  text\n  createdAt\n  jar {\n    id\n    name\n    owner {\n      id\n      email\n      jars {\n        edges {\n          node {\n            id\n            name\n          }\n        }\n      }\n    }\n  }\n}\n",
   "metadata": {
     "connection": [
       {
@@ -491,6 +524,7 @@ return {
               }
             ]
           },
+          v2,
           {
             "kind": "LinkedField",
             "alias": "allNotes",
@@ -518,18 +552,19 @@ return {
                     "concreteType": "Note",
                     "plural": false,
                     "selections": [
+                      v3,
                       {
                         "kind": "FragmentSpread",
                         "name": "EditableNote_note",
                         "args": null
                       },
-                      v2
+                      v4
                     ]
                   },
-                  v3
+                  v5
                 ]
               },
-              v4
+              v6
             ]
           }
         ]
@@ -564,7 +599,7 @@ return {
                 "alias": null,
                 "name": "jars",
                 "storageKey": "jars(last:100,orderBy:\"createdAt_DESC\")",
-                "args": v6,
+                "args": v8,
                 "concreteType": "JarConnection",
                 "plural": false,
                 "selections": [
@@ -586,35 +621,36 @@ return {
                         "concreteType": "Jar",
                         "plural": false,
                         "selections": [
-                          v7,
-                          v8,
-                          v2
+                          v9,
+                          v10,
+                          v4
                         ]
                       },
-                      v3
+                      v5
                     ]
                   },
-                  v4
+                  v6
                 ]
               },
               {
                 "kind": "LinkedHandle",
                 "alias": null,
                 "name": "jars",
-                "args": v6,
+                "args": v8,
                 "handle": "connection",
                 "key": "HistoryNav_jars",
                 "filters": []
               },
-              v7
+              v9
             ]
           },
+          v2,
           {
             "kind": "LinkedField",
             "alias": null,
             "name": "allNotes",
             "storageKey": null,
-            "args": v9,
+            "args": v11,
             "concreteType": "NoteConnection",
             "plural": false,
             "selections": [
@@ -636,18 +672,12 @@ return {
                     "concreteType": "Note",
                     "plural": false,
                     "selections": [
-                      v7,
+                      v3,
+                      v9,
                       {
                         "kind": "ScalarField",
                         "alias": null,
                         "name": "text",
-                        "args": null,
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "createdAt",
                         "args": null,
                         "storageKey": null
                       },
@@ -660,8 +690,8 @@ return {
                         "concreteType": "Jar",
                         "plural": false,
                         "selections": [
-                          v7,
-                          v8,
+                          v9,
+                          v10,
                           {
                             "kind": "LinkedField",
                             "alias": null,
@@ -671,7 +701,7 @@ return {
                             "concreteType": "User",
                             "plural": false,
                             "selections": [
-                              v7,
+                              v9,
                               {
                                 "kind": "ScalarField",
                                 "alias": null,
@@ -706,8 +736,8 @@ return {
                                         "concreteType": "Jar",
                                         "plural": false,
                                         "selections": [
-                                          v7,
-                                          v8
+                                          v9,
+                                          v10
                                         ]
                                       }
                                     ]
@@ -718,25 +748,25 @@ return {
                           }
                         ]
                       },
-                      v2
+                      v4
                     ]
                   },
-                  v3
+                  v5
                 ]
               },
-              v4
+              v6
             ]
           },
           {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "allNotes",
-            "args": v9,
+            "args": v11,
             "handle": "connection",
             "key": "NoteList_allNotes",
             "filters": []
           },
-          v7
+          v9
         ]
       }
     ]
@@ -744,5 +774,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '505f3ed400658f21b356bf29861802ce';
+(node/*: any*/).hash = 'bebc728951ba9c09816a7d8268d06e99';
 module.exports = node;

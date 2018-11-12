@@ -20,9 +20,13 @@ const HistoryQuery = graphql`
       User(id: $userId) {
         ...HistoryNav_user
       }
+      getRandomNoteDay {
+        day
+      }
       allNotes(last: 100, orderBy: createdAt_DESC, filter: $noteFilter) @connection(key: "NoteList_allNotes", filters: []) {
         edges {
           node {
+            createdAt
             ...EditableNote_note
           }
         }
@@ -79,6 +83,13 @@ class History extends Component {
     this.setState({ jarId: value })
   }
 
+  _goToRandomDay = (date) => {
+    this.setState({
+      interval: 'day',
+      endDate: moment(date).endOf('day')
+    })
+  }
+
   render() {
     const userId = localStorage.getItem(GC_USER_ID)
     const startDate = this._getStartDate()
@@ -98,12 +109,14 @@ class History extends Component {
     }
 
     const intervalOptions = [
+      {value: 'day', label: 'Day'},
       {value: 'week', label: 'Week'},
       {value: 'month', label: 'Month'},
       {value: 'year', label: 'Year'},
     ]
 
     const headers = {
+      day: moment().isSame(startDate, 'day') ? 'Today' : `${startDate.format('dddd, MMMM Do')}`,
       week: `${startDate.format('ddd MM/DD')} - ${this.state.endDate.format('ddd MM/DD')}`,
       month: startDate.format('MMMM YYYY'),
       year: startDate.year()
@@ -118,6 +131,7 @@ class History extends Component {
           if (error) {
             return <div>{error.message}</div>
           } else if (props) {
+            const randomDay = props.viewer.getRandomNoteDay.day
             return (
               <React.Fragment>
                 <div css={`
@@ -132,6 +146,7 @@ class History extends Component {
                   <HistoryNav
                     user={props.viewer.User}
                     jarId={jarId}
+                    goToRandomDay={this._goToRandomDay.bind(null, randomDay)}
                     updateJar={this._updateJar}
                     setPrevInterval={this._setPrevInterval}
                     setNextInterval={this._setNextInterval}
