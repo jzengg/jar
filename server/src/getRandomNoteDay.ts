@@ -19,8 +19,11 @@ export default async (event: FunctionEvent<{}>) => {
     const graphcool = fromEvent(event)
     const api = graphcool.api('simple/v1')
 
+    const filter = {
+      jar: { owner: { id: userId } },
+   }
 
-    const notes = await getNotes(api, userId).then(r => r.allNotes)
+    const notes = await getNotes(api, filter).then(r => r.allNotes)
     const note = notes[Math.floor(Math.random() * notes.length)]
 
     return { data: { day: note.createdAt } }
@@ -30,7 +33,7 @@ export default async (event: FunctionEvent<{}>) => {
   }
 }
 
-async function getNotes(api: GraphQLClient, id: string): Promise<{ Note }> {
+async function getNotes(api: GraphQLClient, filter): Promise<{ Note }> {
   const query = `
     query getNotes($filter: NoteFilter!) {
       allNotes(filter: $filter) {
@@ -38,11 +41,6 @@ async function getNotes(api: GraphQLClient, id: string): Promise<{ Note }> {
       }
     }
   `
-
-  const filter = {
-    jar: { owner: { id: id } },
-    createdAt_lte: moment.utc().startOf('day')
- }
 
   const variables = {
     filter
