@@ -21,7 +21,7 @@ export const NoteSecondary = styled.div`
 `
 
 export const JarTag = styled.div(props => ({
-  background: props.editing ? '#d9534f' : '#95a5a6',
+  background: props.editable ? '#d9534f' : '#95a5a6',
   borderRadius: '3px',
   color: 'white',
   padding: '0.25rem 0.5rem',
