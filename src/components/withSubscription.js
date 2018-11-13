@@ -4,7 +4,7 @@ import { GC_USER_ID } from '../constants'
 const withSubscription = (WrappedComponent, subscribeFn) => {
   const userId = localStorage.getItem(GC_USER_ID)
 
-  return class extends React.component {
+  return class extends React.Component {
 
     componentDidMount() {
       this.subscription = subscribeFn && subscribeFn(userId)
