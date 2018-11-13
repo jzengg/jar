@@ -5,6 +5,9 @@ import { QueryRenderer, graphql } from 'react-relay'
 import environment from '../../Environment'
 import { GC_USER_ID } from '../../constants'
 
+import NewFriendNoteSubscription from '../../subscriptions/NewFriendNoteSubscription'
+
+import withSubscription from '../withSubscription'
 import CreateNote from '../CreateNote'
 import NoteList from '../NoteList'
 import EditableNote from '../EditableNote'
@@ -59,6 +62,8 @@ class Today extends Component {
       userId: userId
     }
 
+    const NoteListWithSub = withSubscription(NoteList, NewFriendNoteSubscription)
+
     return (
       <QueryRenderer
         environment={environment}
@@ -72,7 +77,7 @@ class Today extends Component {
               <React.Fragment>
                 <CreateNote user={props.viewer.User} />
 
-                <NoteList subscribe>
+                <NoteListWithSub>
                   <SubHeading> Notes from Today </SubHeading>
                   {props.viewer.allNotes.edges.map(({ node }) => {
                     const isAuthor = node.jar.owner.id === userId
@@ -84,7 +89,7 @@ class Today extends Component {
                     }
                   }
                   )}
-                </NoteList>
+                </NoteListWithSub>
               </React.Fragment>
             )
 
