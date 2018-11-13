@@ -5,7 +5,7 @@ import { GC_USER_ID } from '../../constants'
 
 import FriendRequestSentSubscription from '../../subscriptions/FriendRequestSentSubscription'
 
-import withSubscription from '../withSubscription'
+import Subscriber from '../Subscriber'
 import Spinner from '../Spinner'
 import CreateFriendRequest from '../CreateFriendRequest'
 import SentFriendRequestList from '../SentFriendRequestList'
@@ -33,11 +33,6 @@ class FriendRequests extends Component {
       friendRequestFilter: { status: "PENDING" }
     }
 
-    const SentFriendRequestListWithSub = withSubscription(
-      SentFriendRequestList,
-      FriendRequestSentSubscription.bind(null, userId)
-    )
-
     return (
       <QueryRenderer
         environment={environment}
@@ -51,7 +46,12 @@ class FriendRequests extends Component {
               <React.Fragment>
                 <React.Fragment>
                   <ReceivedFriendRequestList user={props.viewer.User} />
-                  <SentFriendRequestListWithSub user={props.viewer.User} />
+                  <Subscriber
+                    startSub={FriendRequestSentSubscription.bind(null, userId)}
+                    render={ (subscription) => {
+                      return <SentFriendRequestList user={props.viewer.User} />
+                    }}
+                  />
                 </React.Fragment>
                   <CreateFriendRequest viewer={props.viewer} />
               </React.Fragment>
