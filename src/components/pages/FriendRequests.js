@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { QueryRenderer, graphql } from 'react-relay'
 import environment from '../../Environment'
-
 import { GC_USER_ID } from '../../constants'
 
+import FriendRequestSentSubscription from '../../subscriptions/FriendRequestSentSubscription'
+
+import withSubscription from '../withSubscription'
 import Spinner from '../Spinner'
 import CreateFriendRequest from '../CreateFriendRequest'
 import SentFriendRequestList from '../SentFriendRequestList'
@@ -31,6 +33,8 @@ class FriendRequests extends Component {
       friendRequestFilter: { status: "PENDING" }
     }
 
+    const SentFriendRequestListWithSub = withSubscription(SentFriendRequestList, FriendRequestSentSubscription)
+
     return (
       <QueryRenderer
         environment={environment}
@@ -44,7 +48,7 @@ class FriendRequests extends Component {
               <React.Fragment>
                 <React.Fragment>
                   <ReceivedFriendRequestList user={props.viewer.User} />
-                  <SentFriendRequestList user={props.viewer.User} subscribe />
+                  <SentFriendRequestListWithSub user={props.viewer.User} />
                 </React.Fragment>
                   <CreateFriendRequest viewer={props.viewer} />
               </React.Fragment>
