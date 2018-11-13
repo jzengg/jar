@@ -33,7 +33,10 @@ class FriendRequests extends Component {
       friendRequestFilter: { status: "PENDING" }
     }
 
-    const SentFriendRequestListWithSub = withSubscription(SentFriendRequestList, FriendRequestSentSubscription)
+    const SentFriendRequestListWithSub = withSubscription(
+      SentFriendRequestList,
+      FriendRequestSentSubscription.bind(null, userId)
+    )
 
     return (
       <QueryRenderer

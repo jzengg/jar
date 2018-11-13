@@ -62,7 +62,10 @@ class Today extends Component {
       userId: userId
     }
 
-    const NoteListWithSub = withSubscription(NoteList, NewFriendNoteSubscription)
+    const NoteListWithSub = withSubscription(
+      NoteList,
+      NewFriendNoteSubscription.bind(null, userId)
+    )
 
     return (
       <QueryRenderer
