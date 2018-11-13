@@ -1,34 +1,18 @@
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay'
-import { GC_USER_ID } from '../constants'
-
-import FriendRequestSentSubscription from '../subscriptions/FriendRequestSentSubscription'
 
 import FriendRequest from './FriendRequest'
 import Timestamp from './Timestamp'
 
 import SubHeading from '../css/SubHeading'
 import Divider from '../css/Divider'
-
 import { Container } from '../css/BaseLayout'
+
 
 const ListContainer = Container.withComponent('ul')
 
+
 class SentFriendRequestList extends React.Component {
-
-    _subscribeToFriendRequestSent(userId) {
-      return FriendRequestSentSubscription(userId)
-    }
-
-    componentDidMount() {
-      const userId = localStorage.getItem(GC_USER_ID)
-      this.subscription = this.props.subscribe && this._subscribeToFriendRequestSent(userId)
-    }
-
-    componentWillUnmount() {
-      this.subscription && this.subscription.dispose()
-    }
-
   render () {
     let friendRequests = this.props.user.sentFriendRequests.edges
     if (!friendRequests.length) return <div/>
