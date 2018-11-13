@@ -7,7 +7,7 @@ import { GC_USER_ID } from '../../constants'
 
 import NewFriendNoteSubscription from '../../subscriptions/NewFriendNoteSubscription'
 
-import withSubscription from '../withSubscription'
+import Subscriber from '../Subscriber'
 import CreateNote from '../CreateNote'
 import NoteList from '../NoteList'
 import EditableNote from '../EditableNote'
@@ -62,11 +62,6 @@ class Today extends Component {
       userId: userId
     }
 
-    const NoteListWithSub = withSubscription(
-      NoteList,
-      NewFriendNoteSubscription.bind(null, userId)
-    )
-
     return (
       <QueryRenderer
         environment={environment}
@@ -80,19 +75,23 @@ class Today extends Component {
               <React.Fragment>
                 <CreateNote user={props.viewer.User} />
 
-                <NoteListWithSub>
-                  <SubHeading> Notes from Today </SubHeading>
-                  {props.viewer.allNotes.edges.map(({ node }) => {
-                    const isAuthor = node.jar.owner.id === userId
+                <Subscriber
+                  startSub={NewFriendNoteSubscription.bind(null, userId)}
+                  render={(subscription) => {
+                    return (
+                      <NoteList>
+                        <SubHeading> Notes from Today </SubHeading>
+                        {props.viewer.allNotes.edges.map(({ node }) => {
+                          const isAuthor = node.jar.owner.id === userId
+                          const NoteType = isAuthor ? EditableNote : Note
+                          return <NoteType key={node.__id} note={node} />
+                        }
+                        )}
+                    </NoteList>
+                    )
+                  }}
+                />
 
-                    if (isAuthor) {
-                      return <EditableNote key={node.__id} note={node} />
-                    } else {
-                      return <Note key={node.__id} note={node} />
-                    }
-                  }
-                  )}
-                </NoteListWithSub>
               </React.Fragment>
             )
 
