@@ -24,9 +24,15 @@ export default async (event: FunctionEvent<{}>) => {
    }
 
     const notes = await getNotes(api, filter).then(r => r.allNotes)
-    const note = notes[Math.floor(Math.random() * notes.length)]
+    let day
+    if (notes.length) {
+      const note = notes[Math.floor(Math.random() * notes.length)]
+      day = note.createdAt
+    } else {
+      day = moment()
+    }
 
-    return { data: { day: note.createdAt } }
+    return { data: { day: day } }
   } catch (e) {
     console.log(e)
     return { error: 'An unexpected error occured while getting random note.' }
